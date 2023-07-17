@@ -1,0 +1,66 @@
+[
+	{
+		"id": 1,
+		"diameter": 80
+	},
+	{
+		"id": 2,
+		"diameter": 160
+	},
+	{
+		"id": 3,
+		"diameter": 200
+	},
+	{
+		"id": 4,
+		"diameter": 250
+	},
+	{
+		"id": 5,
+		"diameter": 315
+	},
+	{
+		"id": 6,
+		"diameter": 355
+	},
+	{
+		"id": 7,
+		"diameter": 400
+	},
+	{
+		"id": 8,
+		"diameter": 450
+	},
+	{
+		"id": 9,
+		"diameter": 500
+	},
+	{
+		"id": 10,
+		"diameter": 560
+	},
+	{
+		"id": 11,
+		"diameter": 630
+	},
+	{
+		"id": 12,
+		"diameter": 710
+	},
+	{
+		"id": 13,
+		"diameter": 800
+	},
+	{
+		"id": 14,
+		"diameter": 900
+	},
+	{
+		"id": 15,
+		"diameter": 1000
+	},
+	{
+		"id": 16,
+		"diameter": 1250
+	}
+]

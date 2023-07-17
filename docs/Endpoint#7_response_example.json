@@ -1,0 +1,47 @@
+[
+	{
+		"id": 1,
+		"name": "galvanised steel",
+		"roughness": 0.0001
+	},
+	{
+		"id": 2,
+		"name": "aluminium",
+		"roughness": 2.0e-6
+	},
+	{
+		"id": 3,
+		"name": "steel",
+		"roughness": 5.0e-5
+	},
+	{
+		"id": 4,
+		"name": "cast iron",
+		"roughness": 0.0002
+	},
+	{
+		"id": 5,
+		"name": "plastic",
+		"roughness": 2.0e-6
+	},
+	{
+		"id": 6,
+		"name": "smooth concrete",
+		"roughness": 0.0003
+	},
+	{
+		"id": 7,
+		"name": "ordinary concrete",
+		"roughness": 0.001
+	},
+	{
+		"id": 8,
+		"name": "brick",
+		"roughness": 0.002
+	},
+	{
+		"id": 9,
+		"name": "terracotta",
+		"roughness": 0.005
+	}
+]
