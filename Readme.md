@@ -12,7 +12,7 @@ The formula used for the linear air pressure drop calculation is the [Colebrook 
 ## PHP version used
 * PHP 8.2
 
-## Dependancies
+## Dependencies
 * Laravel 10.14.1
 
 ## Database
