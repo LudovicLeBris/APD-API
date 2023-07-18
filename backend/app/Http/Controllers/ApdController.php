@@ -20,14 +20,15 @@ class ApdController extends Controller
     {
         $shape = $request->shape;
         $flowRate = $request->flowRate;
+        
         if($shape === 'rectangular'){
             $secondSize = $request->width;
         } else {
             $secondSize = 0;
         }
         
-        if($request->has('flowspeed')){
-            $idealFlowSpeed = $request->flowspeed;
+        if($request->has('flowSpeed')){
+            $idealFlowSpeed = $request->flowSpeed;
             $optimalDuctDimension = DuctApd::getOptimalDimensions($shape, $flowRate, $secondSize, $idealFlowSpeed);          
         } else {
             $optimalDuctDimension = DuctApd::getOptimalDimensions($shape, $flowRate, $secondSize);
