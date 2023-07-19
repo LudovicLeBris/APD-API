@@ -20,29 +20,32 @@ class SingularityRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Singularity::class);
     }
-
-//    /**
-//     * @return Singularity[] Returns an array of Singularity objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('s')
-//            ->andWhere('s.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('s.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?Singularity
-//    {
-//        return $this->createQueryBuilder('s')
-//            ->andWhere('s.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    
+       public function findOneByNameAndShape($name, $shape): ?Singularity
+       {
+           return $this->createQueryBuilder('s')
+               ->andWhere('s.name = :name')
+               ->andWhere('s.shape = :shape')
+               ->setParameter('name', $name)
+               ->setParameter('shape', $shape)
+               ->getQuery()
+               ->setMaxResults(1)
+               ->getOneOrNullResult()
+           ;
+       }
+    
+    //    /**
+    //     * @return Singularity[] Returns an array of Singularity objects
+    //     */
+    //    public function findByExampleField($value): array
+    //    {
+    //        return $this->createQueryBuilder('s')
+    //            ->andWhere('s.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->orderBy('s.id', 'ASC')
+    //            ->setMaxResults(10)
+    //            ->getQuery()
+    //            ->getResult()
+    //        ;
+    //    }
 }
