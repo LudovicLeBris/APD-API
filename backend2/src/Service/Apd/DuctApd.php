@@ -353,9 +353,9 @@ class DuctApd
      *
      * @return  float
      */ 
-    public function getTotalApd(): float
+    public function getTotalApd(MaterialRepository $materialRepository, SingularityRepository $singularityRepository): float
     {
-        $this->setTotalApd();
+        $this->setTotalApd($materialRepository, $singularityRepository);
         return $this->totalApd;
     }
 
@@ -364,8 +364,11 @@ class DuctApd
      *
      * @return  bool
      */ 
-    public function setTotalApd(): bool
+    public function setTotalApd(MaterialRepository $materialRepository, SingularityRepository $singularityRepository): bool
     {
+        $this->setLinearApd($materialRepository);
+        $this->setSingularApd($singularityRepository);
+        
         $this->totalApd = $this->linearApd + $this->singularApd + $this->additionalApd;
 
         return true;
