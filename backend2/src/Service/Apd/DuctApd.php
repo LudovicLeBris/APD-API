@@ -132,8 +132,40 @@ class DuctApd
      * @var Air
      */
     public Air $air;
+
+    private $diameterRepository;
+
+    private $materialRepository;
+
+    private $singularityRepository;
     
     public function __construct(
+        DiameterRepository $diameterRepository,
+        MaterialRepository $materialRepository,
+        SingularityRepository $singularityRepository
+    )
+    {    
+        $this->air = Air::getInstance();
+        
+        $this->diameterRepository = $diameterRepository;
+        $this->materialRepository = $materialRepository;
+        $this->singularityRepository = $singularityRepository;
+    }
+
+    /**
+     * Global setter for all parameters. Use in priority just after instantiation
+     *
+     * @param string $shape
+     * @param string $material
+     * @param integer $firstSize
+     * @param integer|null $secondSize
+     * @param integer $flowRate
+     * @param float $length
+     * @param array $singularities
+     * @param integer $additionalApd
+     * @return void
+     */
+    public function globalSetter(
         string $shape, 
         string $material, 
         int $firstSize, 
@@ -141,10 +173,9 @@ class DuctApd
         int $flowRate,
         float $length,
         array $singularities = [],
-        int $additionalApd=0)
-    {    
-        $this->air = Air::getInstance();
-        
+        int $additionalApd=0
+    ): void
+    {
         $this->shape = $shape;
         $this->material = $material;
         if($shape === 'circular'){
@@ -160,7 +191,7 @@ class DuctApd
         $this->length = $length;
         $this->singularities = $singularities;
         $this->additionalApd = $additionalApd;
-        
+
         $this->setEquiveDiameter();
         $this->setSection();
         $this->setFlowSpeed();
@@ -245,13 +276,13 @@ class DuctApd
         return true;
     }
 
-    public static function getOptimalDimensions(DiameterRepository $diameterRepository, string $shape, int $flowRate, int $secondSize=0, float $idealFlowSpeed = 7): float
+    public function getOptimalDimensions(string $shape, int $flowRate, int $secondSize=0, float $idealFlowSpeed = 7): float
     {
-        $optimalSection = ($flowRate / 3600) / $idealFlowSpeed;
+        $optimalSection = ($flowRate / 3600) / $idealFlowSpeed; 
 
         if($shape === 'circular'){
             $optimalDiameter = sqrt(($optimalSection * 4) / pi()) * 1000;
-            $optimalDimension = $diameterRepository->findOneByDiameter($optimalDiameter)->getDiameter();
+            $optimalDimension = $this->diameterRepository->findOneByDiameter($optimalDiameter)->getDiameter();
         } elseif ($shape === 'rectangular') {
             $optimalDimension = round(($optimalSection / ($secondSize / 1000)) * 1000);
         }
@@ -264,9 +295,9 @@ class DuctApd
      *
      * @return  float
      */ 
-    public function getLinearApd(MaterialRepository $materialRepository): float
+    public function getLinearApd(): float
     {
-        $this->setLinearApd($materialRepository);
+        $this->setLinearApd();
         return $this->linearApd;
     }
 
@@ -275,7 +306,7 @@ class DuctApd
      *
      * @return boolean
      */
-    private function setLinearApd(MaterialRepository $materialRepository): bool
+    private function setLinearApd(): bool
     {
 
         $reynolds = ($this->flowSpeed * ($this->equivDiameter * 10 ** -3)) / $this->air->getViscosity();
@@ -287,7 +318,7 @@ class DuctApd
             return true;
         }
 
-        $roughness = $materialRepository->findOneByMaterial($this->material)->getRoughness();
+        $roughness = $this->materialRepository->findOneByMaterial($this->material)->getRoughness();
         $b = 2.51 / $reynolds;
 
         $roughnessLambda = (1 / (-2 * log10($roughness))) ** 2;
@@ -315,9 +346,9 @@ class DuctApd
      *
      * @return float
      */
-    public function getSingularApd(SingularityRepository $singularityRepository): float
+    public function getSingularApd(): float
     {
-        $this->setSingularApd($singularityRepository);
+        $this->setSingularApd();
         return $this->singularApd;
     }
     
@@ -326,12 +357,12 @@ class DuctApd
      *
      * @return boolean
      */
-    private function setSingularApd(SingularityRepository $singularityRepository): bool
+    private function setSingularApd(): bool
     {
         $totalSingularities = 0;
         foreach($this->singularities as $singularityName => $singularityCount)
         {
-            $totalSingularities += $singularityRepository->findOneByNameAndShape($singularityName, $this->shape)->getSingularity() * $singularityCount;
+            $totalSingularities += $this->singularityRepository->findOneByNameAndShape($singularityName, $this->shape)->getSingularity() * $singularityCount;
         }
         $this->singularApd = round($totalSingularities * $this->air->getDensity() * ($this->flowSpeed ** 2) / 2, 3);
         
@@ -353,9 +384,9 @@ class DuctApd
      *
      * @return  float
      */ 
-    public function getTotalApd(MaterialRepository $materialRepository, SingularityRepository $singularityRepository): float
+    public function getTotalApd(): float
     {
-        $this->setTotalApd($materialRepository, $singularityRepository);
+        $this->setTotalApd();
         return $this->totalApd;
     }
 
@@ -364,10 +395,10 @@ class DuctApd
      *
      * @return  bool
      */ 
-    public function setTotalApd(MaterialRepository $materialRepository, SingularityRepository $singularityRepository): bool
+    public function setTotalApd(): bool
     {
-        $this->setLinearApd($materialRepository);
-        $this->setSingularApd($singularityRepository);
+        $this->setLinearApd();
+        $this->setSingularApd();
         
         $this->totalApd = $this->linearApd + $this->singularApd + $this->additionalApd;
 
