@@ -107,10 +107,10 @@ class ApdController extends Controller
     /**
      * Retrieve list of singularities by duct shape
      *
-     * @param int $shape
+     * @param string $shape
      * @return JsonResponse
      */
-    public function listSingularities(int $shape)
+    public function listSingularities(string $shape)
     {
         if(!in_array($shape, ['circular', 'rectangular'])){
             return response()->json(null, 422);

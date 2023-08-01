@@ -8,6 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+#[Route("/api")]
 class TestController extends AbstractController
 {
     #[Route('/test', name: 'app_test')]
@@ -28,16 +29,18 @@ class TestController extends AbstractController
         // test des méthodes statiques
         $section = DuctApd::getSection('circular', 250);
         $flowspeed = DuctApd::getFlowSpeed(1500, 'circular', 250);
+        $optimalDimension = DuctApd::getOptimalDimensions('circular', 1000);
         
         // test d'instanciation d'un objet ductApd
         $ductApd->globalSetter('circular', 'galvanised steel', 355, 0, 2000, 10, $duct1Singularities);
-        $optimalDimension = $ductApd->getOptimalDimensions('circular', 2000);
         // $ductSection1->air->setAltitude(2000);
         $sectionLinearApd1 = $ductApd->getLinearApd();
         $sectionSingularApd1 = $ductApd->getSingularApd();
 
 
         return $this->json([
+            $section,
+            $flowspeed,
             $optimalDimension,
             $sectionLinearApd1,
             $sectionSingularApd1

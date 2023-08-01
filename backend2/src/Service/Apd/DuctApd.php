@@ -133,7 +133,7 @@ class DuctApd
      */
     public Air $air;
 
-    private $diameterRepository;
+    private static $diameterRepository;
 
     private $materialRepository;
 
@@ -147,7 +147,7 @@ class DuctApd
     {    
         $this->air = Air::getInstance();
         
-        $this->diameterRepository = $diameterRepository;
+        self::$diameterRepository = $diameterRepository;
         $this->materialRepository = $materialRepository;
         $this->singularityRepository = $singularityRepository;
     }
@@ -276,13 +276,13 @@ class DuctApd
         return true;
     }
 
-    public function getOptimalDimensions(string $shape, int $flowRate, int $secondSize=0, float $idealFlowSpeed = 7): float
+    public static function getOptimalDimensions(string $shape, int $flowRate, int $secondSize=0, float $idealFlowSpeed = 7): float
     {
         $optimalSection = ($flowRate / 3600) / $idealFlowSpeed; 
 
         if($shape === 'circular'){
             $optimalDiameter = sqrt(($optimalSection * 4) / pi()) * 1000;
-            $optimalDimension = $this->diameterRepository->findOneByDiameter($optimalDiameter)->getDiameter();
+            $optimalDimension = self::$diameterRepository->findOneByDiameter($optimalDiameter)->getDiameter();
         } elseif ($shape === 'rectangular') {
             $optimalDimension = round(($optimalSection / ($secondSize / 1000)) * 1000);
         }
