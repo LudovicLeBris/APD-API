@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service\Apd;
+namespace App\Util;
 
 class Air
 {

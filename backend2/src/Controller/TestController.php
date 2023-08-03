@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Service\Apd\DuctApd;
+use App\Util\DuctApd;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;

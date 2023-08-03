@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Service\Apd;
+namespace App\Util;
 
+use App\Util\Air;
 use App\Repository\DiameterRepository;
 use App\Repository\MaterialRepository;
 use App\Repository\SingularityRepository;
-use App\Service\Apd\Air;
 
 class DuctApd
 {
@@ -142,8 +142,8 @@ class DuctApd
     public function __construct(
         DiameterRepository $diameterRepository,
         MaterialRepository $materialRepository,
-        SingularityRepository $singularityRepository
-    )
+        SingularityRepository $singularityRepository,
+        )
     {    
         $this->air = Air::getInstance();
         
