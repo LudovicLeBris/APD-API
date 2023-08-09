@@ -1,19 +1,28 @@
 <?php
 
-namespace App\Util;
+namespace App\Entity;
 
-use App\Util\Air;
+use App\Entity\Air;
 use App\Repository\DiameterRepository;
 use App\Repository\MaterialRepository;
 use App\Repository\SingularityRepository;
+use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\ORM\Mapping as ORM;
 
-class DuctApd
+#[ORM\Entity]
+class DuctSection
 {
     /**
      * Shape of the duct section : circular or rectangular
      *
      * @var string
      */
+    #[Assert\NotBlank]
+    #[Assert\Regex(
+        pattern: '/circular|rectangular/',
+        match: true,
+        message: "The shape must be 'circular' or 'rectangular'"
+    )]
     private string $shape;
 
     /**
@@ -21,6 +30,12 @@ class DuctApd
      *
      * @var string
      */
+    #[Assert\NotBlank]
+    #[Assert\Regex(
+        pattern: '/(galvanised steel)|aluminium|steel|(cast iron)|plastic|(smooth concrete)|(ordinary concrete)|brick|terracotta/',
+        match: true,
+        message: "This parameter should be 'galvanised steel', 'aluminium', 'steel', 'cast iron', 'plastic', 'smooth concrete', 'ordinary concrete', 'brick' or 'terracotta'"
+    )]
     private string $material;
 
     /**
@@ -29,6 +44,13 @@ class DuctApd
      * 
      * @var integer
      */
+    #[Assert\Type('integer')]
+    #[Assert\Positive]
+    #[Assert\Regex(
+        pattern: '/80|160|200|250|315|355|400|450|500|560|630|710|800|900|1000|1250/',
+        match: true,
+        message: "The diameter should be an normalize circular diameter"
+    )]
     private int $diameter;
 
     /**
@@ -37,6 +59,8 @@ class DuctApd
      *
      * @var integer
      */
+    #[Assert\Type('integer')]
+    #[Assert\Positive]
     private int $width;
 
     /**
@@ -45,6 +69,8 @@ class DuctApd
      * 
      * @var integer
      */
+    #[Assert\Type('integer')]
+    #[Assert\Positive]
     private int $height;
 
     /**
@@ -53,14 +79,19 @@ class DuctApd
      *
      * @var integer
      */
+    #[Assert\NotBlank]
+    #[Assert\Type('integer')]
+    #[Assert\Positive]
     private int $flowRate;
 
     /**
      * Length of the duct section
      * unit : meter (m)
      *
-     * @var float
+     * @var int
      */
+    #[Assert\NotBlank]
+    #[Assert\Positive]
     private float $length;
 
     /**
@@ -68,6 +99,7 @@ class DuctApd
      *
      * @var array
      */
+    #[Assert\Type('array')]
     private array $singularities;
 
     /**
@@ -76,7 +108,9 @@ class DuctApd
      *
      * @var integer
      */
-    private int $additionalApd;
+    #[Assert\Type('integer')]
+    #[Assert\PositiveOrZero]
+     private int $additionalApd;
 
     /**
      * Value of the equivalent diameter for rectangular shape
@@ -132,24 +166,10 @@ class DuctApd
      * @var Air
      */
     public Air $air;
-
-    private static $diameterRepository;
-
-    private $materialRepository;
-
-    private $singularityRepository;
     
-    public function __construct(
-        DiameterRepository $diameterRepository,
-        MaterialRepository $materialRepository,
-        SingularityRepository $singularityRepository,
-        )
+    public function __construct()
     {    
         $this->air = Air::getInstance();
-        
-        self::$diameterRepository = $diameterRepository;
-        $this->materialRepository = $materialRepository;
-        $this->singularityRepository = $singularityRepository;
     }
 
     /**
@@ -192,6 +212,13 @@ class DuctApd
         $this->singularities = $singularities;
         $this->additionalApd = $additionalApd;
 
+        $this->setEquiveDiameter();
+        $this->setSection();
+        $this->setFlowSpeed();
+    }
+
+    public function setCalculation()
+    {
         $this->setEquiveDiameter();
         $this->setSection();
         $this->setFlowSpeed();
@@ -276,13 +303,13 @@ class DuctApd
         return true;
     }
 
-    public static function getOptimalDimensions(string $shape, int $flowRate, int $secondSize=0, float $idealFlowSpeed = 7): float
+    public static function getOptimalDimensions(DiameterRepository $diameterRepository, string $shape, int $flowRate, int $secondSize=0, float $idealFlowSpeed = 7): float
     {
         $optimalSection = ($flowRate / 3600) / $idealFlowSpeed; 
 
         if($shape === 'circular'){
             $optimalDiameter = sqrt(($optimalSection * 4) / pi()) * 1000;
-            $optimalDimension = self::$diameterRepository->findOneByDiameter($optimalDiameter)->getDiameter();
+            $optimalDimension = $diameterRepository->findOneByDiameter($optimalDiameter)->getDiameter();
         } elseif ($shape === 'rectangular') {
             $optimalDimension = round(($optimalSection / ($secondSize / 1000)) * 1000);
         }
@@ -295,9 +322,9 @@ class DuctApd
      *
      * @return  float
      */ 
-    public function getLinearApd(): float
+    public function getLinearApd(MaterialRepository $materialRepository): float
     {
-        $this->setLinearApd();
+        $this->setLinearApd($materialRepository);
         return $this->linearApd;
     }
 
@@ -306,7 +333,7 @@ class DuctApd
      *
      * @return boolean
      */
-    private function setLinearApd(): bool
+    private function setLinearApd(MaterialRepository $materialRepository): bool
     {
 
         $reynolds = ($this->flowSpeed * ($this->equivDiameter * 10 ** -3)) / $this->air->getViscosity();
@@ -318,7 +345,7 @@ class DuctApd
             return true;
         }
 
-        $roughness = $this->materialRepository->findOneByMaterial($this->material)->getRoughness();
+        $roughness = $materialRepository->findOneByMaterial($this->material)->getRoughness();
         $b = 2.51 / $reynolds;
 
         $roughnessLambda = (1 / (-2 * log10($roughness))) ** 2;
@@ -346,9 +373,9 @@ class DuctApd
      *
      * @return float
      */
-    public function getSingularApd(): float
+    public function getSingularApd(SingularityRepository $singularityRepository): float
     {
-        $this->setSingularApd();
+        $this->setSingularApd($singularityRepository);
         return $this->singularApd;
     }
     
@@ -357,12 +384,12 @@ class DuctApd
      *
      * @return boolean
      */
-    private function setSingularApd(): bool
+    private function setSingularApd(SingularityRepository $singularityRepository): bool
     {
         $totalSingularities = 0;
         foreach($this->singularities as $singularityName => $singularityCount)
         {
-            $totalSingularities += $this->singularityRepository->findOneByNameAndShape($singularityName, $this->shape)->getSingularity() * $singularityCount;
+            $totalSingularities += $singularityRepository->findOneByNameAndShape($singularityName, $this->shape)->getSingularity() * $singularityCount;
         }
         $this->singularApd = round($totalSingularities * $this->air->getDensity() * ($this->flowSpeed ** 2) / 2, 3);
         
@@ -370,23 +397,13 @@ class DuctApd
     }
 
     /**
-     * Get value of additional apd in the duct section
-     *
-     * @return  integer
-     */ 
-    public function getAdditionalApd(): int
-    {
-        return $this->additionalApd;
-    }
-
-    /**
      * Get total pressure drop of the duct section
      *
      * @return  float
      */ 
-    public function getTotalApd(): float
+    public function getTotalApd(MaterialRepository $materialRepository, SingularityRepository $singularityRepository): float
     {
-        $this->setTotalApd();
+        $this->setTotalApd($materialRepository, $singularityRepository);
         return $this->totalApd;
     }
 
@@ -395,13 +412,235 @@ class DuctApd
      *
      * @return  bool
      */ 
-    public function setTotalApd(): bool
+    public function setTotalApd(MaterialRepository $materialRepository, SingularityRepository $singularityRepository): bool
     {
-        $this->setLinearApd();
-        $this->setSingularApd();
+        $this->setLinearApd($materialRepository);
+        $this->setSingularApd($singularityRepository);
         
         $this->totalApd = $this->linearApd + $this->singularApd + $this->additionalApd;
 
         return true;
+    }
+
+    /**
+     * Get the value of shape
+     */ 
+    public function getShape()
+    {
+        return $this->shape;
+    }
+
+    /**
+     * Set the value of shape
+     *
+     * @return  self
+     */ 
+    public function setShape($shape)
+    {
+        $this->shape = $shape;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of material
+     */ 
+    public function getMaterial()
+    {
+        return $this->material;
+    }
+
+    /**
+     * Set the value of material
+     *
+     * @return  self
+     */ 
+    public function setMaterial($material)
+    {
+        $this->material = $material;
+
+        return $this;
+    }
+
+    /**
+     * Get unit : millimeter (mm)
+     *
+     * @return  integer
+     */ 
+    public function getDiameter()
+    {
+        return $this->diameter;
+    }
+
+    /**
+     * Set unit : millimeter (mm)
+     *
+     * @param  integer  $diameter  unit : millimeter (mm)
+     *
+     * @return  self
+     */ 
+    public function setDiameter($diameter)
+    {
+        $this->diameter = $diameter;
+
+        return $this;
+    }
+
+    /**
+     * Get unit : millimeter (mm)
+     *
+     * @return  integer
+     */ 
+    public function getWidth()
+    {
+        return $this->width;
+    }
+
+    /**
+     * Set unit : millimeter (mm)
+     *
+     * @param  integer  $width  unit : millimeter (mm)
+     *
+     * @return  self
+     */ 
+    public function setWidth($width)
+    {
+        $this->width = $width;
+
+        return $this;
+    }
+
+    /**
+     * Get unit : millimeter (mm)
+     *
+     * @return  integer
+     */ 
+    public function getHeight()
+    {
+        return $this->height;
+    }
+
+    /**
+     * Set unit : millimeter (mm)
+     *
+     * @param  integer  $height  unit : millimeter (mm)
+     *
+     * @return  self
+     */ 
+    public function setHeight($height)
+    {
+        $this->height = $height;
+
+        return $this;
+    }
+
+    /**
+     * Get unit : cubic meter per hour (m3/h)
+     *
+     * @return  integer
+     */ 
+    public function getFlowRate()
+    {
+        return $this->flowRate;
+    }
+
+    /**
+     * Set unit : cubic meter per hour (m3/h)
+     *
+     * @param  integer  $flowRate  unit : cubic meter per hour (m3/h)
+     *
+     * @return  self
+     */ 
+    public function setFlowRate($flowRate)
+    {
+        $this->flowRate = $flowRate;
+
+        return $this;
+    }
+
+    /**
+     * Get unit : meter (m)
+     *
+     * @return  float
+     */ 
+    public function getLength()
+    {
+        return $this->length;
+    }
+
+    /**
+     * Set unit : meter (m)
+     *
+     * @param  float  $length  unit : meter (m)
+     *
+     * @return  self
+     */ 
+    public function setLength(float $length)
+    {
+        $this->length = $length;
+
+        return $this;
+    }
+
+    /**
+     * Get list of type and number of singularities present in the duct section
+     *
+     * @return  array
+     */ 
+    public function getSingularities()
+    {
+        return $this->singularities;
+    }
+
+    /**
+     * Set list of type and number of singularities present in the duct section
+     *
+     * @param  array  $singularities  List of type and number of singularities present in the duct section
+     *
+     * @return  self
+     */ 
+    public function setSingularities(array $singularities)
+    {
+        $this->singularities = $singularities;
+
+        return $this;
+    }
+
+    /**
+     * Get unit : Pascal (Pa)
+     *
+     * @return  integer
+     */ 
+    public function getAdditionalApd()
+    {
+        return $this->additionalApd;
+    }
+
+    /**
+     * Set unit : Pascal (Pa)
+     *
+     * @param  integer  $additionalApd  unit : Pascal (Pa)
+     *
+     * @return  self
+     */ 
+    public function setAdditionalApd($additionalApd)
+    {
+        $this->additionalApd = $additionalApd;
+
+        return $this;
+    }
+
+    public function setAltitude($altitude)
+    {
+        $this->air->setAltitude($altitude);
+
+        return $this;
+    }
+
+    public function setTemperature($temperature)
+    {
+        $this->air->setTemperature($temperature);
+
+        return $this;
     }
 }

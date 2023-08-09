@@ -2,11 +2,11 @@
 
 namespace App\Controller;
 
-use App\Service\Apd\DuctApd;
-use App\Service\DuctApdService;
+use App\Service\DuctSectionService;
 use App\Repository\DiameterRepository;
 use App\Repository\MaterialRepository;
 use App\Repository\SingularityRepository;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,28 +14,28 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 #[Route("/api")]
 class ApdController extends AbstractController
 {
-    #[Route('/ductdimension', name:'app_apd_getDuctDimension', methods:['POST'])]
-    public function optimalDuctDimension(DuctApdService $ductApdService): JsonResponse
+    #[Route('/ductdimension', name:'app_apd_getDuctDimension', methods:['GET'])]
+    public function optimalDuctDimension(DuctSectionService $ductSectionService): JsonResponse
     {
-        $optimalDuctDimension = $ductApdService->getOptimalDuctDimension();
+        $response = $ductSectionService->getOptimalDuctDimension();
         
-        return $this->json($optimalDuctDimension, 200);
+        return $this->json($response['response'], $response['httpResponse']);
     }
 
-    #[Route('/ductsection', name:'app_apd_getDuctSection', methods:['POST'])]
-    public function ductSection(DuctApdService $ductApdService): JsonResponse
+    #[Route('/ductsection', name:'app_apd_getDuctSection', methods:['GET'])]
+    public function ductSection(DuctSectionService $ductSectionService): JsonResponse
     {
-        $section = $ductApdService->getDuctSection();
+        $response = $ductSectionService->getDuctSection();
 
-        return $this->json($section, 200);
+        return $this->json($response['response'], $response['httpResponse']);
     }
 
-    #[Route('/flowspeed', name:'app_apd_getFlowSpeed', methods:['POST'])]
-    public function flowSpeed(DuctApdService $ductApdService): JsonResponse
+    #[Route('/flowspeed', name:'app_apd_getFlowSpeed', methods:['GET'])]
+    public function flowSpeed(DuctSectionService $ductSectionService): JsonResponse
     {
-        $flowSpeed = $ductApdService->getFlowSpeed();
+        $response = $ductSectionService->getFlowSpeed();
 
-        return $this->json($flowSpeed, 200);
+        return $this->json($response['response'], $response['httpResponse']);
     }
 
     #[Route('/diameters', name:'app_apd_diametersList', methods:['GET'])]
@@ -47,7 +47,7 @@ class ApdController extends AbstractController
             $diameters[] = $diameter->getDiameter();
         }
 
-        return $this->json($diameters, 200);
+        return $this->json($diameters, Response::HTTP_OK);
     }
 
     #[Route('/materials', name:'app_apd_materialsList', methods:['GET'])]
@@ -59,34 +59,30 @@ class ApdController extends AbstractController
             $materials[] = $material->getName();
         }
         
-        return $this->json($materials, 200);
+        return $this->json($materials, Response::HTTP_OK);
     }
 
     #[Route('/singularities/{shape}', name:'app_apd_singularitiesList', methods:['GET'], requirements:['shape' => '^circular|rectangular$'])]
     public function listSingularities(SingularityRepository $singularityRepository, string $shape): JsonResponse
     {
-        $singularityEntities = $singularityRepository->findBy(['shape' => $shape]);
-        $singularities = [];
-        foreach($singularityEntities as $singularity) {
-            $singularities[] = $singularity->getLongName();
-        }
+        $singularities = $singularityRepository->findBy(['shape' => $shape]);
         
-        return $this->json($singularities, 200);
+        return $this->json($singularities, Response::HTTP_OK);
     }
 
-    #[Route('/section', name:'app_apd_setSection', methods:['POST'])]
-    public function setSection(DuctApdService $ductApdService): JsonResponse
+    #[Route('/section', name:'app_apd_setSection', methods:['GET'])]
+    public function setSection(DuctSectionService $ductSectionService): JsonResponse
     {
-        $section = $ductApdService->getSection();
+        $response = $ductSectionService->getSection();
 
-        return $this->json($section, 200);
+        return $this->json($response['response'], $response['httpResponse']);
     }
 
-    #[Route('/sections', name:'app_apd_setSections', methods:['POST'])]
-    public function setSections(DuctApdService $ductApdService)
+    #[Route('/sections', name:'app_apd_setSections', methods:['GET'])]
+    public function setSections(DuctSectionService $ductSectionService)
     {
-        $sections = $ductApdService->getSections();
+        $response = $ductSectionService->getSections();
         
-        return $this->json($sections, 200);
+        return $this->json($response['response'], $response['httpResponse']);
     }
 }
