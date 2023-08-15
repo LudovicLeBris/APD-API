@@ -20,3 +20,8 @@ define('DIAMETERS', [
     1000,
     1200
 ]);
+
+class data
+{
+    
+}
