@@ -6,6 +6,8 @@ use App\Repository\DuctNetworkRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: DuctNetworkRepository::class)]
 class DuctNetwork
@@ -26,6 +28,8 @@ class DuctNetwork
      * @var integer|null
      */
     #[ORM\Column(nullable: true)]
+    #[Assert\Type('integer')]
+    #[Assert\PositiveOrZero]
     private ?int $additionalApd = null;
 
     /**
@@ -34,7 +38,8 @@ class DuctNetwork
      * @var int|null
      */
     #[ORM\Column(nullable: true)]
-    private ?int $temperature = null;
+    #[Assert\Type('integer')]
+    private ?int $temperature;
 
     /**
      * Duct network altitude (in meter bellow sea m)
@@ -42,7 +47,9 @@ class DuctNetwork
      * @var integer|null
      */
     #[ORM\Column(nullable: true)]
-    private ?int $altitude = null;
+    #[Assert\Type('integer')]
+    #[Assert\PositiveOrZero]
+    private ?int $altitude;
 
     /**
      * Duct network duct sections
@@ -92,13 +99,12 @@ class DuctNetwork
     #[ORM\Column(nullable: true)]
     private ?float $totalApd = null;
 
-    public function __construct($additionalApd = 0, $temperature = 20, $altitude = 0)
+    public function __construct()
     {
         $this->ductSections = new ArrayCollection();
 
-        $this->additionalApd = $additionalApd;
-        $this->temperature = $temperature;
-        $this->altitude = $altitude;
+        $this->temperature = 20;
+        $this->altitude = 0;
     }
 
     /**
@@ -294,7 +300,7 @@ class DuctNetwork
             $totalSingularApd += $ductSection->getSingularApd();
         }
         
-        $this->totalSingularApd = $totalSingularApd;
+        $this->totalSingularApd = round($totalSingularApd, 3);
 
         return $this;
     }

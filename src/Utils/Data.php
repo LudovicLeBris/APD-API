@@ -23,13 +23,13 @@ define('DIAMETERS', [
 ]);
 
 define('MATERIALS', [
-    'galvanised steel' => 0.0001, 
+    'galvanised_steel' => 0.0001, 
     'aluminium' => 0.000002, 
     'steel' => 0.00005, 
-    'cast iron' => 0.0002, 
+    'cast_iron' => 0.0002, 
     'plastic' => 0.000002, 
-    'smooth concrete' => 0.0003, 
-    'ordinary concrete' => 0.001, 
+    'smooth_concrete' => 0.0003, 
+    'ordinary_concrete' => 0.001, 
     'brick' => 0.002, 
     'terracotta' => 0.005
 ]);
@@ -71,6 +71,11 @@ define('SINGULARITIES', [
 
 class Data
 {
+    public static function getDiameters()
+    {
+        return DIAMETERS;
+    }
+    
     public static function getUpperDiameter($diameter)
     {
         $closest = null;
@@ -83,9 +88,25 @@ class Data
         }
     }
 
+    public static function getMaterials()
+    {
+        return array_keys(MATERIALS);
+    }
+
     public static function getRoughness($material)
     {
         return MATERIALS[$material];
+    }
+
+    public static function getSingularitiesLongName($shape)
+    {
+        $singularities = [];
+
+        foreach (SINGULARITIES[$shape] as $singularityShortName => $singularity) {
+            $singularities[$singularityShortName] = $singularity[1];
+        }
+
+        return $singularities;
     }
 
     public static function getSingularity($shape, $singularityType)

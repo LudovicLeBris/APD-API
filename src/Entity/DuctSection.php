@@ -6,7 +6,10 @@ use App\Entity\Air;
 use App\Utils\Data;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 use App\Repository\DuctSectionRepository;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\ExpressionLanguage;
 
 #[ORM\Entity(repositoryClass: DuctSectionRepository::class)]
 class DuctSection
@@ -27,6 +30,13 @@ class DuctSection
      * @var string|null
      */
     #[ORM\Column(length: 32)]
+    #[Assert\NotBlank]
+    #[Assert\Regex(
+        pattern: '/\bcircular\b|\brectangular\b/',
+        match: true,
+        message: "The shape must be 'circular' or 'rectangular'"
+    )]
+    #[Groups(['request'])]
     private ?string $shape = null;
 
     /**
@@ -35,6 +45,12 @@ class DuctSection
      * @var string|null
      */
     #[ORM\Column(length: 32)]
+    #[Assert\NotBlank]
+    #[Assert\ExpressionSyntax(
+        allowedVariables: ['galvanised_steel', 'aluminium', 'steel', 'cast iron', 'plastic', 'smooth_concrete', 'ordinary_concrete', 'brick', 'terracotta'],
+        message: "This parameter should be 'galvanised steel', 'aluminium', 'steel', 'cast iron', 'plastic', 'smooth concrete', 'ordinary concrete', 'brick' or 'terracotta'"
+    )]
+    #[Groups(['request'])]
     private ?string $material = null;
 
     /**
@@ -43,6 +59,14 @@ class DuctSection
      * @var integer|null
      */
     #[ORM\Column(nullable: true)]
+    #[Assert\Type('integer')]
+    #[Assert\Positive]
+    #[Assert\Regex(
+        pattern: '/\b80\b|\b160\b|\b200\b|\b250\b|\b315\b|\b355\b|\b400\b|\b450\b|\b500\b|\b560\b|\b630\b|\b710\b|\b800\b|\b900\b|\b1000\b|\b1250\b/',
+        match: true,
+        message: "The diameter should be an normalize circular diameter"
+    )]
+    #[Groups(['request'])]
     private ?int $diameter = null;
 
     /**
@@ -51,6 +75,9 @@ class DuctSection
      * @var integer|null
      */
     #[ORM\Column(nullable: true)]
+    #[Assert\Type('integer')]
+    #[Assert\Positive]
+    #[Groups(['request'])]
     private ?int $width = null;
 
     /**
@@ -59,6 +86,9 @@ class DuctSection
      * @var integer|null
      */
     #[ORM\Column(nullable: true)]
+    #[Assert\Type('integer')]
+    #[Assert\Positive]
+    #[Groups(['request'])]
     private ?int $height = null;
 
     /**
@@ -67,6 +97,10 @@ class DuctSection
      * @var integer|null
      */
     #[ORM\Column]
+    #[Assert\NotBlank]
+    #[Assert\Type('integer')]
+    #[Assert\Positive]
+    #[Groups(['request'])]
     private ?int $flowrate = null;
 
     /**
@@ -75,6 +109,9 @@ class DuctSection
      * @var float|null
      */
     #[ORM\Column]
+    #[Assert\NotBlank]
+    #[Assert\Positive]
+    #[Groups(['request'])]
     private ?float $length = null;
 
     /**
@@ -83,6 +120,8 @@ class DuctSection
      * @var array|null
      */
     #[ORM\Column(type: Types::SIMPLE_ARRAY, nullable: true)]
+    #[Assert\Type('array')]
+    #[Groups(['request'])]
     private ?array $singularities = null;
 
     /**
@@ -91,6 +130,9 @@ class DuctSection
      * @var integer|null
      */
     #[ORM\Column(nullable: true)]
+    #[Assert\Type('integer')]
+    #[Assert\PositiveOrZero]
+    #[Groups(['request'])]
     private ?int $additionalApd = null;
 
     /**
@@ -107,6 +149,7 @@ class DuctSection
      * @var float|null
      */
     #[ORM\Column(nullable: true)]
+    #[Groups(['response'])]
     private ?float $section = null;
 
     /**
@@ -115,6 +158,7 @@ class DuctSection
      * @var float|null
      */
     #[ORM\Column(nullable: true)]
+    #[Groups(['response'])]
     private ?float $flowSpeed = null;
 
     /**
@@ -123,6 +167,7 @@ class DuctSection
      * @var float|null
      */
     #[ORM\Column(nullable: true)]
+    #[Groups(['response'])]
     private ?float $linearApd = null;
 
     /**
@@ -131,6 +176,7 @@ class DuctSection
      * @var float|null
      */
     #[ORM\Column(nullable: true)]
+    #[Groups(['response'])]
     private ?float $singularApd = null;
 
     /**
@@ -139,6 +185,7 @@ class DuctSection
      * @var float|null
      */
     #[ORM\Column(nullable: true)]
+    #[Groups(['response'])]
     private ?float $totalApd = null;
 
     /**
@@ -157,31 +204,9 @@ class DuctSection
      */
     public Air $air;
 
-    public function __construct(
-        string $shape,
-        string $material,
-        ?int $diameter,
-        ?int $width,
-        ?int $height,
-        int $flowrate,
-        int $length,
-        array $singularities,
-        int $additionalApd = 0
-    )
+    public function __construct()
     {
         $this->air = Air::getInstance();
-
-        $this->shape = $shape;
-        $this->material = $material;
-        $this->diameter = $diameter;
-        $this->width = $width;
-        $this->height = $height;
-        $this->flowrate = $flowrate;
-        $this->length = $length;
-        $this->singularities = $singularities;
-        $this->additionalApd = $additionalApd;
-
-        $this->calculate();
     }
 
     /**
