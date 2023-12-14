@@ -92,15 +92,20 @@ class UpdatePassword
         if (!$recoveryPassword->getIsEnable()) {
             $response->addError('recover time', 'The recovery time is exceeded');
             $isValid = false;
-        } 
+        }
+
+        $oldAppUser = $this->appUserRepository->getAppUserById($recoveryPassword->getAppUserId());
+
+        if (!$oldAppUser) {
+            $isValid = false;
+            $response->addError('id', 'User id don\'t match in recovery database');
+        }
 
         if ($isValid) {
-            $oldAppUser = $this->appUserRepository->getAppUserById($recoveryPassword->getAppUserId());
 
             $hashedPassword = $this->passwordHasher->hash($request->newPassword);
 
             $appUser = new AppUser(
-                $oldAppUser->getId(),
                 $oldAppUser->getEmail(),
                 $hashedPassword,
                 $oldAppUser->getLastname(),
@@ -109,6 +114,7 @@ class UpdatePassword
                 $oldAppUser->getRole(),
                 $oldAppUser->getIsEnable()
             );
+            $appUser->setId($oldAppUser->getId());
 
             $this->appUserRepository->updateAppUser($appUser);
             $this->recoveryPasswordRepository->deleteRecoveryPassword($request->guid);
@@ -121,13 +127,18 @@ class UpdatePassword
     private function updatePassword(UpdatePasswordRequest $request, UpdatePasswordResponse $response, bool $isValid)
     {
         $oldAppUser = $this->appUserRepository->getAppUserById($request->id);
+        $isValid = true;
+        if (!$oldAppUser) {
+            $isValid = false;
+            $response->addError('id', 'User doesn\'t exist with this id');
+        }
+        
         $isValid = $isValid && $this->checkOldPassword($request, $oldAppUser, $response);
 
         if ($isValid) {
             $hashedPassword = $this->passwordHasher->hash($request->newPassword);
 
             $appUser = new AppUser(
-                $oldAppUser->getId(),
                 $oldAppUser->getEmail(),
                 $hashedPassword,
                 $oldAppUser->getLastname(),
@@ -136,6 +147,8 @@ class UpdatePassword
                 $oldAppUser->getRole(),
                 $oldAppUser->getIsEnable()
             );
+
+            $appUser->setId($oldAppUser->getId());
 
             $this->appUserRepository->updateAppUser($appUser);
 

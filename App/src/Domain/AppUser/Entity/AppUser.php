@@ -4,7 +4,7 @@ namespace App\Domain\AppUser\Entity;
 
 class AppUser
 {
-    private int $id;
+    public int $id;
     private string $email;
     private string $password;
     private string $lastname;
@@ -14,7 +14,6 @@ class AppUser
     private bool $isEnable;
 
     public function __construct(
-        int $id,
         string $email,
         string $password,
         string $lastname,
@@ -25,7 +24,6 @@ class AppUser
 
     )
     {
-        $this->id = $id;
         $this->email = $email;
         $this->password = $password;
         $this->lastname = $lastname;
@@ -75,6 +73,13 @@ class AppUser
         return $this->isEnable;
     }
 
+    public function setId(int $id): static
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+    
     public function setIsEnable(bool $isEnable): static
     {
         $this->isEnable = $isEnable;

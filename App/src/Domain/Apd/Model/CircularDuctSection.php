@@ -29,9 +29,4 @@ class CircularDuctSection extends DuctSection implements DuctSectionInterface
 
         return $this;
     }
-
-    public function getDiameter(): int
-    {
-        return $this->diameter;
-    }
 }

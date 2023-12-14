@@ -13,7 +13,7 @@ class RecoveryPasswordRepositoryTest extends ServiceEntityRepository implements 
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, DuctNetwork::class);
+        parent::__construct($registry, RecoveryPassword::class);
     }
 
     public function getRecoveryPasswordByGuid(string $guid): ?RecoveryPassword

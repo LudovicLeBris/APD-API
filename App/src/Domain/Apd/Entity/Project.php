@@ -6,7 +6,7 @@ use Exception;
 
 class Project
 {
-    private int $id;
+    public int $id;
     private string $name;
     private int $userId;
 

@@ -8,6 +8,8 @@ interface DuctSectionRepositoryInterface
 {
     public function getDuctSectionById(int $id): ?DuctSection;
 
+    public function getDuctSectionsByDuctNetworkId(int $ductNetworkId): array;
+
     public function addDuctSection(DuctSection $ductSection): void;
 
     public function updateDuctSection(DuctSection $ductSection): void;

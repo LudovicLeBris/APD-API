@@ -13,7 +13,7 @@ class GetProjectResponse
         return $this->project;
     }
 
-    public function setProject(Project $project): static
+    public function setProject(?Project $project): static
     {
         $this->project = $project;
 

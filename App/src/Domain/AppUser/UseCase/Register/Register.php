@@ -92,9 +92,7 @@ class Register
     {
         $hashedPassword = $this->passwordHasher->hash($request->password);
 
-        // TODO : solution for AppUserId (an Idgenerator ?)
         $appUser = new AppUser(
-            1,
             $request->email,
             $hashedPassword,
             $request->lastname,

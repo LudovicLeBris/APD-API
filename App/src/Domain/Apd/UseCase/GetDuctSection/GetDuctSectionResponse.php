@@ -13,7 +13,7 @@ class GetDuctSectionResponse
         return $this->ductSection;
     }
 
-    public function setDuctSection(DuctSection $ducSection): static
+    public function setDuctSection(?DuctSection $ducSection): static
     {
         $this->ductSection = $ducSection;
 

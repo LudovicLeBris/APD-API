@@ -13,7 +13,7 @@ class GetAppUserResponse
         return $this->appUser;
     }
 
-    public function setAppUser(AppUser $appUser): static
+    public function setAppUser(?AppUser $appUser): static
     {
         $this->appUser = $appUser;
 

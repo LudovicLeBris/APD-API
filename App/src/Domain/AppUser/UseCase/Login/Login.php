@@ -55,15 +55,18 @@ class Login
     
     private function checkAppUser(LoginRequest $request, ?AppUser $appUser, LoginResponse $response): bool
     {
-        $isPasswordValid = $this->passwordHasher->isPasswordValid($request->password, $appUser->getPassword());
+        $isPasswordValid = false;
 
-        if ($appUser === null || !$isPasswordValid) {
-            $response->addError('credentials : email or password', 'Incorrect e-mail address or password');
-
-            return false;
+        if ($appUser) {
+            $isPasswordValid = $this->passwordHasher->isPasswordValid($request->password, $appUser->getPassword());
         }
 
-        return true;
+        if ($isPasswordValid) {
+            return true;
+        }
+        
+        $response->addError('credentials : email or password', 'Incorrect e-mail address or password');
+        return false;
     }
 
     private function checkAppUserEnable(AppUser $appUser, LoginResponse $response): bool

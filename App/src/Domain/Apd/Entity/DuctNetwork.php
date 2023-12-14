@@ -6,7 +6,7 @@ use Exception;
 
 class DuctNetwork
 {
-    private int $id;
+    public int $id;
     private string $name;
     private int $projectId;
 

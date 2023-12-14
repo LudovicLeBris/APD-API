@@ -13,7 +13,7 @@ class GetDuctNetworkResponse
         return $this->ductNetwork;
     }
 
-    public function setDuctNetwork(DuctNetwork $ductNetwork): static
+    public function setDuctNetwork(?DuctNetwork $ductNetwork): static
     {
         $this->ductNetwork = $ductNetwork;
 

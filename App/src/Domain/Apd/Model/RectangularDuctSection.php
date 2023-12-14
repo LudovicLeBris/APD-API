@@ -32,14 +32,4 @@ class RectangularDuctSection extends DuctSection implements DuctSectionInterface
 
         return $this;
     }
-
-    public function getWidth(): int
-    {
-        return $this->width;
-    }
-
-    public function getHeight(): int
-    {
-        return $this->height;
-    }
 }

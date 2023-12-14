@@ -4,6 +4,7 @@ namespace App\Domain\Apd\UseCase\AddDuctNetwork;
 
 use App\Domain\Apd\Entity\DuctNetwork;
 use App\Domain\Apd\Entity\DuctNetworkRepositoryInterface;
+use App\Domain\Apd\Entity\Project;
 use App\Domain\Apd\Entity\ProjectRepositoryInterface;
 use App\SharedKernel\Model\Material;
 use Assert\Assert;
@@ -26,10 +27,12 @@ class AddDuctNetwork
     public function execute(AddDuctNetworkRequest $request, AddDuctNetworkPresenter $presenter)
     {
         $response = new AddDuctNetworkResponse();
-        $isValid = $this->checkRequest($request, $response);
+        $project = $this->projectRepository->getProjectById($request->projectId);
+        $isValid = $this->checkProjectExist($project, $response);
+        $isValid = $isValid && $this->checkRequest($request, $response);
 
         if ($isValid) {
-            $ductNetwork = $this->setDuctNetwork($request);
+            $ductNetwork = $this->setDuctNetwork($request, $project);
 
             $this->ductNetworkRepository->addDuctNetwork($ductNetwork);
 
@@ -58,10 +61,17 @@ class AddDuctNetwork
         }
     }
 
-    private function setDuctNetwork(AddDuctNetworkRequest $request): DuctNetwork
+    private function checkProjectExist(?Project $project, AddDuctNetworkResponse $response)
     {
-        $project = $this->projectRepository->getProjectById($request->projectId);
+        if ($project) {
+            return true;
+        }
+        $response->addError('projectId', 'Project doesn\'t exist with this id');
+        return false;
+    }
 
+    private function setDuctNetwork(AddDuctNetworkRequest $request, Project $project): DuctNetwork
+    {
         $ductNetwork = new DuctNetwork(
             $request->name,
             $request->generalMaterial,
@@ -72,6 +82,9 @@ class AddDuctNetwork
             ->setAltitude($project->getGeneralAltitude())
             ->setTemperature($project->getGeneralTemperature())
             ->setProjectId($project->getId());
+        
+        $project->addDuctNetwork($ductNetwork);
+        $this->projectRepository->updateProject($project);
 
         return $ductNetwork;
     }

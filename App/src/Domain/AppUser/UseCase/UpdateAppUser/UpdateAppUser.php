@@ -20,8 +20,9 @@ class UpdateAppUser
     {
         $response = new UpdateAppUserResponse();
         $oldAppUser = $this->appUserRepository->getAppUserById($request->id);
-
-        $isValid = $this->checkRequest($request, $response);
+        
+        $isValid = $this->checkAppUserExist($oldAppUser, $response);
+        $isValid = $isValid && $this->checkRequest($request, $response);
         $isValid = $isValid && $this->checkAppUserEnable($oldAppUser, $response);
 
         if ($isValid) {
@@ -72,6 +73,16 @@ class UpdateAppUser
         }
     }
 
+    private function checkAppUserExist(?AppUser $appUser, UpdateAppUserResponse $response): bool
+    {
+        if ($appUser) {
+            return true;
+        }
+
+        $response->addError('id', 'User doesn\'t exist with this id');
+        return false;
+    }
+
     private function checkAppUserEnable(AppUser $oldAppUser, UpdateAppUserResponse $response)
     {
         if (!$oldAppUser->getIsEnable()) {
@@ -110,7 +121,6 @@ class UpdateAppUser
         }
 
         $appUser = new AppUser(
-            $oldAppUser->getId(),
             $email,
             $oldAppUser->getPassword(),
             $lastname,
@@ -119,6 +129,7 @@ class UpdateAppUser
             $oldAppUser->getRole(),
             $oldAppUser->getIsEnable()
         );
+        $appUser->setId($oldAppUser->getId());
 
         return $appUser;
     }

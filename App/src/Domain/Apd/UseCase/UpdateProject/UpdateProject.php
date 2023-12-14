@@ -21,10 +21,11 @@ class UpdateProject
     public function execute(UpdateProjectRequest $request, UpdateProjectPresenter $presenter)
     {
         $response = new UpdateProjectResponse();
-        $isValid = $this->checkRequest($request, $response);
+        $oldProject = $this->projectRepository->getProjectById($request->id);
+        $isValid = $this->checkProjectExist($response, $oldProject);
+        $isValid = $isValid && $this->checkRequest($request, $response);
 
         if ($isValid) {
-            $oldProject = $this->projectRepository->getProjectById($request->id);
             $updatedProject = $this->updateProject($request, $oldProject);
 
             $this->projectRepository->updateProject($updatedProject);
@@ -63,6 +64,15 @@ class UpdateProject
             }
             return false;
         }
+    }
+
+    private function checkProjectExist(UpdateProjectResponse $response, ?Project $project)
+    {
+        if ($project) {
+            return true;
+        }
+        $response->addError('id', 'Project doesn\'t exist with this id');
+        return false;
     }
 
     private function updateProject(UpdateProjectRequest $request, Project $oldProject): Project

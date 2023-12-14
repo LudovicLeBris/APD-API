@@ -7,7 +7,7 @@ use App\SharedKernel\Model\Singularity;
 
 class DuctSection
 {
-    protected int $id;
+    public ?int $id;
     protected string $name;
     protected int $ductNetworkId;
     
@@ -31,7 +31,7 @@ class DuctSection
     protected float $singularApd;
     protected float $totalApd;
     
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -79,6 +79,26 @@ class DuctSection
     public function getAdditionalApd(): int
     {
         return $this->additionalApd;
+    }
+
+    public function getDiameter(): int
+    {
+        return $this->diameter;
+    }
+
+    public function getWidth(): int
+    {
+        return $this->width;
+    }
+
+    public function getHeight(): int
+    {
+        return $this->height;
+    }
+
+    public function getEquivDiameter(): float
+    {
+        return $this->equivDiameter;
     }
 
     public function getDuctSectionsSection(): float

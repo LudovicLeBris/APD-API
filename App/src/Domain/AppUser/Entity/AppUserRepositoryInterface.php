@@ -12,5 +12,5 @@ interface AppUserRepositoryInterface
 
     public function updateAppUser(AppUser $appUser): void;
 
-    public function deleteAppUser(string $id): void;
+    public function deleteAppUser(int $id): void;
 }

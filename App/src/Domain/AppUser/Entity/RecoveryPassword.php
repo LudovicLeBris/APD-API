@@ -7,7 +7,7 @@ use DateTimeImmutable;
 
 class RecoveryPassword
 {
-    private string $guid;
+    public string $guid;
     private int $AppUserId;
     private string $AppUserEmail;
     private DateTimeImmutable $requestDateTime;
@@ -57,5 +57,12 @@ class RecoveryPassword
     public function getIsEnable()
     {
         return $this->isEnable;
+    }
+
+    public function setGuid(string $guid)
+    {
+        $this->guid = $guid;
+
+        return $this;
     }
 }

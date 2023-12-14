@@ -11,21 +11,22 @@ class AppUserRepositoryTest extends ServiceEntityRepository implements AppUserRe
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, DuctNetwork::class);
+        parent::__construct($registry, AppUser::class);
     }
 
     public function getAppUserByEmail(string $email): ?AppUser
     {
         $appUser = new AppUser(
-            1,
-            "toto@gmail.to",
-            '$2y$10$XR7CqsobK7a2w16y3zUDm.GEhfAUX4XjLgO4xJn.0l9WPItsiFX2K',
+            "toto@toto.to",
+            '$2y$10$zJ1xMnkzVB6rqYfxx0Skg.ZNre8Eye1X7t97uW9yRdHZswoIMlBJ.',
             "De Toto",
             "Toto",
             "Toto&Cie",
             "appUser",
             true
         );
+
+        $appUser->setId(1);
 
         // return null;
         return $appUser;
@@ -34,15 +35,16 @@ class AppUserRepositoryTest extends ServiceEntityRepository implements AppUserRe
     public function getAppUserById(int $id): ?AppUser
     {
         $appUser = new AppUser(
-            1,
-            "toto@gmail.to",
-            '$2y$10$XR7CqsobK7a2w16y3zUDm.GEhfAUX4XjLgO4xJn.0l9WPItsiFX2K',
+            "toto@toto.to",
+            '$2y$10$zJ1xMnkzVB6rqYfxx0Skg.ZNre8Eye1X7t97uW9yRdHZswoIMlBJ.',
             "De Toto",
             "Toto",
             "Toto&Cie",
             "appUser",
             true
         );
+
+        $appUser->setId(1);
 
         // return null;
         return $appUser;

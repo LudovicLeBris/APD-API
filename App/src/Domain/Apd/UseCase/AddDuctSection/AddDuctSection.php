@@ -2,13 +2,15 @@
 
 namespace App\Domain\Apd\UseCase\AddDuctSection;
 
-use App\Domain\Apd\Entity\DuctNetworkRepositoryInterface;
-use App\Domain\Apd\Entity\DuctSection;
 use Assert\Assert;
 use Assert\LazyAssertionException;
-use App\Domain\Apd\Factory\DuctSectionFactory;
-use App\Domain\Apd\Entity\DuctSectionRepositoryInterface;
+use App\Domain\Apd\Entity\DuctNetwork;
+use App\Domain\Apd\Entity\DuctSection;
 use App\SharedKernel\Model\Singularity;
+use App\SharedKernel\Model\CircularDiameters;
+use App\Domain\Apd\Factory\DuctSectionFactory;
+use App\Domain\Apd\Entity\DuctNetworkRepositoryInterface;
+use App\Domain\Apd\Entity\DuctSectionRepositoryInterface;
 
 class AddDuctSection
 {
@@ -27,10 +29,12 @@ class AddDuctSection
     public function execute(AddDuctSectionRequest $request, AddDuctSectionPresenter $presenter)
     {
         $response = new AddDuctSectionResponse();
-        $isValid = $this->checkRequest($request, $response);
+        $ductNetwork = $this->ductNetworkRepository->getDuctNetworkById($request->ductNetworkId);
+        $isValid = $this->checkDuctNetworkExist($ductNetwork, $response);
+        $isValid = $isValid && $this->checkRequest($request, $response);
 
         if ($isValid) {
-            $ductSection = $this->setDuctSection($request);
+            $ductSection = $this->setDuctSection($request, $ductNetwork);
 
             $this->ductSectionRepository->addDuctSection($ductSection);
 
@@ -50,6 +54,7 @@ class AddDuctSection
                 ->that($request->flowrate, 'flowrate')->notEmpty('Flowrate is empty')->integer()->greaterThan(0, 'Flowrate must be positive')
                 ->that($request->length, 'length')->notEmpty('Length is empty')->float()->greaterThan(0, 'Length must be positive')
                 ->that($request->singularities, 'singularities')->isArray('Singularities must be an array')->satisfy(function($values) use($request){
+                    if ($request->shape === null) {return true;}
                     $singularities = Singularity::getSingularitiesByShape($request->shape);
                     foreach($values as $key => $value) {
                         if (!array_key_exists($key, $singularities)) {
@@ -63,14 +68,20 @@ class AddDuctSection
                 }, 'In singularities : key invalid or not integer value')
                 ->that($request->additionalApd, 'additionalApd')->integer()->greaterThan(-1, 'AdditionalApd must be positive')
                 ->that($request->diameter, 'diameter')->satisfy(function($value) use($request){
-                    if ($request->shape === 'circular') {return isset($value) && is_int($value);}
-                }, 'Diameter is not set or not integer value')
-                ->that($request->width, 'diameter')->satisfy(function($value) use($request){
-                    if ($request->shape === 'rectangular') {return isset($value) && is_int($value);}
-                }, 'Width is not set or not integer value')
-                ->that($request->height, 'diameter')->satisfy(function($value) use($request){
-                    if ($request->shape === 'rectangular') {return isset($value) && is_int($value);}
-                }, 'Height is not set or not integer value')
+                    if ($request->shape === 'circular') {
+                        return isset($value) && is_int($value) && in_array($value, CircularDiameters::$diameters);
+                    }
+                }, 'Diameter is not set or not integer value or not a normalized diameter like : '. implode(', ', CircularDiameters::$diameters))
+                ->that($request->width, 'width')->satisfy(function($value) use($request){
+                    if ($request->shape === 'rectangular') {
+                        return isset($value) && is_int($value) && $value > 0;
+                    }
+                }, 'Width is not set or not a positive integer value')
+                ->that($request->height, 'height')->satisfy(function($value) use($request){
+                    if ($request->shape === 'rectangular') {
+                        return isset($value) && is_int($value) && $value > 0;
+                    }
+                }, 'Height is not set or not a positive integer value')
                 ->verifyNow();
             
             return true;
@@ -82,10 +93,17 @@ class AddDuctSection
         }
     }
 
-    private function setDuctSection(AddDuctSectionRequest $request): DuctSection
+    private function checkDuctNetworkExist(?DuctNetwork $ductNetwork, AddDuctSectionResponse $response)
     {
-        $ductNetwork = $this->ductNetworkRepository->getDuctNetworkById($request->ductNetworkId);
+        if ($ductNetwork) {
+            return true;
+        }
+        $response->addError('ductNetworkId', 'Duct Network doesn\'t exist with this id');
+        return false;
+    }
 
+    private function setDuctSection(AddDuctSectionRequest $request, DuctNetwork $ductNetwork): DuctSection
+    {
         $technicalDatas = $request->getContent();
         $technicalDatas['air'] = $ductNetwork->getAir();
         $technicalDatas['material'] = $ductNetwork->getGeneralMaterial();

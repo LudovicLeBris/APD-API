@@ -2,12 +2,13 @@
 
 namespace App\Domain\Apd\UseCase\UpdateDuctNetwork;
 
-use App\Domain\Apd\Entity\DuctNetwork;
-use App\Domain\Apd\Entity\DuctNetworkRepositoryInterface;
-use App\Domain\Apd\Entity\ProjectRepositoryInterface;
-use App\SharedKernel\Model\Material;
 use Assert\Assert;
+use App\Domain\Apd\Entity\Project;
 use Assert\LazyAssertionException;
+use App\SharedKernel\Model\Material;
+use App\Domain\Apd\Entity\DuctNetwork;
+use App\Domain\Apd\Entity\ProjectRepositoryInterface;
+use App\Domain\Apd\Entity\DuctNetworkRepositoryInterface;
 
 class UpdateDuctNetwork
 {
@@ -26,11 +27,15 @@ class UpdateDuctNetwork
     public function execute(UpdateDuctNetworkRequest $request, UpdateDuctNetworkPresenter $presenter)
     {
         $response = new UpdateDuctNetworkResponse();
-        $isValid = $this->checkRequest($request, $response);
+        $oldDuctNetwork = $this->ductNetworkRepository->getDuctNetworkById($request->id);
+        $project = $this->projectRepository->getProjectById($request->projectId);
+        $isValid = $this->checkDuctNetworkExist($oldDuctNetwork, $response);
+        $isValid = $isValid && $this->checkProjectExist($project, $response);
+        $isValid = $isValid && $this->checkDuctNetworkExistInProject($request, $response, $project);
+        $isValid = $isValid && $this->checkRequest($request, $response);
 
         if ($isValid) {
-            $oldDuctNetwork = $this->ductNetworkRepository->getDuctNetworkById($request->id);
-            $ductNetwork = $this->updateDuctNetwork($request, $oldDuctNetwork);
+            $ductNetwork = $this->updateDuctNetwork($request, $oldDuctNetwork, $project);
 
             $this->ductNetworkRepository->updateDuctNetwork($ductNetwork);
 
@@ -63,7 +68,7 @@ class UpdateDuctNetwork
                     if (!is_null($value)) {
                         return in_array($value, array_keys(Material::$material));
                     }
-                }, "GeneralMaterial must be a value of this : ". implode(',',array_keys(Material::$material)))
+                }, "GeneralMaterial must be a value of this : ". implode(', ',array_keys(Material::$material)))
                 ->that($request->additionalApd, 'additionalApd')->satisfy(function($value) {
                     if (!is_null($value)) {
                         return is_int($value);
@@ -80,9 +85,38 @@ class UpdateDuctNetwork
         }
     }
 
-    private function updateDuctNetwork(UpdateDuctNetworkRequest $request, DuctNetwork $oldDuctNetwork): DuctNetwork
+    private function checkDuctNetworkExist(?DuctNetwork $ductNetwork, UpdateDuctNetworkResponse $response): bool
     {
-        $project = $this->projectRepository->getProjectById($request->projectId);
+        if ($ductNetwork) {
+            return true;
+        }
+        $response->addError('id', 'Duct Network doesn\'t exist with this id');
+        return false;
+    }
+
+    private function checkProjectExist(?Project $project, UpdateDuctNetworkResponse $response): bool
+    {
+        if ($project) {
+            return true;
+        }
+        $response->addError('projectId', 'Project doesn\'t exist with this id');
+        return false;
+    }
+
+    private function checkDuctNetworkExistInProject(UpdateDuctNetworkRequest $request, UpdateDuctNetworkResponse $response, Project $project): bool
+    {
+        foreach ($project->getDuctNetworks() as $ductNetwork) {
+            if ($ductNetwork->getId() === $request->id) {
+                return true;
+            }
+        }
+
+        $response->addError('id', 'Duct network don\'t belong to this project');
+        return false;
+    }
+
+    private function updateDuctNetwork(UpdateDuctNetworkRequest $request, DuctNetwork $oldDuctNetwork, Project $project): DuctNetwork
+    {
         $project->removeDuctNetwork($oldDuctNetwork);
 
         if (is_null($request->name)) {
