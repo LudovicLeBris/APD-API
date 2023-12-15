@@ -3,10 +3,13 @@
 namespace App\Domain\Apd\UseCase\GetDuctSection;
 
 use App\Domain\Apd\Entity\DuctSection;
+use App\Domain\CoreResponse;
 
-class GetDuctSectionResponse
+class GetDuctSectionResponse extends CoreResponse
 {
     private $ductSection;
+
+    public function __construct() {}
 
     public function getDuctSection(): ?DuctSection
     {

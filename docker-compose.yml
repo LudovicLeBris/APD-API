@@ -1,4 +1,5 @@
 version: '3.8'
+
 services:
   db:
     image: mysql
@@ -10,6 +11,7 @@ services:
       MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
     networks:
       - dev
+
   phpmyadmin:
     image: phpmyadmin
     container_name: ${PHPMYADMIN_CONTAINER_NAME}
@@ -22,6 +24,7 @@ services:
       PMA_HOST: db
     networks:
       - dev
+
   maildev:
     image: mailhog/mailhog
     container_name: ${MAILHOG_CONTAINER_NAME}
@@ -31,6 +34,7 @@ services:
     restart: always
     networks:
         - dev
+
   www:
     build: ./build/php
     container_name: ${PHP_PROJECT_CONTAINER_NAME}

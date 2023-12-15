@@ -43,10 +43,17 @@ class GetProjectTest extends TestCase implements GetProjectPresenter
         );
     }
 
-    public function test_return_null_when_project_does_not_exist()
+    public function test_fails_when_project_does_not_exist()
     {
         $this->getProject->execute(new GetProjectRequest(42), $this);
 
+        $shouldResponseBe = new GetProjectResponse();
+        $shouldResponseBe->addError('id', 'Project doesn\'t exist with this id.');
+
         $this->assertNull($this->response->getProject());
+        $this->assertEquals(
+            $this->response,
+            $shouldResponseBe
+        );
     }
 }

@@ -3,10 +3,13 @@
 namespace App\Domain\Apd\UseCase\GetProject;
 
 use App\Domain\Apd\Entity\Project;
+use App\Domain\CoreResponse;
 
-class GetProjectResponse
+class GetProjectResponse extends CoreResponse
 {
     private $project;
+
+    public function __construct() {}
 
     public function getProject(): ?Project
     {

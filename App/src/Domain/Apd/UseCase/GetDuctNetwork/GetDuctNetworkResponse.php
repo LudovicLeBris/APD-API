@@ -3,10 +3,13 @@
 namespace App\Domain\Apd\UseCase\GetDuctNetwork;
 
 use App\Domain\Apd\Entity\DuctNetwork;
+use App\Domain\CoreResponse;
 
-class GetDuctNetworkResponse
+class GetDuctNetworkResponse extends CoreResponse
 {
     private $ductNetwork;
+
+    public function __construct() {}
 
     public function getDuctNetwork(): ?DuctNetwork
     {

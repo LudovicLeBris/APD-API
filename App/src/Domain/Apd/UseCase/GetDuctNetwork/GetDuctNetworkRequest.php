@@ -4,10 +4,12 @@ namespace App\Domain\Apd\UseCase\GetDuctNetwork;
 
 class GetDuctNetworkRequest
 {
-    public $id;
+    public $projectId;
+    public $ductNetworkId;
 
-    public function __construct($id)
+    public function __construct($projectId, $ductNetworkId)
     {
-        $this->id = $id;
+        $this->projectId = $projectId;
+        $this->ductNetworkId = $ductNetworkId;
     }
 }

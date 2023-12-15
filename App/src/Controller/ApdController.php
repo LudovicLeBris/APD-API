@@ -2,137 +2,284 @@
 
 namespace App\Controller;
 
-use App\Entity\DuctNetwork;
-use App\Entity\DuctSection;
-use App\Service\DuctSectionService;
-use App\Utils\Data;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
-#[Route('/api')]
-class ApdController extends AbstractController
+use App\Domain\Apd\UseCase\GetDuctSection\GetDuctSection;
+use App\Domain\Apd\UseCase\GetDuctSection\GetDuctSectionRequest;
+use App\Presentation\Apd\GetDuctSectionJsonPresenter;
+use App\Domain\Apd\UseCase\AddDuctSection\AddDuctSection;
+use App\Domain\Apd\UseCase\AddDuctSection\AddDuctSectionRequest;
+use App\Presentation\Apd\AddDuctSectionJsonPresenter;
+use App\Domain\Apd\UseCase\UpdateDuctSection\UpdateDuctSection;
+use App\Domain\Apd\UseCase\UpdateDuctSection\UpdateDuctSectionRequest;
+use App\Presentation\Apd\UpdateDuctSectionJsonPresenter;
+use App\Domain\Apd\UseCase\RemoveDuctSection\RemoveDuctSection;
+use App\Domain\Apd\UseCase\RemoveDuctSection\RemoveDuctSectionRequest;
+use App\Presentation\Apd\RemoveDuctSectionJsonPresenter;
+
+use App\Domain\Apd\UseCase\GetDuctNetwork\GetDuctNetwork;
+use App\Domain\Apd\UseCase\GetDuctNetwork\GetDuctNetworkRequest;
+use App\Presentation\Apd\GetDuctNetworkJsonPresenter;
+use App\Domain\Apd\UseCase\AddDuctNetwork\AddDuctNetwork;
+use App\Domain\Apd\UseCase\AddDuctNetwork\AddDuctNetworkRequest;
+use App\Presentation\Apd\AddDuctNetworkJsonPresenter;
+use App\Domain\Apd\UseCase\UpdateDuctNetwork\UpdateDuctNetwork;
+use App\Domain\Apd\UseCase\UpdateDuctNetwork\UpdateDuctNetworkRequest;
+use App\Presentation\Apd\UpdateDuctNetworkJsonPresenter;
+use App\Domain\Apd\UseCase\RemoveDuctNetwork\RemoveDuctNetwork;
+use App\Domain\Apd\UseCase\RemoveDuctNetwork\RemoveDuctNetworkRequest;
+use App\Presentation\Apd\RemoveDuctNetworkJsonPresenter;
+
+use App\Domain\Apd\UseCase\GetProject\GetProject;
+use App\Domain\Apd\UseCase\GetProject\GetProjectRequest;
+use App\Presentation\Apd\GetProjectJsonPresenter;
+use App\Domain\Apd\UseCase\AddProject\AddProject;
+use App\Domain\Apd\UseCase\AddProject\AddProjectRequest;
+use App\Presentation\Apd\AddProjectJsonPresenter;
+use App\Domain\Apd\UseCase\UpdateProject\UpdateProject;
+use App\Domain\Apd\UseCase\UpdateProject\UpdateProjectRequest;
+use App\Presentation\Apd\UpdateProjectJsonPresenter;
+use App\Domain\Apd\UseCase\RemoveProject\RemoveProject;
+use App\Domain\Apd\UseCase\RemoveProject\RemoveProjectRequest;
+use App\Presentation\Apd\RemoveProjectJsonPresenter;
+
+#[Route('/api/V1/apd')]
+class ApdControllerV2 extends AbstractController
 {
-    #[Route('/test', name: 'app_apd_test')]
-    public function test(Request $request): JsonResponse
+    #[Route('/ductnetworks/{ductNetworkId}/ductsections/{ductSectionId}',
+        name: 'app_apd_getductsection',
+        methods: ['GET'],
+        requirements: ['ductNetworkId' => '\d+', 'ductSectionId' => '\d+']
+    )]
+    public function test(
+        int $ductNetworkId,
+        int $ductSectionId,
+        GetDuctSection $getDuctSection,
+        GetDuctSectionJsonPresenter $presenter
+    )
     {
-        $ductSection = new DuctSection();
-        $ductSection->setShape('circular');
-        $ductSection->setMaterial('galvanised_steel');
-        $ductSection->setDiameter(500);
-        $ductSection->setFlowrate(5000);
-        $ductSection->setLength(1);
-        $ductSection->setSingularities([
-            '90_elbow' => 1,
-            '90_junc_tee' => 1
-        ]);
+        $getDuctSection->execute(new GetDuctSectionRequest($ductNetworkId, $ductSectionId), $presenter);
 
-        $ductSection2 = new DuctSection();
-        $ductSection2->setShape('circular');
-        $ductSection2->setMaterial('galvanised_steel');
-        $ductSection2->setDiameter(500);
-        $ductSection2->setFlowrate(5000);
-        $ductSection2->setLength(1);
-        $ductSection2->setSingularities([
-            '90_elbow' => 1,
-            '90_junc_tee' => 1
-        ]);
+        return $this->json(...$presenter->getJson());
 
-        $ductNetwork = new DuctNetwork(10);
-        $ductNetwork->addDuctSection($ductSection);
-        $ductNetwork->addDuctSection($ductSection2);
+    }
 
-        $response = [
-            'equivDiameter' => $ductSection->getEquivDiameter(),
-            'section' => $ductSection->getSection(),
-            'flowSpeed' => $ductSection->getFlowSpeed(),
-            'linearApd' => $ductSection->getLinearApd(),
-            'singularApd' => $ductSection->getSingularApd(),
-            'additionalApd' => $ductSection->getAdditionalApd(),
-            'totaApd' => $ductSection->getTotalApd(),
-            'ductNetworkTotalLinearApd' => $ductNetwork->getTotalLinearApd(),
-            'ductNetworkTotalSingularApd' => $ductNetwork->getTotalSingularApd(),
-            'ductNetworkTotalAdditionalApd' => $ductNetwork->getTotalAdditionalApd(),
-            'ductNetworkTotalAllAdditionalApd' => $ductNetwork->getTotalAllAdditionalApd(),
-            'ductNetworkTotalApd' => $ductNetwork->getTotalApd(),
-        ];
+    #[Route('/ductnetworks/{ductNetworkId}/ductsections',
+        name: 'app_apd_addductSection',
+        methods: ['POST'],
+        requirements: ['ductNetworkId' => '\d+']
+    )]
+    public function addDuctSection(
+        int $ductNetworkId,
+        Request $request,
+        AddDuctSection $addDuctSection,
+        AddDuctSectionJsonPresenter $presenter
+    ): JsonResponse
+    {
+        $content = json_decode($request->getContent(), true);
+
+        $nullableRequest = new AddDuctSectionRequest($ductNetworkId);
+
+        $addDuctSection->execute($nullableRequest->setContent($content), $presenter);
+
+        return $this->json(...$presenter->getJson());
+    }
+
+    #[Route('/ductnetworks/{ductNetworkId}/ductsections/{ductSectionId}',
+        name: 'app_apd_updateductSection',
+        methods: ['PUT'],
+        requirements: ['ductNetworkId' => '\d+', 'ductSectionId' => '\d+']
+    )]
+    public function updateDuctSection(
+        int $ductNetworkId,
+        int $ductSectionId,
+        Request $request,
+        UpdateDuctSection $updateDuctSection,
+        UpdateDuctSectionJsonPresenter $presenter
+    ): JsonResponse
+    {
+        $content = json_decode($request->getContent(), true);
+
+        $nullableRequest = new UpdateDuctSectionRequest($ductNetworkId, $ductSectionId);
+
+        $updateDuctSection->execute($nullableRequest->setContent($content), $presenter);
         
-        // $response = Data::getSingularityLongName('circular', '90_elbow');
-
-        return $this->json(
-            $response, 200
-        );
+        return $this->json(...$presenter->getJson());
     }
 
-    #[Route('/', name: 'app_home')]
-    public function home(Request $request): Response
+    #[Route('/ductnetworks/{ductNetworkId}/ductsections/{ductSectionId}',
+        name: 'app_apd_removeductSection',
+        methods: ['DELETE'],
+        requirements: ['ductNetworkId' => '\d+', 'ductSectionId' => '\d+']
+    )]
+    public function removeDuctSection(
+        int $ductNetworkId,
+        int $ductSectionId,
+        RemoveDuctSection $removeDuctSection,
+        RemoveDuctSectionJsonPresenter $presenter
+    ): JsonResponse
     {
-        return new Response("<html><body><h1>test</h1><div>". $request->getContent() ."</div></body></html>");
+        $removeDuctSection->execute(new RemoveDuctSectionRequest($ductNetworkId, $ductSectionId), $presenter);
+
+        return $this->json(...$presenter->getJson());
     }
 
-    #[Route('/ductdimension', name:'app_apd_getDuctDimension', methods:['GET'])]
-    public function optimalDuctDimension(DuctSectionService $ductSectionService): JsonResponse
+    #[Route(
+        '/projects/{projectId}/ductnetworks/{ductNetworkId}',
+        name: 'app_apd_getductnetwork',
+        methods: ['GET'],
+        requirements: ['projectId' => '\d+', 'ductProjectId' => '\d+']
+    )]
+    public function getDuctNetwork(
+        int $projectId,
+        int $ductNetworkId,
+        GetDuctNetwork $getDuctNetwork,
+        GetDuctNetworkJsonPresenter $presenter
+    )
     {
-        $response = $ductSectionService->getOptimalDuctDimension();
+        $getDuctNetwork->execute(new GetDuctNetworkRequest($projectId, $ductNetworkId), $presenter);
+
+        return $this->json(...$presenter->getJson());
+    }
+    
+    #[Route(
+        '/projects/{projectId}/ductnetworks',
+        name: 'app_apd_addductnetwork',
+        methods: ['POST'],
+        requirements: ['projectId' => '\d+']
+    )]
+    public function addDuctNetwork(
+        int $projectId,
+        Request $request,
+        AddDuctNetwork $addDuctNetwork,
+        AddDuctNetworkJsonPresenter $presenter
+    )
+    {
+        $content = json_decode($request->getContent(), true);
+
+        $nullableRequest = new AddDuctNetworkRequest($projectId);
         
-        return $this->json($response['response'], $response['httpResponse']);
+        $addDuctNetwork->execute($nullableRequest->setContent($content), $presenter);
+
+        return $this->json(...$presenter->getJson());
     }
 
-    #[Route('/ductsection', name:'app_apd_getDuctSection', methods:['GET'])]
-    public function ductSection(DuctSectionService $ductSectionService): JsonResponse
+    #[Route(
+        '/projects/{projectId}/ductnetworks/{ductNetworkId}',
+        name: 'app_apd_updateductnetwork',
+        methods: ['PUT'],
+        requirements: ['projectId' => '\d+', 'ductNetworkId' => '\d+']
+    )]
+    public function updateDuctNetwork(
+        int $projectId,
+        int $ductNetworkId,
+        Request $request,
+        UpdateDuctNetwork $updateDuctNetwork,
+        UpdateDuctNetworkJsonPresenter $presenter
+    )
     {
-        $response = $ductSectionService->getDuctSection();
+        $content = json_decode($request->getContent(), true);
 
-        return $this->json($response['response'], $response['httpResponse']);
+        $nullableRequest = new UpdateDuctNetworkRequest($projectId, $ductNetworkId);
+
+        $updateDuctNetwork->execute($nullableRequest->setContent($content), $presenter);
+
+        return $this->json(...$presenter->getJson());
     }
 
-    #[Route('/flowspeed', name:'app_apd_getFlowSpeed', methods:['GET'])]
-    public function flowSpeed(DuctSectionService $ductSectionService): JsonResponse
+    #[Route(
+        '/projects/{projectId}/ductnetworks/{ductNetworkId}',
+        name: 'app_apd_removeductnetwork',
+        methods: ['DELETE'],
+        requirements: ['projectId' => '\d+', 'ductNetworkId' => '\d+']
+    )]
+    public function removeDuctNetwork(
+        int $projectId,
+        int $ductNetworkId,
+        RemoveDuctNetwork $removeDuctNetwork,
+        RemoveDuctNetworkJsonPresenter $presenter
+    )
     {
-        $response = $ductSectionService->getFlowSpeed();
+        $removeDuctNetwork->execute(new RemoveDuctNetworkRequest($projectId, $ductNetworkId), $presenter);
 
-        return $this->json($response['response'], $response['httpResponse']);
+        return $this->json(...$presenter->getJson());
     }
 
-    #[Route('/diameters', name:'app_apd_diametersList', methods:['GET'])]
-    public function listDiameters(): JsonResponse
+    #[Route(
+        '/projects/{id}',
+        name: 'app_apd_getproject',
+        methods: ['GET'],
+        requirements: ['id' => '\d+']
+    )]
+    public function getProject(
+        int $id,
+        GetProject $getProject,
+        GetProjectJsonPresenter $presenter
+    )
     {
-        $diameters = Data::getDiameters();
+        $getProject->execute(new GetProjectRequest($id), $presenter);
 
-        return $this->json($diameters, Response::HTTP_OK);
+        return $this->json(...$presenter->getJson());
     }
-
-    #[Route('/materials', name:'app_apd_materialsList', methods:['GET'])]
-    public function listMaterials(): JsonResponse
+    
+    #[Route(
+        '/projects',
+        name: 'app_apd_addproject',
+        methods: ['POST']
+    )]
+    public function addProject(
+        Request $request,
+        AddProject $addProject,
+        AddProjectRequest $nullableRequest,
+        AddProjectJsonPresenter $presenter
+    )
     {
-        $materials = Data::getMaterials();
+        $content = json_decode($request->getContent(), true);
         
-        return $this->json($materials, Response::HTTP_OK);
+        $addProject->execute($nullableRequest->setContent($content), $presenter);
+
+        return $this->json(...$presenter->getJson());
     }
 
-    #[Route('/singularities/{shape}', name:'app_apd_singularitiesList', methods:['GET'], requirements:['shape' => '^circular|rectangular$'])]
-    public function listSingularities(string $shape): JsonResponse
+    #[Route(
+        '/projects/{id}',
+        name: 'app_apd_updateproject',
+        methods: ['PUT'],
+        requirements: ['id' => '\d+']
+    )]
+    public function updateProject(
+        int $id,
+        Request $request,
+        UpdateProject $updateProject,
+        UpdateProjectJsonPresenter $presenter
+    )
     {
-        $singularities = Data::getSingularitiesLongName($shape);
-        
-        return $this->json($singularities, Response::HTTP_OK);
+        $content = json_decode($request->getContent(), true);
+
+        $nullableRequest = new UpdateProjectRequest($id);
+
+        $updateProject->execute($nullableRequest->setContent($content), $presenter);
+
+        return $this->json(...$presenter->getJson());
     }
 
-    #[Route('/section', name:'app_apd_setSection', methods:['GET'])]
-    public function setSection(DuctSectionService $ductSectionService): JsonResponse
+    #[Route(
+        '/projects/{id}',
+        name: 'app_apd_removeproject',
+        methods: ['DELETE'],
+        requirements: ['id' => '\d+']
+    )]
+    public function removeProject(
+        int $id,
+        RemoveProject $removeProject,
+        RemoveProjectJsonPresenter $presenter
+    )
     {
-        $response = $ductSectionService->getSection();
+        $removeProject->execute(new RemoveProjectRequest($id), $presenter);
 
-        return $this->json($response['response'], $response['httpResponse']);
-    }
-
-    #[Route('/network', name:'app_apd_setNetwork', methods:['GET'])]
-    public function setNetwork(DuctSectionService $ductSectionService)
-    {
-        $response = $ductSectionService->getNetwork();
-        
-        return $this->json($response['response'], $response['httpResponse']);
+        return $this->json(...$presenter->getJson());
     }
 }
