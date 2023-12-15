@@ -9,11 +9,6 @@ class InMemoryProjectRepository implements ProjectRepositoryInterface
 {
     private $projects = [];
     
-    public function getAllProject()
-    {
-        return $this->projects;
-    }
-    
     public function getProjectById(int $id): ?Project
     {
         $find = function (Project $project) use ($id) {

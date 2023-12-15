@@ -8,12 +8,7 @@ use App\Domain\Apd\Entity\DuctSectionRepositoryInterface;
 class InMemoryDuctSectionRepository implements DuctSectionRepositoryInterface
 {
     private $ductSections = [];
-    
-    public function getAllDuctSection()
-    {
-        return $this->ductSections;
-    }
-    
+
     public function getDuctSectionById(int $id): ?DuctSection
     {
         $find = function (DuctSection $ductSection) use ($id) {

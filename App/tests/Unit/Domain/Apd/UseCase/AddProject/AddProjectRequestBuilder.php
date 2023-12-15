@@ -6,11 +6,12 @@ use App\Domain\Apd\UseCase\AddProject\AddProjectRequest;
 
 class AddProjectRequestBuilder extends AddProjectRequest
 {
+    const APPUSER_ID = 1;
     const NAME = 'project 1';
 
     public static function aProject()
     {
-        $request = new static();
+        $request = new static(self::APPUSER_ID);
         $request->name = self::NAME;
 
         return $request;
@@ -18,7 +19,7 @@ class AddProjectRequestBuilder extends AddProjectRequest
 
     public function build()
     {
-        $request = new AddProjectRequest();
+        $request = new AddProjectRequest($this->userId);
         $request->name = $this->name;
 
         return $request;
@@ -29,6 +30,13 @@ class AddProjectRequestBuilder extends AddProjectRequest
         $this->name = null;
     }
 
+    public function setUserId(int $userId)
+    {
+        $this->userId = $userId;
+
+        return $this;
+    }
+    
     public function setName(string $name)
     {
         $this->name = $name;

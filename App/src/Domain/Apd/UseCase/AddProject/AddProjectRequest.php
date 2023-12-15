@@ -4,7 +4,13 @@ namespace App\Domain\Apd\UseCase\AddProject;
 
 class AddProjectRequest
 {
+    public $userId;
     public $name;
+
+    public function __construct(int $userId)
+    {
+        $this->userId = $userId;
+    }
 
     public function setContent($requestContent)
     {

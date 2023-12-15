@@ -4,10 +4,12 @@ namespace App\Domain\Apd\UseCase\GetProject;
 
 class GetProjectRequest
 {
-    public $id;
+    public $appUserId;
+    public $projectId;
 
-    public function __construct($id)
+    public function __construct(int $appUserId, int $projectId)
     {
-        $this->id = $id;
+        $this->appUserId = $appUserId;
+        $this->projectId = $projectId;
     }
 }

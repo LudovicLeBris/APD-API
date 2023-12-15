@@ -4,25 +4,32 @@ namespace App\Domain\Apd\UseCase\UpdateProject;
 
 use App\Domain\Apd\Entity\Project;
 use App\Domain\Apd\Entity\ProjectRepositoryInterface;
+use App\Domain\AppUser\Entity\AppUser;
+use App\Domain\AppUser\Entity\AppUserRepositoryInterface;
 use Assert\Assert;
 use Assert\LazyAssertionException;
 
 class UpdateProject
 {
+    private $appUserRepository;
     private $projectRepository;
 
     public function __construct(
+        AppUserRepositoryInterface $appUserRepository,
         ProjectRepositoryInterface $projectRepository
     )
     {
+        $this->appUserRepository = $appUserRepository;
         $this->projectRepository = $projectRepository;
     }
 
     public function execute(UpdateProjectRequest $request, UpdateProjectPresenter $presenter)
     {
         $response = new UpdateProjectResponse();
-        $oldProject = $this->projectRepository->getProjectById($request->id);
-        $isValid = $this->checkProjectExist($response, $oldProject);
+        $appUser = $this->appUserRepository->getAppUserById($request->userId);
+        $oldProject = $this->projectRepository->getProjectById($request->projectId);
+        $isValid = $this->checkUserExist($appUser, $response);
+        $isValid = $isValid && $this->checkProjectExist($oldProject, $response);
         $isValid = $isValid && $this->checkRequest($request, $response);
 
         if ($isValid) {
@@ -66,12 +73,21 @@ class UpdateProject
         }
     }
 
-    private function checkProjectExist(UpdateProjectResponse $response, ?Project $project)
+    private function checkUserExist(?AppUser $appUser, UpdateProjectResponse $response)
+    {
+        if ($appUser) {
+            return true;
+        }
+        $response->addError('userId', 'User doesn\'t exist with this id.');
+        return false;
+    }
+
+    private function checkProjectExist(?Project $project, UpdateProjectResponse $response)
     {
         if ($project) {
             return true;
         }
-        $response->addError('id', 'Project doesn\'t exist with this id');
+        $response->addError('projectId', 'Project doesn\'t exist with this id.');
         return false;
     }
 
@@ -84,7 +100,6 @@ class UpdateProject
         }
 
         $project = new Project($name);
-
         $project->setId($oldProject->getId());
 
         foreach ($oldProject->getDuctNetworks() as $ductNetwork) {

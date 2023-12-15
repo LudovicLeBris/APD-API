@@ -6,6 +6,7 @@ use App\Domain\Apd\UseCase\UpdateProject\UpdateProjectRequest;
 
 class UpdateProjectRequestBuilder extends UpdateProjectRequest
 {
+    const APPUSER_ID = 1;
     const PROJECT_ID = 1;
     const NAME = 'project 1';
     const GENERAL_ALTITUDE = 2000;
@@ -13,7 +14,7 @@ class UpdateProjectRequestBuilder extends UpdateProjectRequest
 
     public static function aRequest()
     {
-        $request = new static(self::PROJECT_ID);
+        $request = new static(self::APPUSER_ID, self::PROJECT_ID);
         $request->name = self::NAME;
         $request->generalAltitude = self::GENERAL_ALTITUDE;
         $request->generalTemperature = self::GENERAL_TEMPERATURE;
@@ -23,7 +24,7 @@ class UpdateProjectRequestBuilder extends UpdateProjectRequest
 
     public function build()
     {
-        $request = new UpdateProjectRequest($this->id);
+        $request = new UpdateProjectRequest($this->userId, $this->projectId);
         $request->name = $this->name;
         $request->generalAltitude = $this->generalAltitude;
         $request->generalTemperature = $this->generalTemperature;
@@ -38,9 +39,16 @@ class UpdateProjectRequestBuilder extends UpdateProjectRequest
         $this->generalTemperature = null;
     }
 
-    public function setId(int $id)
+    public function setUserId(int $userId)
     {
-        $this->id = $id;
+        $this->userId = $userId;
+
+        return $this;
+    }
+
+    public function setProjectId(int $projectId)
+    {
+        $this->projectId = $projectId;
 
         return $this;
     }

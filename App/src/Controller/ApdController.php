@@ -7,6 +7,9 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
+use App\Domain\Apd\UseCase\GetAllDuctSections\GetAllDuctSections;
+use App\Domain\Apd\UseCase\GetAllDuctSections\GetAllDuctSectionsRequest;
+use App\Presentation\Apd\GetAllDuctSectionsJsonPresenter;
 use App\Domain\Apd\UseCase\GetDuctSection\GetDuctSection;
 use App\Domain\Apd\UseCase\GetDuctSection\GetDuctSectionRequest;
 use App\Presentation\Apd\GetDuctSectionJsonPresenter;
@@ -20,6 +23,9 @@ use App\Domain\Apd\UseCase\RemoveDuctSection\RemoveDuctSection;
 use App\Domain\Apd\UseCase\RemoveDuctSection\RemoveDuctSectionRequest;
 use App\Presentation\Apd\RemoveDuctSectionJsonPresenter;
 
+use App\Domain\Apd\UseCase\GetAllDuctNetworks\GetAllDuctNetworks;
+use App\Domain\Apd\UseCase\GetAllDuctNetworks\GetAllDuctNetworksRequest;
+use App\Presentation\Apd\GetAllDuctNetworksJsonPresenter;
 use App\Domain\Apd\UseCase\GetDuctNetwork\GetDuctNetwork;
 use App\Domain\Apd\UseCase\GetDuctNetwork\GetDuctNetworkRequest;
 use App\Presentation\Apd\GetDuctNetworkJsonPresenter;
@@ -33,6 +39,9 @@ use App\Domain\Apd\UseCase\RemoveDuctNetwork\RemoveDuctNetwork;
 use App\Domain\Apd\UseCase\RemoveDuctNetwork\RemoveDuctNetworkRequest;
 use App\Presentation\Apd\RemoveDuctNetworkJsonPresenter;
 
+use App\Domain\Apd\UseCase\GetAllProjects\GetAllProjects;
+use App\Domain\Apd\UseCase\GetAllProjects\GetAllProjectsRequest;
+use App\Presentation\Apd\GetAllProjectsJsonPresenter;
 use App\Domain\Apd\UseCase\GetProject\GetProject;
 use App\Domain\Apd\UseCase\GetProject\GetProjectRequest;
 use App\Presentation\Apd\GetProjectJsonPresenter;
@@ -47,14 +56,32 @@ use App\Domain\Apd\UseCase\RemoveProject\RemoveProjectRequest;
 use App\Presentation\Apd\RemoveProjectJsonPresenter;
 
 #[Route('/api/V1/apd')]
-class ApdControllerV2 extends AbstractController
+class ApdController extends AbstractController
 {
-    #[Route('/ductnetworks/{ductNetworkId}/ductsections/{ductSectionId}',
+    #[Route(
+        '/ductnetworks/{id}/ductsections',
+        name: 'app_apd_getductsections',
+        methods: ['GET'],
+        requirements: ['id' => '\d+']
+    )]
+    public function getDuctSections(
+        int $id,
+        GetAllDuctSections $getAllDuctSections,
+        GetAllDuctSectionsJsonPresenter $presenter
+    )
+    {
+        $getAllDuctSections->execute(new GetAllDuctSectionsRequest($id), $presenter);
+
+        return $this->json(...$presenter->getJson());
+    }
+    
+    #[Route(
+        '/ductnetworks/{ductNetworkId}/ductsections/{ductSectionId}',
         name: 'app_apd_getductsection',
         methods: ['GET'],
         requirements: ['ductNetworkId' => '\d+', 'ductSectionId' => '\d+']
     )]
-    public function test(
+    public function getDuctSection(
         int $ductNetworkId,
         int $ductSectionId,
         GetDuctSection $getDuctSection,
@@ -67,7 +94,8 @@ class ApdControllerV2 extends AbstractController
 
     }
 
-    #[Route('/ductnetworks/{ductNetworkId}/ductsections',
+    #[Route(
+        '/ductnetworks/{ductNetworkId}/ductsections',
         name: 'app_apd_addductSection',
         methods: ['POST'],
         requirements: ['ductNetworkId' => '\d+']
@@ -88,7 +116,8 @@ class ApdControllerV2 extends AbstractController
         return $this->json(...$presenter->getJson());
     }
 
-    #[Route('/ductnetworks/{ductNetworkId}/ductsections/{ductSectionId}',
+    #[Route(
+        '/ductnetworks/{ductNetworkId}/ductsections/{ductSectionId}',
         name: 'app_apd_updateductSection',
         methods: ['PUT'],
         requirements: ['ductNetworkId' => '\d+', 'ductSectionId' => '\d+']
@@ -110,7 +139,8 @@ class ApdControllerV2 extends AbstractController
         return $this->json(...$presenter->getJson());
     }
 
-    #[Route('/ductnetworks/{ductNetworkId}/ductsections/{ductSectionId}',
+    #[Route(
+        '/ductnetworks/{ductNetworkId}/ductsections/{ductSectionId}',
         name: 'app_apd_removeductSection',
         methods: ['DELETE'],
         requirements: ['ductNetworkId' => '\d+', 'ductSectionId' => '\d+']
@@ -127,6 +157,23 @@ class ApdControllerV2 extends AbstractController
         return $this->json(...$presenter->getJson());
     }
 
+    #[Route(
+        '/projects/{id}/ductNetworks',
+        name: 'app_apd_getallductnetworks',
+        methods: ['GET'],
+        requirements: ['id' => '\d+']
+    )]
+    public function getAllDuctNetworks(
+        int $id,
+        GetAllDuctNetworks $getAllDuctNetworks,
+        GetAllDuctNetworksJsonPresenter $presenter
+    )
+    {
+        $getAllDuctNetworks->execute(new GetAllDuctNetworksRequest($id), $presenter);
+
+        return $this->json(...$presenter->getJson());
+    }
+    
     #[Route(
         '/projects/{projectId}/ductnetworks/{ductNetworkId}',
         name: 'app_apd_getductnetwork',
@@ -209,49 +256,70 @@ class ApdControllerV2 extends AbstractController
     }
 
     #[Route(
-        '/projects/{id}',
-        name: 'app_apd_getproject',
+        '/users/{id}/projects',
+        name: 'app_apd_getallprojects',
         methods: ['GET'],
         requirements: ['id' => '\d+']
     )]
-    public function getProject(
+    public function getAllProjects(
         int $id,
-        GetProject $getProject,
-        GetProjectJsonPresenter $presenter
+        GetAllProjects $getAllProjects,
+        GetAllProjectsJsonPresenter $presenter
     )
     {
-        $getProject->execute(new GetProjectRequest($id), $presenter);
+        $getAllProjects->execute(new GetAllProjectsRequest($id), $presenter);
 
         return $this->json(...$presenter->getJson());
     }
     
     #[Route(
-        '/projects',
+        '/users/{userId}/projects/{projectId}',
+        name: 'app_apd_getproject',
+        methods: ['GET'],
+        requirements: ['userId' => '\d+', 'projectId' => '\d+']
+    )]
+    public function getProject(
+        int $userId,
+        int $projectId,
+        GetProject $getProject,
+        GetProjectJsonPresenter $presenter
+    )
+    {
+        $getProject->execute(new GetProjectRequest($userId, $projectId), $presenter);
+
+        return $this->json(...$presenter->getJson());
+    }
+    
+    #[Route(
+        '/users/{id}/projects',
         name: 'app_apd_addproject',
-        methods: ['POST']
+        methods: ['POST'],
+        requirements: ['id' => '\d+']
     )]
     public function addProject(
+        int $id,
         Request $request,
         AddProject $addProject,
-        AddProjectRequest $nullableRequest,
         AddProjectJsonPresenter $presenter
     )
     {
         $content = json_decode($request->getContent(), true);
+        $AddProjectRequest = new AddProjectRequest($id);
         
-        $addProject->execute($nullableRequest->setContent($content), $presenter);
+        $addProject->execute($AddProjectRequest->setContent($content), $presenter);
 
         return $this->json(...$presenter->getJson());
     }
 
     #[Route(
-        '/projects/{id}',
+        '/users/{userId}/projects/{projectId}',
         name: 'app_apd_updateproject',
         methods: ['PUT'],
-        requirements: ['id' => '\d+']
+        requirements: ['userId' => '\d+', 'projectId' => '\d+']
     )]
     public function updateProject(
-        int $id,
+        int $userId,
+        int $projectId,
         Request $request,
         UpdateProject $updateProject,
         UpdateProjectJsonPresenter $presenter
@@ -259,26 +327,27 @@ class ApdControllerV2 extends AbstractController
     {
         $content = json_decode($request->getContent(), true);
 
-        $nullableRequest = new UpdateProjectRequest($id);
+        $updateProjectRequest = new UpdateProjectRequest($userId, $projectId);
 
-        $updateProject->execute($nullableRequest->setContent($content), $presenter);
+        $updateProject->execute($updateProjectRequest->setContent($content), $presenter);
 
         return $this->json(...$presenter->getJson());
     }
 
     #[Route(
-        '/projects/{id}',
+        '/users/{userId}/projects/{projecId}',
         name: 'app_apd_removeproject',
         methods: ['DELETE'],
-        requirements: ['id' => '\d+']
+        requirements: ['userId' => '\d+', 'projectId' => '\d+']
     )]
     public function removeProject(
-        int $id,
+        int $userId,
+        int $projectId,
         RemoveProject $removeProject,
         RemoveProjectJsonPresenter $presenter
     )
     {
-        $removeProject->execute(new RemoveProjectRequest($id), $presenter);
+        $removeProject->execute(new RemoveProjectRequest($userId, $projectId), $presenter);
 
         return $this->json(...$presenter->getJson());
     }

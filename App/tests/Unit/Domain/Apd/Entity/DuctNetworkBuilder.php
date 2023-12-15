@@ -4,6 +4,7 @@ namespace App\Tests\Domain\Apd\Entity;
 
 use App\Domain\Apd\Entity\Air;
 use App\Domain\Apd\Entity\DuctNetwork;
+use App\Domain\Apd\Entity\Project;
 use App\Tests\Domain\Apd\Entity\DuctSectionBuilder;
 
 class DuctNetworkBuilder
@@ -34,12 +35,8 @@ class DuctNetworkBuilder
             $this->generalMaterial,
             $this->additionalApd
         );
-        $ductSection = DuctSectionBuilder::aDuctSection()->build();
-
-        $ductNetwork
-            ->setId($id)
-            ->setProjectId($this->projectId)
-            ->addDuctSection($ductSection);
+        $ductNetwork->setId($id);
+        $ductNetwork->setProjectId($this->projectId);
 
         return $ductNetwork;
     }

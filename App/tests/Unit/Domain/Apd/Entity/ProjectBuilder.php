@@ -3,7 +3,6 @@
 namespace App\Tests\Domain\Apd\Entity;
 
 use App\Domain\Apd\Entity\Project;
-use App\Tests\Domain\Apd\Entity\DuctSectionBuilder;
 
 class ProjectBuilder
 {
@@ -19,18 +18,12 @@ class ProjectBuilder
         $id = $this->id ?? mt_rand(0, 500);
         
         $project = new Project($this->name);
-        $ductNetwork = DuctNetworkBuilder::aDuctNetwork()->build();
-        $ductSection = DuctSectionBuilder::aDuctSection()->build();
-        $ductNetwork->addDuctSection($ductSection);
-
-        $this->ductNetworks[] = $ductNetwork;
         
         $project
             ->setId($id)
             ->setUserId($this->userId)
             ->setGeneralAltitude($this->generalAltitude)
-            ->setGeneralTemperature($this->generalTemperature)
-            ->addDuctNetwork($ductNetwork);
+            ->setGeneralTemperature($this->generalTemperature);
 
         return $project;
     }

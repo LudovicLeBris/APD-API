@@ -9,11 +9,6 @@ class InMemoryDuctNetworkRepository implements DuctNetworkRepositoryInterface
 {
     private $ductNetworks = [];
     
-    public function getAllDuctNetwork()
-    {
-        return $this->ductNetworks;
-    }
-    
     public function getDuctNetworkById(int $id): ?DuctNetwork
     {
         $find = function (DuctNetwork $ductNetwork) use ($id) {

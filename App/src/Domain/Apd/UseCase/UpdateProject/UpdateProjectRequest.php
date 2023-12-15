@@ -4,15 +4,17 @@ namespace App\Domain\Apd\UseCase\UpdateProject;
 
 class UpdateProjectRequest
 {
-    public $id;
+    public $userId;
+    public $projectId;
     public $name;
 
     public $generalAltitude;
     public $generalTemperature;
 
-    public function __construct(int $projectId)
+    public function __construct(int $userId, int $projectId)
     {
-        $this->id = $projectId;
+        $this->userId = $userId;
+        $this->projectId = $projectId;
     }
 
     public function setContent($requestContent)

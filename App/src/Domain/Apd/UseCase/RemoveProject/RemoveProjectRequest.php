@@ -4,10 +4,12 @@ namespace App\Domain\Apd\UseCase\RemoveProject;
 
 class RemoveProjectRequest
 {
-    public $id;
+    public $userId;
+    public $projectId;
 
-    public function __construct(int $projectId)
+    public function __construct(int $userId, int $projectId)
     {
-        $this->id = $projectId;
+        $this->userId = $userId;
+        $this->projectId = $projectId;
     }
 }
