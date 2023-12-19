@@ -10,7 +10,7 @@ interface ProjectRepositoryInterface
 
     public function addProject(Project $project): void;
 
-    public function updateProject(Project $project);
+    public function updateProject(Project $project): void;
 
     public function deleteProject(int $id): void;
 }

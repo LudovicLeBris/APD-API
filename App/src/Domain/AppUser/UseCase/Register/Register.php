@@ -103,8 +103,9 @@ class Register
         );
 
         $this->appUserRepository->addAppUser($appUser);
+        $user = $this->appUserRepository->getAppUserByEmail($appUser->getEmail());
 
-        $confirmEmail = new ValidateRegisterMailer($this->mailer, $appUser);
+        $confirmEmail = new ValidateRegisterMailer($this->mailer, $user);
         $confirmEmail->setTo($appUser->getEmail());
         $confirmEmail->sendEmail();
 

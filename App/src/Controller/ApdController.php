@@ -58,6 +58,12 @@ use App\Presentation\Apd\RemoveProjectJsonPresenter;
 #[Route('/api/V1/apd')]
 class ApdController extends AbstractController
 {
+    #[Route('/test', name: 'app_apd_test', methods: ['GET'])]
+    public function test()
+    {
+        return $this->json('test', 200);
+    }
+    
     #[Route(
         '/ductnetworks/{id}/ductsections',
         name: 'app_apd_getductsections',
@@ -158,7 +164,7 @@ class ApdController extends AbstractController
     }
 
     #[Route(
-        '/projects/{id}/ductNetworks',
+        '/projects/{id}/ductnetworks',
         name: 'app_apd_getallductnetworks',
         methods: ['GET'],
         requirements: ['id' => '\d+']
@@ -335,7 +341,7 @@ class ApdController extends AbstractController
     }
 
     #[Route(
-        '/users/{userId}/projects/{projecId}',
+        '/users/{userId}/projects/{projectId}',
         name: 'app_apd_removeproject',
         methods: ['DELETE'],
         requirements: ['userId' => '\d+', 'projectId' => '\d+']

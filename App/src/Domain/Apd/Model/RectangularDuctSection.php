@@ -7,12 +7,9 @@ use App\Domain\Apd\Factory\DuctSectionInterface;
 
 class RectangularDuctSection extends DuctSection implements DuctSectionInterface
 {
-    protected string $shape = 'rectangular';
-    protected ?int $width;
-    protected ?int $height;
-
     public function __construct($datas)
     {
+        $this->shape = 'rectangular';
         $this->air = $datas['air'];
         $this->material = $datas['material'];
         $this->flowrate = $datas['flowrate'];
@@ -21,6 +18,7 @@ class RectangularDuctSection extends DuctSection implements DuctSectionInterface
         $this->height = $datas['height'];
         $this->singularities = $datas['singularities'];
         $this->additionalApd = $datas['additionalApd'];
+        $this->diameter = null;
 
         $this->calculate();
     }

@@ -8,9 +8,9 @@ interface DuctNetworkRepositoryInterface
 
     public function getDuctNetworksByProjectId(int $projectId): array;
 
-    public function addDuctNetwork(DuctNetwork $ductNetwork);
+    public function addDuctNetwork(DuctNetwork $ductNetwork): void;
 
-    public function updateDuctNetwork(DuctNetwork $ductNetwork);
+    public function updateDuctNetwork(DuctNetwork $ductNetwork): void;
 
     public function deleteDucNetwork(int $id): void;
 }

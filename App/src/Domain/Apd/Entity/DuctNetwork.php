@@ -6,23 +6,23 @@ use Exception;
 
 class DuctNetwork
 {
-    public int $id;
-    private string $name;
-    private int $projectId;
+    public $id;
+    private $name;
+    private $projectId;
 
-    private Air $air;
-    private int $altitude;
-    private float $temperature;
+    private $air;
+    private $altitude;
+    private $temperature;
 
-    private string $generalMaterial;
-    private int $additionalApd;
+    private $generalMaterial;
+    private $additionalApd;
 
     private array $ductSections;
 
-    private float $totalLinearApd;
-    private float $totalSingularApd;
-    private float $totalAdditionalApd;
-    private float $totalApd;
+    private $totalLinearApd;
+    private $totalSingularApd;
+    private $totalAdditionalApd;
+    private $totalApd;
 
     public function __construct(string $name, string $generalMaterial, int $additionalApd = 0)
     {
@@ -109,28 +109,35 @@ class DuctNetwork
         $this->setTotalApd();
     }
 
-    public function setId($id): static
+    public function setId(int $id): static
     {
         $this->id = $id;
 
         return $this;
     }
 
-    public function setName($name): static
+    public function setName(string $name): static
     {
         $this->name = $name;
 
         return $this;
     }
 
-    public function setProjectId($projectId): static
+    public function setProjectId(int $projectId): static
     {
         $this->projectId = $projectId;
 
         return $this;
     }
 
-    public function setAltitude($altitude): static
+    public function setAir(Air $air): static
+    {
+        $this->air = $air;
+
+        return $this;
+    }
+
+    public function setAltitude(int $altitude): static
     {
         $this->altitude = $altitude;
         $this->air->setAltitude($altitude);
@@ -145,7 +152,7 @@ class DuctNetwork
         return $this;
     }
 
-    public function setTemperature($temperature): static
+    public function setTemperature(float $temperature): static
     {
         $this->temperature = $temperature;
         $this->air->setTemperature($temperature);
@@ -160,14 +167,14 @@ class DuctNetwork
         return $this;
     }
 
-    public function setGeneralMaterial($generalMaterial): static
+    public function setGeneralMaterial(string $generalMaterial): static
     {
         $this->generalMaterial = $generalMaterial;
 
         return $this;
     }
 
-    public function setAdditionalApd($additionalApd): static
+    public function setAdditionalApd(int $additionalApd): static
     {
         $this->additionalApd = $additionalApd;
 

@@ -14,7 +14,7 @@ class GetDuctSectionJsonPresenter extends CoreJsonPresenter implements GetDuctSe
         if ($response->getDuctSection() === null) {
             $this->jsonModel = new JsonModel(
                 'error',
-                ["There is no Duct Section with this Id"],
+                $response->getErrors(),
                 404
             );
         } else {

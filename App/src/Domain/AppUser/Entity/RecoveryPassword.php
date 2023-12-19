@@ -8,21 +8,21 @@ use DateTimeImmutable;
 class RecoveryPassword
 {
     public string $guid;
-    private int $AppUserId;
-    private string $AppUserEmail;
+    private int $appUserId;
+    private string $appUserEmail;
     private DateTimeImmutable $requestDateTime;
     private bool $isEnable;
 
     public function __construct(
         string $guid,
-        int $AppUserId,
-        string $AppUserEmail,
+        int $appUserId,
+        string $appUserEmail,
         DateTimeImmutable $requestDateTime,
     )
     {
         $this->guid = $guid;
-        $this->AppUserId = $AppUserId;
-        $this->AppUserEmail = $AppUserEmail;
+        $this->appUserId = $appUserId;
+        $this->appUserEmail = $appUserEmail;
         $this->requestDateTime = $requestDateTime;
 
         $expectedTime = $this->requestDateTime->add(new DateInterval('PT15M'));
@@ -36,12 +36,12 @@ class RecoveryPassword
 
     public function getAppUserId()
     {
-        return $this->AppUserId;
+        return $this->appUserId;
     }
 
     public function getAppUserEmail()
     {
-        return $this->AppUserEmail;
+        return $this->appUserEmail;
     }
 
     public function getRequestDateTime()

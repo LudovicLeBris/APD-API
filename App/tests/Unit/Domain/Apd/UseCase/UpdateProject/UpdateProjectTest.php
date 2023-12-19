@@ -6,6 +6,8 @@ use App\Domain\Apd\UseCase\UpdateProject\UpdateProject;
 use PHPUnit\Framework\TestCase;
 use App\Domain\Apd\UseCase\UpdateProject\UpdateProjectResponse;
 use App\Domain\Apd\UseCase\UpdateProject\UpdateProjectPresenter;
+use App\Tests\_Mock\Domain\Apd\Entity\InMemoryDuctNetworkRepository;
+use App\Tests\_Mock\Domain\Apd\Entity\InMemoryDuctSectionRepository;
 use App\Tests\_Mock\Domain\Apd\Entity\InMemoryProjectRepository;
 use App\Tests\_Mock\Domain\AppUser\Entity\InMemoryAppUserRepository;
 use App\Tests\Domain\Apd\Entity\ProjectBuilder;
@@ -19,6 +21,8 @@ class UpdateProjectTest extends TestCase implements UpdateProjectPresenter
     private $response;
     private $appUserRepository;
     private $projectRepository;
+    private $ductNetworkRepository;
+    private $ductSectionRepository;
     private $appUser;
     private $project;
     private $updateProject;
@@ -27,11 +31,13 @@ class UpdateProjectTest extends TestCase implements UpdateProjectPresenter
     {
         $this->appUserRepository = new InMemoryAppUserRepository;
         $this->projectRepository = new InMemoryProjectRepository;
+        $this->ductNetworkRepository = new InMemoryDuctNetworkRepository;
+        $this->ductSectionRepository = new InMemoryDuctSectionRepository;
         $this->appUser = AppUserBuilder::anAppUser()->setId(self::APPUSER_ID)->build();
         $this->appUserRepository->addAppUser($this->appUser);
         $this->project = ProjectBuilder::aProject()->setId(self::PROJECT_ID)->setUserId(self::APPUSER_ID)->build();
         $this->projectRepository->addProject($this->project);
-        $this->updateProject = new UpdateProject($this->appUserRepository, $this->projectRepository);
+        $this->updateProject = new UpdateProject($this->appUserRepository, $this->projectRepository, $this->ductNetworkRepository, $this->ductSectionRepository);
     }
 
     public function present(UpdateProjectResponse $response): void

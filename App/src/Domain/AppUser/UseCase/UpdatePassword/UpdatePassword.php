@@ -112,7 +112,7 @@ class UpdatePassword
                 $oldAppUser->getFirstname(),
                 $oldAppUser->getCompany(),
                 $oldAppUser->getRole(),
-                $oldAppUser->getIsEnable()
+                true
             );
             $appUser->setId($oldAppUser->getId());
 

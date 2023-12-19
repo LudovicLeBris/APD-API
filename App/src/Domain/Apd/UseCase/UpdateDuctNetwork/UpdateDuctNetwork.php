@@ -9,19 +9,23 @@ use App\SharedKernel\Model\Material;
 use App\Domain\Apd\Entity\DuctNetwork;
 use App\Domain\Apd\Entity\ProjectRepositoryInterface;
 use App\Domain\Apd\Entity\DuctNetworkRepositoryInterface;
+use App\Domain\Apd\Entity\DuctSectionRepositoryInterface;
 
 class UpdateDuctNetwork
 {
     private $projectRepository;
     private $ductNetworkRepository;
+    private $ductSectionRepository;
 
     public function __construct(
         ProjectRepositoryInterface $projectRepository, 
-        DuctNetworkRepositoryInterface $ductNetworkRepository
+        DuctNetworkRepositoryInterface $ductNetworkRepository,
+        DuctSectionRepositoryInterface $ductSectionRepository
     )
     {
         $this->projectRepository = $projectRepository;
         $this->ductNetworkRepository = $ductNetworkRepository;
+        $this->ductSectionRepository = $ductSectionRepository;
     }
 
     public function execute(UpdateDuctNetworkRequest $request, UpdateDuctNetworkPresenter $presenter)
@@ -158,9 +162,16 @@ class UpdateDuctNetwork
             $ductNetwork->setAdditionalApd($oldDuctNetwork->getAdditionalApd());
         }
         $ductNetwork->calculate();
+        
+        foreach ($ductNetwork->getDuctSections() as $ductSection) {
+            $this->ductSectionRepository->updateDuctSection($ductSection);
+        }
+
         $ductNetwork->setProjectId($project->getId());
         $project->addDuctNetwork($ductNetwork);
         $this->projectRepository->updateProject($project);
+
+        
 
         return $ductNetwork;
     }

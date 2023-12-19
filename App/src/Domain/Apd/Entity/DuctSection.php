@@ -7,29 +7,29 @@ use App\SharedKernel\Model\Singularity;
 
 class DuctSection
 {
-    public ?int $id;
-    protected string $name;
-    protected int $ductNetworkId;
+    public $id;
+    protected $name;
+    protected $ductNetworkId;
     
     protected Air $air;
 
-    protected string $shape;
-    protected string $material;
-    protected int $flowrate;
-    protected float $length;
-    protected array $singularities;
-    protected int $additionalApd;
+    protected $shape;
+    protected $material;
+    protected $flowrate;
+    protected $length;
+    protected $singularities;
+    protected $additionalApd;
 
-    protected ?int $diameter = null;
-    protected ?int $width = null;
-    protected ?int $height = null;
+    protected $diameter = null;
+    protected $width = null;
+    protected $height = null;
 
-    protected float $equivDiameter;
-    protected float $ductSectionsSection;
-    protected float $flowspeed;
-    protected float $linearApd;
-    protected float $singularApd;
-    protected float $totalApd;
+    protected $equivDiameter;
+    protected $ductSectionsSection;
+    protected $flowspeed;
+    protected $linearApd;
+    protected $singularApd;
+    protected $totalApd;
     
     public function getId(): ?int
     {
@@ -51,7 +51,7 @@ class DuctSection
         return $this->air;
     }
     
-    public function getShape()
+    public function getShape(): string
     {
         return $this->shape;
     }
@@ -81,17 +81,17 @@ class DuctSection
         return $this->additionalApd;
     }
 
-    public function getDiameter(): int
+    public function getDiameter(): ?int
     {
         return $this->diameter;
     }
 
-    public function getWidth(): int
+    public function getWidth(): ?int
     {
         return $this->width;
     }
 
-    public function getHeight(): int
+    public function getHeight(): ?int
     {
         return $this->height;
     }
@@ -136,21 +136,21 @@ class DuctSection
         $this->setTotalApd();
     }
 
-    public function setId($id): static
+    public function setId(int $id): static
     {
         $this->id = $id;
 
         return $this;
     }
 
-    public function setName($name): static
+    public function setName(string $name): static
     {
         $this->name = $name;
 
         return $this;
     }
     
-    public function setDuctNetworkId($ductNetworkId): static
+    public function setDuctNetworkId(int $ductNetworkId): static
     {
         $this->ductNetworkId = $ductNetworkId;
 

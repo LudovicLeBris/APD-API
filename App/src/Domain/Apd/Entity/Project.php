@@ -6,16 +6,16 @@ use Exception;
 
 class Project
 {
-    public int $id;
-    private string $name;
-    private int $userId;
+    public $id;
+    private $name;
+    private $userId;
 
-    private float $generalAltitude;
-    private float $generalTemperature;
+    private $generalAltitude;
+    private $generalTemperature;
 
-    private array $ductNetworks;
+    private $ductNetworks;
 
-    public function __construct($name)
+    public function __construct(string $name)
     {
         $this->ductNetworks = [];
         $this->name = $name;
@@ -53,28 +53,28 @@ class Project
         return $this->ductNetworks;
     }
 
-    public function setId($id): static
+    public function setId(int $id): static
     {
         $this->id = $id;
 
         return $this;
     }
 
-    public function setName($name): static
+    public function setName(string $name): static
     {
         $this->name = $name;
 
         return $this;
     }
 
-    public function setUserId($userId): static
+    public function setUserId(int $userId): static
     {
         $this->userId = $userId;
 
         return $this;
     }
 
-    public function setGeneralAltitude($altitude): static
+    public function setGeneralAltitude(int $altitude): static
     {
         $this->generalAltitude = $altitude;
 
@@ -85,7 +85,7 @@ class Project
         return $this;
     }
 
-    public function setGeneralTemperature($temperature): static
+    public function setGeneralTemperature(float $temperature): static
     {
         $this->generalTemperature = $temperature;
 

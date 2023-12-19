@@ -43,7 +43,7 @@ class InMemoryProjectRepository implements ProjectRepositoryInterface
         $this->projects[] = $project;
     }
 
-    public function updateProject(Project $project)
+    public function updateProject(Project $project): void
     {
         for ($i=0; $i < count($this->projects); $i++) {
             if ($this->projects[$i]->getId() === $project->getId()) {

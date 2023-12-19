@@ -14,7 +14,7 @@ class GetDuctNetworkJsonPresenter extends CoreJsonPresenter implements GetDuctNe
         if ($response->getDuctNetwork() === null) {
             $this->jsonModel = new JsonModel(
                 'error',
-                ['There is no Duct Network with this Id'],
+                $response->getErrors(),
                 404
             );
         } else {

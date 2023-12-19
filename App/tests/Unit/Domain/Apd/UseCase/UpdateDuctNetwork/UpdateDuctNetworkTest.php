@@ -6,6 +6,7 @@ use App\Domain\Apd\UseCase\UpdateDuctNetwork\UpdateDuctNetwork;
 use App\Domain\Apd\UseCase\UpdateDuctNetwork\UpdateDuctNetworkPresenter;
 use App\Domain\Apd\UseCase\UpdateDuctNetwork\UpdateDuctNetworkResponse;
 use App\Tests\_Mock\Domain\Apd\Entity\InMemoryDuctNetworkRepository;
+use App\Tests\_Mock\Domain\Apd\Entity\InMemoryDuctSectionRepository;
 use App\Tests\_Mock\Domain\Apd\Entity\InMemoryProjectRepository;
 use App\Tests\Domain\Apd\Entity\DuctNetworkBuilder;
 use App\Tests\Domain\Apd\Entity\ProjectBuilder;
@@ -19,6 +20,7 @@ class UpdateDuctNetworkTest extends TestCase implements UpdateDuctNetworkPresent
     private $response;
     private $ductNetworkRepository;
     private $projecteRepository;
+    private $ductSectionRepository;
     private $ductNetwork;
     private $project;
     private $updateDuctNetwork;
@@ -27,12 +29,13 @@ class UpdateDuctNetworkTest extends TestCase implements UpdateDuctNetworkPresent
     {
         $this->ductNetworkRepository = new InMemoryDuctNetworkRepository;
         $this->projecteRepository = new InMemoryProjectRepository;
+        $this->ductSectionRepository = new InMemoryDuctSectionRepository;
         $this->ductNetwork = DuctNetworkBuilder::aDuctNetwork()->setId(self::DUCTNETWORK_ID)->setProjectId(self::PROJECT_ID)->build();
         $this->project = ProjectBuilder::aProject()->setId(self::PROJECT_ID)->build();
         $this->project->addDuctNetwork($this->ductNetwork);
         $this->projecteRepository->addProject($this->project);
         $this->ductNetworkRepository->addDuctNetwork($this->ductNetwork);
-        $this->updateDuctNetwork = new UpdateDuctNetwork($this->projecteRepository, $this->ductNetworkRepository);
+        $this->updateDuctNetwork = new UpdateDuctNetwork($this->projecteRepository, $this->ductNetworkRepository, $this->ductSectionRepository);
     }
 
     public function present(UpdateDuctNetworkResponse $response): void

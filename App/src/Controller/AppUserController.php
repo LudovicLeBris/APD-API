@@ -32,11 +32,17 @@ use App\Presentation\AppUser\UpdateAppUserJsonPresenter;
 use App\Presentation\AppUser\UpdatePasswordJsonPresenter;
 use App\Presentation\JsonModel;
 
-#[Route('/api/V2')]
+#[Route('/api/V1')]
 class AppUserController extends AbstractController
 {
+    #[Route('/test', name: 'app_test', methods: ['GET'])]
+    public function test()
+    {
+        return $this->json('test', 200);
+    }
+    
     #[Route(
-        '/appuser/{id}',
+        '/users/{id}',
         name: 'app_appuser_getappAppUser',
         methods: ['GET'],
         requirements: ['id' => '\d+']
@@ -60,13 +66,12 @@ class AppUserController extends AbstractController
     public function register(
         Request $request,
         Register $register,
-        RegisterRequest $nulllableRequest,
+        RegisterRequest $registerRequest,
         RegisterJsonPresenter $presenter
     )
     {
         $content = json_decode($request->getContent(), true);
-
-        $register->execute($nulllableRequest->setContent($content), $presenter);
+        $register->execute($registerRequest->setContent($content), $presenter);
 
         return $this->json(...$presenter->getJson());
     }
@@ -106,7 +111,7 @@ class AppUserController extends AbstractController
     }
 
     #[Route(
-        '/appuser/{id}',
+        '/users/{id}',
         name: 'app_appuser_updateappuser',
         methods: ['PUT'],
         requirements: ['id' => '\d+']
@@ -120,15 +125,15 @@ class AppUserController extends AbstractController
     {
         $content = json_decode($request->getContent(), true);
 
-        $nulllableRequest = new UpdateAppUserRequest($id);
+        $UpdateAppUserRequest = new UpdateAppUserRequest($id);
 
-        $updateAppUser->execute($nulllableRequest->setContent($content), $presenter);
+        $updateAppUser->execute($UpdateAppUserRequest->setContent($content), $presenter);
 
         return $this->json(...$presenter->getJson());
     }
 
     #[Route(
-        '/appuser/{id}',
+        '/users/{id}',
         name: 'app_appuser_removeappuser',
         methods: ['DELETE'],
         requirements: ['id' => '\d+']
@@ -186,9 +191,9 @@ class AppUserController extends AbstractController
     {
         $content = json_decode($request->getContent(), true);
 
-        $nullableRequest = (new UpdatePasswordRequest())->setGuid($guid);
+        $UpdatePasswordRequest = (new UpdatePasswordRequest())->setGuid($guid);
 
-        $updatePassword->execute($nullableRequest->setContent($content), $presenter);
+        $updatePassword->execute($UpdatePasswordRequest->setContent($content), $presenter);
 
         return $this->json(...$presenter->getJson());
     }
@@ -208,9 +213,9 @@ class AppUserController extends AbstractController
     {
         $content = json_decode($request->getContent(), true);
 
-        $nullableRequest = (new UpdatePasswordRequest())->setId($id);
+        $UpdatePasswordRequest = (new UpdatePasswordRequest())->setId($id);
 
-        $updatePassword->execute($nullableRequest->setContent($content), $presenter);
+        $updatePassword->execute($UpdatePasswordRequest->setContent($content), $presenter);
 
         return $this->json(...$presenter->getJson());
     }

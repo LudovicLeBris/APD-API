@@ -14,7 +14,7 @@ class GetProjectJsonPresenter extends CoreJsonPresenter implements GetProjectPre
         if ($response->getProject() === null) {
             $this->jsonModel = new JsonModel(
                 'error',
-                ["There is no Duct Network with this Id"],
+                $response->getErrors(),
                 404
             );
         } else {
