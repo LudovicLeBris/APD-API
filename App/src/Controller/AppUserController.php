@@ -95,19 +95,12 @@ class AppUserController extends AbstractController
 
     #[Route(
         '/login',
-        name: 'app_appuser_login'
+        name: 'app_appuser_login',
+        methods: ['POST']
     )]
-    public function login(
-        Request $request,
-        Login $login,
-        LoginJsonPresenter $presenter
-    )
+    public function login()
     {
-        $content = json_decode($request->getContent(), true);
-        
-        $login->execute(new LoginRequest($content['email'], $content['password']), $presenter);
-
-        return $this->json(...$presenter->getJson());
+        return $this->json('email or password is missing', 400);
     }
 
     #[Route(
@@ -199,7 +192,7 @@ class AppUserController extends AbstractController
     }
 
     #[Route(
-        '/updatepassword/{id}',
+        '/users/{id}/updatepassword',
         name: 'app_appuser_updatepassword',
         methods: ['PUT'],
         requirements: ['id' => '\d+']
