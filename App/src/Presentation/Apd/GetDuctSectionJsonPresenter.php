@@ -15,7 +15,7 @@ class GetDuctSectionJsonPresenter extends CoreJsonPresenter implements GetDuctSe
             $this->jsonModel = new JsonModel(
                 'error',
                 $response->getErrors(),
-                404
+                $response->getHttpStatus(),
             );
         } else {
             $this->jsonModel = new JsonModel(

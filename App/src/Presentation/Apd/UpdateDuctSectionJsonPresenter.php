@@ -15,7 +15,7 @@ class UpdateDuctSectionJsonPresenter extends CoreJsonPresenter implements Update
             $this->jsonModel = new JsonModel(
                 'error',
                 $response->getErrors(),
-                422
+                $response->getHttpStatus(),
             );
         } else {
             $this->jsonModel = new JsonModel(

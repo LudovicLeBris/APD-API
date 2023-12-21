@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Api;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -56,10 +55,10 @@ use App\Domain\Apd\UseCase\RemoveProject\RemoveProjectRequest;
 use App\Presentation\Apd\RemoveProjectJsonPresenter;
 
 #[Route('/api/V1/apd')]
-class ApdController extends AbstractController
+class ApdController extends ApiAbstractController
 {
     #[Route('/test', name: 'app_apd_test', methods: ['GET'])]
-    public function test()
+    public function test(): JsonResponse
     {
         return $this->json('test', 200);
     }
@@ -74,7 +73,7 @@ class ApdController extends AbstractController
         int $id,
         GetAllDuctSections $getAllDuctSections,
         GetAllDuctSectionsJsonPresenter $presenter
-    )
+    ): JsonResponse
     {
         $getAllDuctSections->execute(new GetAllDuctSectionsRequest($id), $presenter);
 
@@ -92,7 +91,7 @@ class ApdController extends AbstractController
         int $ductSectionId,
         GetDuctSection $getDuctSection,
         GetDuctSectionJsonPresenter $presenter
-    )
+    ): JsonResponse
     {
         $getDuctSection->execute(new GetDuctSectionRequest($ductNetworkId, $ductSectionId), $presenter);
 
@@ -173,7 +172,7 @@ class ApdController extends AbstractController
         int $id,
         GetAllDuctNetworks $getAllDuctNetworks,
         GetAllDuctNetworksJsonPresenter $presenter
-    )
+    ): JsonResponse
     {
         $getAllDuctNetworks->execute(new GetAllDuctNetworksRequest($id), $presenter);
 
@@ -191,7 +190,7 @@ class ApdController extends AbstractController
         int $ductNetworkId,
         GetDuctNetwork $getDuctNetwork,
         GetDuctNetworkJsonPresenter $presenter
-    )
+    ): JsonResponse
     {
         $getDuctNetwork->execute(new GetDuctNetworkRequest($projectId, $ductNetworkId), $presenter);
 
@@ -209,7 +208,7 @@ class ApdController extends AbstractController
         Request $request,
         AddDuctNetwork $addDuctNetwork,
         AddDuctNetworkJsonPresenter $presenter
-    )
+    ): JsonResponse
     {
         $content = json_decode($request->getContent(), true);
 
@@ -232,7 +231,7 @@ class ApdController extends AbstractController
         Request $request,
         UpdateDuctNetwork $updateDuctNetwork,
         UpdateDuctNetworkJsonPresenter $presenter
-    )
+    ): JsonResponse
     {
         $content = json_decode($request->getContent(), true);
 
@@ -254,7 +253,7 @@ class ApdController extends AbstractController
         int $ductNetworkId,
         RemoveDuctNetwork $removeDuctNetwork,
         RemoveDuctNetworkJsonPresenter $presenter
-    )
+    ): JsonResponse
     {
         $removeDuctNetwork->execute(new RemoveDuctNetworkRequest($projectId, $ductNetworkId), $presenter);
 
@@ -271,7 +270,7 @@ class ApdController extends AbstractController
         int $id,
         GetAllProjects $getAllProjects,
         GetAllProjectsJsonPresenter $presenter
-    )
+    ): JsonResponse
     {
         $getAllProjects->execute(new GetAllProjectsRequest($id), $presenter);
 
@@ -289,7 +288,7 @@ class ApdController extends AbstractController
         int $projectId,
         GetProject $getProject,
         GetProjectJsonPresenter $presenter
-    )
+    ): JsonResponse
     {
         $getProject->execute(new GetProjectRequest($userId, $projectId), $presenter);
 
@@ -307,7 +306,7 @@ class ApdController extends AbstractController
         Request $request,
         AddProject $addProject,
         AddProjectJsonPresenter $presenter
-    )
+    ): JsonResponse
     {
         $content = json_decode($request->getContent(), true);
         $AddProjectRequest = new AddProjectRequest($id);
@@ -329,7 +328,7 @@ class ApdController extends AbstractController
         Request $request,
         UpdateProject $updateProject,
         UpdateProjectJsonPresenter $presenter
-    )
+    ): JsonResponse
     {
         $content = json_decode($request->getContent(), true);
 
@@ -351,7 +350,7 @@ class ApdController extends AbstractController
         int $projectId,
         RemoveProject $removeProject,
         RemoveProjectJsonPresenter $presenter
-    )
+    ): JsonResponse
     {
         $removeProject->execute(new RemoveProjectRequest($userId, $projectId), $presenter);
 

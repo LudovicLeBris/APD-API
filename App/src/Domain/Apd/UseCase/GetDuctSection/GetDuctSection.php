@@ -44,7 +44,7 @@ class GetDuctSection
             return true;
         }
 
-        $response->addError('ductNetworkId', 'Duct network doesn\'t exist with this id.');
+        $response->addError('ductNetworkId', 'Duct network doesn\'t exist with this id.', 404);
         return false;
     }
 
@@ -54,7 +54,7 @@ class GetDuctSection
             return true;
         }
 
-        $response->addError('ductSectionId', 'Duct section doesn\'t exist with this id.');
+        $response->addError('ductSectionId', 'Duct section doesn\'t exist with this id.', 404);
         return false;
     }
 
@@ -66,7 +66,7 @@ class GetDuctSection
             }
         }
 
-        $response->addError('ductSectionId', 'Duct section don\'t belong to this ductNetwork.');
+        $response->addError('ductSectionId', 'Duct section don\'t belong to this ductNetwork.', 404);
         return false;
     }
 }

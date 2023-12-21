@@ -41,7 +41,7 @@ class GetAllDuctSections
             return true;
         }
 
-        $response->addError('ductNetworkId', 'Duct network doesn\'t exist with this id.');
+        $response->addError('ductNetworkId', 'Duct network doesn\'t exist with this id.', 404);
         return false;
     }
 }

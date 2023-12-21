@@ -47,7 +47,7 @@ class Login
             return true;
         } catch (LazyAssertionException $e) {
             foreach ($e->getErrorExceptions() as $error) {
-                $response->addError($error->getPropertyPath(), $error->getMessage());
+                $response->addError($error->getPropertyPath(), $error->getMessage(), 422);
             }
             return false;
         }
@@ -65,14 +65,14 @@ class Login
             return true;
         }
         
-        $response->addError('credentials : email or password', 'Incorrect e-mail address or password');
+        $response->addError('credentials : email or password', 'Incorrect e-mail address or password', 422);
         return false;
     }
 
     private function checkAppUserEnable(AppUser $appUser, LoginResponse $response): bool
     {
         if (!$appUser->getIsEnable()) {
-            $response->addError('email', 'User is disable');
+            $response->addError('email', 'User is disable', 423);
 
             return false;
         }

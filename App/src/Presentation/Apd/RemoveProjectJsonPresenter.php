@@ -15,7 +15,7 @@ class RemoveProjectJsonPresenter extends CoreJsonPresenter implements RemoveProj
             $this->jsonModel = new JsonModel(
                 'error',
                 $response->getErrors(),
-                404
+                $response->getHttpStatus(),
             );
         } else {
             $project = $response->getProject();

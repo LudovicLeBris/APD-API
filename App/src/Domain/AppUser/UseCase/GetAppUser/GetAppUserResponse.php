@@ -3,8 +3,9 @@
 namespace App\Domain\AppUser\UseCase\GetAppUser;
 
 use App\Domain\AppUser\Entity\AppUser;
+use App\Domain\CoreResponse;
 
-class GetAppUserResponse
+class GetAppUserResponse extends CoreResponse
 {
     private $appUser;
 

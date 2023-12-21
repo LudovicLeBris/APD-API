@@ -75,7 +75,7 @@ class UpdateProject
             return true;
         } catch (LazyAssertionException $e) {
             foreach ($e->getErrorExceptions() as $error) {
-                $response->addError($error->getPropertyPath(), $error->getMessage());
+                $response->addError($error->getPropertyPath(), $error->getMessage(), 422);
             }
             return false;
         }
@@ -86,7 +86,7 @@ class UpdateProject
         if ($appUser) {
             return true;
         }
-        $response->addError('userId', 'User doesn\'t exist with this id.');
+        $response->addError('userId', 'User doesn\'t exist with this id.', 404);
         return false;
     }
 
@@ -95,7 +95,7 @@ class UpdateProject
         if ($project) {
             return true;
         }
-        $response->addError('projectId', 'Project doesn\'t exist with this id.');
+        $response->addError('projectId', 'Project doesn\'t exist with this id.', 404);
         return false;
     }
 

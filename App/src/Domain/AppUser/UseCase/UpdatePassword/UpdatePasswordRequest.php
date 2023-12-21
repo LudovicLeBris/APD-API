@@ -11,9 +11,11 @@ class UpdatePasswordRequest
 
     public function setContent($requestContent)
     {
-        foreach ($requestContent as $field => $value) {
-            if (property_exists($this, $field)) {
-                $this->$field = $value;
+        if ($requestContent) {
+            foreach ($requestContent as $field => $value) {
+                if (property_exists($this, $field)) {
+                    $this->$field = $value;
+                }
             }
         }
 

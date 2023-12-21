@@ -15,7 +15,7 @@ class GetAllDuctNetworksJsonPresenter extends CoreJsonPresenter implements GetAl
             $this->jsonModel = new JsonModel(
                 'error',
                 $response->getErrors(),
-                422
+                $response->getHttpStatus(),
             );
         } else {
             $this->jsonModel = new JsonModel(

@@ -44,7 +44,7 @@ class GetProject
             return true;
         }
 
-        $response->addError('userId', 'User doesn\'t exist with this id.');
+        $response->addError('userId', 'User doesn\'t exist with this id.', 404);
         return false;
     }
 
@@ -54,7 +54,7 @@ class GetProject
             return true;
         }
 
-        $response->addError('projectId', 'Project doesn\'t exist with this id.');
+        $response->addError('projectId', 'Project doesn\'t exist with this id.', 404);
         return false;
     }
 }

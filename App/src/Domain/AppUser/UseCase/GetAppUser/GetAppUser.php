@@ -19,7 +19,12 @@ class GetAppUser
 
         $appUser = $this->appUserRepository->getAppUserById($request->appUserId);
 
-        $response->setAppUser($appUser);
+        if ($appUser) {
+            $response->setAppUser($appUser);
+        } else {
+            $response->addError('id', 'User doesn\t exist with this id.', 404);
+        }
+
 
         $presenter->present($response);
     }

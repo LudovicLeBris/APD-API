@@ -15,7 +15,7 @@ class RemoveDuctNetworkJsonPresenter extends CoreJsonPresenter implements Remove
             $this->jsonModel = new JsonModel(
                 'error',
                 $response->getErrors(),
-                404
+                $response->getHttpStatus(),
             );
         } else {
             $ductNetwork = $response->getDuctNetwork();

@@ -33,7 +33,7 @@ class RemoveAppUser
         $appUserToRemove = $this->appUserRepository->getAppUserById($request->id);
         
         if (is_null($appUserToRemove)) {
-            $response->addError('id', 'There is no user with this id');
+            $response->addError('id', 'There is no user with this id', 404);
         } else {
             $projects = $this->projectRepository->getProjectsByUserId($appUserToRemove->getId());
     

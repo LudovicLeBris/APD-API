@@ -40,7 +40,7 @@ class GetAllProjects
             return true;
         }
 
-        $response->addError('userId', 'User doesn\'t exist with this id.');
+        $response->addError('userId', 'User doesn\'t exist with this id.', 404);
         return false;
     }
 }

@@ -15,7 +15,7 @@ class GetProjectJsonPresenter extends CoreJsonPresenter implements GetProjectPre
             $this->jsonModel = new JsonModel(
                 'error',
                 $response->getErrors(),
-                404
+                $response->getHttpStatus(),
             );
         } else {
             $this->jsonModel = new JsonModel(

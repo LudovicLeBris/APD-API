@@ -22,7 +22,7 @@ class ConfirmRegister
         
         if ($isValid) {
             if ($appUser->getIsEnable()) {
-                $response->addError('user', 'User is already active');
+                $response->addError('user', 'User is already active', 409);
             } else {
                 $appUser->setIsEnable(true);
                 $this->appUserRepository->updateAppUser($appUser);
@@ -40,7 +40,7 @@ class ConfirmRegister
             return true;
         }
 
-        $response->addError('id', 'User with this id doesn\'t exist');
+        $response->addError('id', 'User with this id doesn\'t exist', 404);
         return false;
     }
 }

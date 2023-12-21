@@ -52,7 +52,7 @@ class AddProject
             return true;
         } catch (LazyAssertionException $e) {
             foreach ($e->getErrorExceptions() as $error) {
-                $response->addError($error->getPropertyPath(), $error->getMessage());
+                $response->addError($error->getPropertyPath(), $error->getMessage(), 422);
             }
             return false;
         }
@@ -64,7 +64,7 @@ class AddProject
             return true;
         }
 
-        $response->addError('userId', 'User doesn\'t exist with this id.');
+        $response->addError('userId', 'User doesn\'t exist with this id.', 404);
         return false;
     }
 

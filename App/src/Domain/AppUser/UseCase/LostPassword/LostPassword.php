@@ -70,7 +70,7 @@ class LostPassword
             return true;
         } catch (LazyAssertionException $e) {
             foreach ($e->getErrorExceptions() as $error) {
-                $response->addError($error->getPropertyPath(), $error->getMessage());
+                $response->addError($error->getPropertyPath(), $error->getMessage(), 422);
             }
             return false;
         }
@@ -79,7 +79,7 @@ class LostPassword
     private function checkAppUser(LostPasswordRequest $request, LostPasswordResponse $response)
     {
         if ($request->email ===null) {
-            $response->addError('email', 'Email is missing');
+            $response->addError('email', 'Email is missing', 400);
 
             return false;
         }
@@ -87,13 +87,13 @@ class LostPassword
         $existingAppUser = $this->appUserRepository->getAppUserByEmail($request->email);
 
         if ($existingAppUser === null) {
-            $response->addError('email', 'User is not registered');
+            $response->addError('email', 'User is not registered', 423);
 
             return false;
         }
 
         if (!$existingAppUser->getIsEnable()) {
-            $response->addError('email', 'User is not enable');
+            $response->addError('email', 'User is not enable', 423);
 
             return false;
         }

@@ -1,42 +1,39 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Api;
 
-use App\Domain\AppUser\UseCase\Login\Login;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Presentation\AppUser\LoginJsonPresenter;
-use App\Domain\AppUser\UseCase\Register\Register;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use App\Presentation\JsonModel;
 
+use App\Domain\AppUser\UseCase\Register\Register;
 use App\Presentation\AppUser\RegisterJsonPresenter;
 use App\Domain\AppUser\UseCase\GetAppUser\GetAppUser;
 use App\Presentation\AppUser\GetAppUserJsonPresenter;
-use App\Domain\AppUser\UseCase\Register\RegisterRequest;
-use App\Presentation\AppUser\ConfirmRegisterJsonPresenter;
-use App\Domain\AppUser\UseCase\GetAppUser\GetAppUserRequest;
-use App\Domain\AppUser\UseCase\ConfirmRegister\ConfirmRegister;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use App\Domain\AppUser\UseCase\ConfirmRegister\ConfirmRegisterRequest;
-use App\Domain\AppUser\UseCase\Login\LoginRequest;
-use App\Domain\AppUser\UseCase\LostPassword\LostPassword;
-use App\Domain\AppUser\UseCase\LostPassword\LostPasswordRequest;
-use App\Domain\AppUser\UseCase\RemoveAppUser\RemoveAppUser;
-use App\Domain\AppUser\UseCase\RemoveAppUser\RemoveAppUserRequest;
-use App\Domain\AppUser\UseCase\UpdateAppUser\UpdateAppUser;
-use App\Domain\AppUser\UseCase\UpdateAppUser\UpdateAppUserRequest;
-use App\Domain\AppUser\UseCase\UpdatePassword\UpdatePassword;
-use App\Domain\AppUser\UseCase\UpdatePassword\UpdatePasswordRequest;
 use App\Presentation\AppUser\LostPasswordJsonPresenter;
+use App\Domain\AppUser\UseCase\Register\RegisterRequest;
 use App\Presentation\AppUser\RemoveAppUserJsonPresenter;
 use App\Presentation\AppUser\UpdateAppUserJsonPresenter;
+use App\Domain\AppUser\UseCase\LostPassword\LostPassword;
 use App\Presentation\AppUser\UpdatePasswordJsonPresenter;
-use App\Presentation\JsonModel;
+use App\Presentation\AppUser\ConfirmRegisterJsonPresenter;
+use App\Domain\AppUser\UseCase\RemoveAppUser\RemoveAppUser;
+use App\Domain\AppUser\UseCase\UpdateAppUser\UpdateAppUser;
+use App\Domain\AppUser\UseCase\GetAppUser\GetAppUserRequest;
+use App\Domain\AppUser\UseCase\UpdatePassword\UpdatePassword;
+use App\Domain\AppUser\UseCase\ConfirmRegister\ConfirmRegister;
+use App\Domain\AppUser\UseCase\LostPassword\LostPasswordRequest;
+use App\Domain\AppUser\UseCase\RemoveAppUser\RemoveAppUserRequest;
+use App\Domain\AppUser\UseCase\UpdateAppUser\UpdateAppUserRequest;
+use App\Domain\AppUser\UseCase\UpdatePassword\UpdatePasswordRequest;
+use App\Domain\AppUser\UseCase\ConfirmRegister\ConfirmRegisterRequest;
 
 #[Route('/api/V1')]
-class AppUserController extends AbstractController
+class AppUserController extends ApiAbstractController
 {
     #[Route('/test', name: 'app_test', methods: ['GET'])]
-    public function test()
+    public function test(): JsonResponse
     {
         return $this->json('test', 200);
     }
@@ -51,7 +48,7 @@ class AppUserController extends AbstractController
         int $id,
         GetAppUser $getAppUser,
         GetAppUserJsonPresenter $presenter
-    )
+    ): JsonResponse
     {
         $getAppUser->execute(new GetAppUserRequest($id), $presenter);
 
@@ -68,7 +65,7 @@ class AppUserController extends AbstractController
         Register $register,
         RegisterRequest $registerRequest,
         RegisterJsonPresenter $presenter
-    )
+    ): JsonResponse
     {
         $content = json_decode($request->getContent(), true);
         $register->execute($registerRequest->setContent($content), $presenter);
@@ -86,7 +83,7 @@ class AppUserController extends AbstractController
         int $id,
         ConfirmRegister $confirmRegister,
         ConfirmRegisterJsonPresenter $presenter
-    )
+    ): JsonResponse
     {
         $confirmRegister->execute(new ConfirmRegisterRequest($id), $presenter);
 
@@ -98,7 +95,7 @@ class AppUserController extends AbstractController
         name: 'app_appuser_login',
         methods: ['POST']
     )]
-    public function login()
+    public function login(): JsonResponse
     {
         return $this->json('email or password is missing', 400);
     }
@@ -114,7 +111,7 @@ class AppUserController extends AbstractController
         Request $request,
         UpdateAppUser $updateAppUser,
         UpdateAppUserJsonPresenter $presenter
-    )
+    ): JsonResponse
     {
         $content = json_decode($request->getContent(), true);
 
@@ -135,7 +132,7 @@ class AppUserController extends AbstractController
         int $id,
         RemoveAppUser $removeAppUser,
         RemoveAppUserJsonPresenter $presenter
-    )
+    ): JsonResponse
     {
         $removeAppUser->execute(new RemoveAppUserRequest($id), $presenter);
 
@@ -151,7 +148,7 @@ class AppUserController extends AbstractController
         Request $request,
         LostPassword $lostPassword,
         LostPasswordJsonPresenter $presenter
-    )
+    ): JsonResponse
     {
         $content = json_decode($request->getContent(), true);
 
@@ -180,7 +177,7 @@ class AppUserController extends AbstractController
         Request $request,
         UpdatePassword $updatePassword,
         UpdatePasswordJsonPresenter $presenter
-    )
+    ): JsonResponse
     {
         $content = json_decode($request->getContent(), true);
 
@@ -202,7 +199,7 @@ class AppUserController extends AbstractController
         Request $request,
         UpdatePassword $updatePassword,
         UpdatePasswordJsonPresenter $presenter
-    )
+    ): JsonResponse
     {
         $content = json_decode($request->getContent(), true);
 

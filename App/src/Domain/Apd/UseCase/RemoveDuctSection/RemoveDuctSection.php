@@ -44,13 +44,13 @@ class RemoveDuctSection
 
         $ductNetwork = $this->ductNetworkRepository->getDuctNetworkById($request->ductNetworkId);
         if (is_null($ductNetwork)) {
-            $response->addError('ductNetwork', 'There is no duct network with this id');
+            $response->addError('ductNetwork', 'There is no duct network with this id', 404);
             $isValid = $isValid && false;
         }
 
         $ductSectionToRemove = $this->ductSectionRepository->getDuctSectionById($request->ductSectionId);
         if (is_null($ductSectionToRemove)) {
-            $response->addError('ductSection', 'There is no duct section with this id');
+            $response->addError('ductSection', 'There is no duct section with this id', 404);
             $isValid = $isValid && false;
         }
 

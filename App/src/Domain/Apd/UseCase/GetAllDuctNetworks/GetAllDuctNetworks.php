@@ -40,7 +40,7 @@ class GetAllDuctNetworks
             return true;
         }
 
-        $response->addError('projectId', 'Project doesn\'t exist with this id.');
+        $response->addError('projectId', 'Project doesn\'t exist with this id.', 404);
         return false;
     }
 }

@@ -43,7 +43,7 @@ class GetDuctNetwork
             return true;
         }
 
-        $response->addError('projectId', 'Project doesn\'t exist with this id.');
+        $response->addError('projectId', 'Project doesn\'t exist with this id.', 404);
         return false;
     }
 
@@ -53,7 +53,7 @@ class GetDuctNetwork
             return true;
         }
 
-        $response->addError('ductNetworkId', 'Duct network doesn\'t exist with this id.');
+        $response->addError('ductNetworkId', 'Duct network doesn\'t exist with this id.', 404);
         return false;
     }
 
@@ -65,7 +65,7 @@ class GetDuctNetwork
             }
         }
 
-        $response->addError('ductNetworkId', 'Duct network don\'t belong to this project.');
+        $response->addError('ductNetworkId', 'Duct network don\'t belong to this project.', 404);
         return false;
     }
 }

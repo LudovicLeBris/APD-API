@@ -31,10 +31,12 @@ class UpdatePassword
         $response = new UpdatePasswordResponse();
         $isValid = $this->checkRequest($request, $response);
 
-        if (is_null($request->guid)) {
-            $this->updatePassword($request, $response, $isValid);
-        } else {
-            $this->recoverPassword($request, $response, $isValid);
+        if ($isValid) {
+            if (is_null($request->guid)) {
+                $this->updatePassword($request, $response, $isValid);
+            } else {
+                $this->recoverPassword($request, $response, $isValid);
+            }
         }
 
         $presenter->present($response);
@@ -56,7 +58,7 @@ class UpdatePassword
             return true;
         } catch (LazyAssertionException $e) {
             foreach ($e->getErrorExceptions() as $error) {
-                $response->addError($error->getPropertyPath(), $error->getMessage());
+                $response->addError($error->getPropertyPath(), $error->getMessage(), 422);
             }
 
             return false;
@@ -66,13 +68,13 @@ class UpdatePassword
     private function checkOldPassword(UpdatePasswordRequest $request, AppUser $appUser, UpdatePasswordResponse $response)
     {
         if (is_null($request->oldPassword)) {
-            $response->addError('oldPassword', 'The oldPassword is missing');
+            $response->addError('oldPassword', 'The oldPassword is missing', 400);
 
             return false;
         }
         
         if (!$this->passwordHasher->isPasswordValid($request->oldPassword, $appUser->getPassword())) {
-            $response->addError('password', 'Invalid password');
+            $response->addError('password', 'Invalid password', 200);
 
             return false;
         }
@@ -84,13 +86,13 @@ class UpdatePassword
     {
         $recoveryPassword = $this->recoveryPasswordRepository->getRecoveryPasswordByGuid($request->guid);
         if (is_null($recoveryPassword)) {
-            $response->addError('guid', 'The guid token doesn\'t match');
+            $response->addError('guid', 'The guid token doesn\'t match', 404);
 
             return $this;
         }
         
         if (!$recoveryPassword->getIsEnable()) {
-            $response->addError('recover time', 'The recovery time is exceeded');
+            $response->addError('recover time', 'The recovery time is exceeded', 410);
             $isValid = false;
         }
 
@@ -98,7 +100,7 @@ class UpdatePassword
 
         if (!$oldAppUser) {
             $isValid = false;
-            $response->addError('id', 'User id don\'t match in recovery database');
+            $response->addError('id', 'User id don\'t match in recovery database', 404);
         }
 
         if ($isValid) {
@@ -130,7 +132,7 @@ class UpdatePassword
         $isValid = true;
         if (!$oldAppUser) {
             $isValid = false;
-            $response->addError('id', 'User doesn\'t exist with this id');
+            $response->addError('id', 'User doesn\'t exist with this id', 404);
         }
         
         $isValid = $isValid && $this->checkOldPassword($request, $oldAppUser, $response);

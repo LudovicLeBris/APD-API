@@ -83,7 +83,7 @@ class UpdateDuctNetwork
             return true;
         } catch (LazyAssertionException $e) {
             foreach ($e->getErrorExceptions() as $error) {
-                $response->addError($error->getPropertyPath(), $error->getMessage());
+                $response->addError($error->getPropertyPath(), $error->getMessage(), 422);
             }
             return false;
         }
@@ -94,7 +94,7 @@ class UpdateDuctNetwork
         if ($ductNetwork) {
             return true;
         }
-        $response->addError('id', 'Duct Network doesn\'t exist with this id');
+        $response->addError('id', 'Duct Network doesn\'t exist with this id', 404);
         return false;
     }
 
@@ -103,7 +103,7 @@ class UpdateDuctNetwork
         if ($project) {
             return true;
         }
-        $response->addError('projectId', 'Project doesn\'t exist with this id');
+        $response->addError('projectId', 'Project doesn\'t exist with this id', 404);
         return false;
     }
 
@@ -115,7 +115,7 @@ class UpdateDuctNetwork
             }
         }
 
-        $response->addError('id', 'Duct network don\'t belong to this project');
+        $response->addError('id', 'Duct network don\'t belong to this project', 404);
         return false;
     }
 

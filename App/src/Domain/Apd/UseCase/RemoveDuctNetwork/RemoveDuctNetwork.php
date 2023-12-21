@@ -55,13 +55,13 @@ class RemoveDuctNetwork
         
         $project = $this->projectRepository->getProjectById($request->projectId);
         if (is_null($project)) {
-            $response->addError('project', 'There is no project with this id');
+            $response->addError('project', 'There is no project with this id', 404);
             $isValid = $isValid && false;
         }
 
         $ductNetworkToRemove = $this->ductNetworkRepository->getDuctNetworkById($request->ductNetworkId);
         if (is_null($ductNetworkToRemove)) {
-            $response->addError('ductNetwork', 'There is no duct network with this id');
+            $response->addError('ductNetwork', 'There is no duct network with this id', 404);
             $isValid = $isValid && false;
         }
 

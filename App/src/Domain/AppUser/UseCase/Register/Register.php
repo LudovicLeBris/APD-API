@@ -44,14 +44,14 @@ class Register
     private function validateAppUser(RegisterRequest $request, RegisterResponse $response): bool
     {
         if ($request->email === null) {
-            $response->addError('email', 'Email is missing');
+            $response->addError('email', 'Email is missing', 400);
             return false;
         }
 
         $existingAppUser = $this->appUserRepository->getAppUserByEmail((string)$request->email);
 
         if ($existingAppUser !== null) {
-            $response->addError('email', 'Email already used');
+            $response->addError('email', 'Email already used', 409);
             return false;
         }
 
@@ -82,7 +82,7 @@ class Register
             return true;
         } catch (LazyAssertionException $e) {
             foreach ($e->getErrorExceptions() as $error) {
-                $response->addError($error->getPropertyPath(), $error->getMessage());
+                $response->addError($error->getPropertyPath(), $error->getMessage(), 422);
             }
             return false;
         }

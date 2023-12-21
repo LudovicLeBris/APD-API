@@ -66,7 +66,7 @@ class UpdateAppUser
             return true;
         } catch (LazyAssertionException $e) {
             foreach ($e->getErrorExceptions() as $error) {
-                $response->addError($error->getPropertyPath(), $error->getMessage());
+                $response->addError($error->getPropertyPath(), $error->getMessage(), 422);
             }
 
             return false;
@@ -79,14 +79,14 @@ class UpdateAppUser
             return true;
         }
 
-        $response->addError('id', 'User doesn\'t exist with this id');
+        $response->addError('id', 'User doesn\'t exist with this id', 404);
         return false;
     }
 
     private function checkAppUserEnable(AppUser $oldAppUser, UpdateAppUserResponse $response)
     {
         if (!$oldAppUser->getIsEnable()) {
-            $response->addError('email', 'Disabled user');
+            $response->addError('email', 'Disabled user', 423);
 
             return false;
         }
