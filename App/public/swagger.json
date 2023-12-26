@@ -1,0 +1,2564 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "APD-API",
+        "description": "An API to perform air pressure drop calculation through projects and user account",
+        "version": "0.1"
+    },
+    "servers": [
+        {
+            "url": "https://aeraulic.io/api/V1",
+            "description": "Apd calculator API server"
+        }
+    ],
+    "paths": {
+        "/apd/projects/{id}/ductnetworks": {
+            "get": {
+                "tags": [
+                    "Duct network"
+                ],
+                "summary": "Get all duct networks",
+                "description": "Get all duct networks from a project",
+                "operationId": "d8155dfd45fe3797263b879a5dc11af0",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/id"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success to get all duct networks",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "content": {
+                                            "type": "array",
+                                            "items": {
+                                                "allOf": [
+                                                    {
+                                                        "$ref": "#/components/schemas/ductNetwork"
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/notFound"
+                    }
+                },
+                "security": [
+                    {
+                        "scalar": "JWT"
+                    }
+                ]
+            }
+        },
+        "/apd/projects/{projectId}/ductnetworks/{ductNetworkId}": {
+            "get": {
+                "tags": [
+                    "Duct network"
+                ],
+                "summary": "Get one project",
+                "description": "Get one duct network with his id from a project",
+                "operationId": "c5fb8e04bddca0760ef21e7ca6fe5fc6",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/projectId"
+                    },
+                    {
+                        "$ref": "#/components/parameters/ductNetworkId"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success to get one duct network",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "content": {
+                                            "$ref": "#/components/schemas/ductNetwork"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/notFound"
+                    }
+                },
+                "security": [
+                    {
+                        "scalar": "JWT"
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Duct network"
+                ],
+                "summary": "Remove a duct network",
+                "description": "Remove a duct network in a project. All duct sections associated will be deleted too.",
+                "operationId": "ecd4de1a23558ad25a210abaf769673d",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/projectId"
+                    },
+                    {
+                        "$ref": "#/components/parameters/ductNetworkId"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success to remove a duct network",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "DuctNetwork with name \"duct network n°1\" has been deleted, all associated duct sections has been deletes too."
+                                        },
+                                        "content": {
+                                            "$ref": "#/components/schemas/ductNetwork"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/notFound"
+                    }
+                },
+                "security": [
+                    {
+                        "scalar": "JWT"
+                    }
+                ]
+            },
+            "patch": {
+                "tags": [
+                    "Duct network"
+                ],
+                "summary": "Update a duct network",
+                "description": "Update a duct network in a project",
+                "operationId": "bb0a1bd95fe5764c7a304d0d3fbbedbe",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/projectId"
+                    },
+                    {
+                        "$ref": "#/components/parameters/ductNetworkId"
+                    }
+                ],
+                "requestBody": {
+                    "$ref": "#/components/requestBodies/updateDuctNetwork"
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success to update a duct network",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "content": {
+                                            "$ref": "#/components/schemas/ductNetwork"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/notFound"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/unprocessableEntity"
+                    }
+                },
+                "security": [
+                    {
+                        "scalar": "JWT"
+                    }
+                ]
+            }
+        },
+        "/apd/projects/{projectId}/ductnetworks": {
+            "post": {
+                "tags": [
+                    "Duct network"
+                ],
+                "summary": "Add a duct network",
+                "description": "Add a duct network in a project",
+                "operationId": "b58cd6a66012e243df7ee0ac432929ab",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/projectId"
+                    }
+                ],
+                "requestBody": {
+                    "$ref": "#/components/requestBodies/addDuctNetwork"
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success to add a duct network",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "content": {
+                                            "properties": {
+                                                "id": {
+                                                    "title": "id",
+                                                    "description": "Duct network's id",
+                                                    "type": "integer",
+                                                    "example": 42
+                                                },
+                                                "name": {
+                                                    "title": "name",
+                                                    "description": "Project's name",
+                                                    "type": "string",
+                                                    "example": "duct network n°1"
+                                                },
+                                                "projectId": {
+                                                    "title": "project id",
+                                                    "description": "Duct network's associated project id",
+                                                    "type": "integer",
+                                                    "example": 21
+                                                },
+                                                "air": {
+                                                    "title": "air",
+                                                    "description": "Duct network's air properties",
+                                                    "properties": {
+                                                        "viscosity": {
+                                                            "title": "viscosity",
+                                                            "description": "Viscosity property of the air",
+                                                            "type": "number",
+                                                            "format": "float",
+                                                            "example": 1.5080510051843115e-5
+                                                        },
+                                                        "density": {
+                                                            "title": "density",
+                                                            "description": "Density property of the air",
+                                                            "type": "number",
+                                                            "format": "float",
+                                                            "example": 1.2058928673556562
+                                                        },
+                                                        "temperature": {
+                                                            "title": "temperature",
+                                                            "description": "Temperature property of the air",
+                                                            "type": "number",
+                                                            "format": "float",
+                                                            "example": 18.2
+                                                        },
+                                                        "altitude": {
+                                                            "title": "altitude",
+                                                            "description": "Altitude property of the air",
+                                                            "type": "integer",
+                                                            "example": 800
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "altitude": {
+                                                    "title": "altitude",
+                                                    "description": "duct network's altitude below sea level, all duct sections are dependant of this property - in meter (m)",
+                                                    "type": "integer",
+                                                    "example": 800
+                                                },
+                                                "temperature": {
+                                                    "title": "temperature",
+                                                    "description": "duct network's temperature, all duct sections are dependant of this property - in degrees Celsius (°C)",
+                                                    "type": "number",
+                                                    "example": 18.2
+                                                },
+                                                "generalMaterial": {
+                                                    "title": "general material",
+                                                    "description": "Duct network's material, all duct sections are dependent of this property",
+                                                    "type": "string",
+                                                    "example": "galvanised_steel"
+                                                },
+                                                "ductSections": {
+                                                    "title": "duct sections",
+                                                    "description": "All duct sections associated of this project",
+                                                    "type": "array",
+                                                    "items": {},
+                                                    "example": "[]"
+                                                },
+                                                "totalLinearApd": {
+                                                    "title": "total linear apd",
+                                                    "description": "Result of all linear apd calculation in this duct network - in pascal (Pa)",
+                                                    "type": "number",
+                                                    "format": "float",
+                                                    "example": 36.387
+                                                },
+                                                "totalSingularApd": {
+                                                    "title": "total singular apd",
+                                                    "description": "Result of all singular apd calculation in this duct network - in pascal (Pa)",
+                                                    "type": "number",
+                                                    "format": "float",
+                                                    "example": 83.473
+                                                },
+                                                "totalAdditionalApd": {
+                                                    "title": "total additional apd",
+                                                    "description": "Result of all additional apd calculation in this duct network - in pascal (Pa)",
+                                                    "type": "integer",
+                                                    "example": 150
+                                                },
+                                                "totalApd": {
+                                                    "title": "total apd",
+                                                    "description": "Result of total of all apd calculation in this duct network - in pascal (Pa)",
+                                                    "type": "number",
+                                                    "format": "float",
+                                                    "example": 269.86
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/notFound"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/unprocessableEntity"
+                    }
+                },
+                "security": [
+                    {
+                        "scalar": "JWT"
+                    }
+                ]
+            }
+        },
+        "/apd/ductnetworks/{id}/ductsections": {
+            "get": {
+                "tags": [
+                    "Duct section"
+                ],
+                "summary": "Get all duct sections",
+                "description": "Get all duct sections from a duct network",
+                "operationId": "e22e325b085af24814b62cc80ee68478",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/id"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success to get all duct sections",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "content": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/ductSection"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/notFound"
+                    }
+                },
+                "security": [
+                    {
+                        "scalar": "JWT"
+                    }
+                ]
+            }
+        },
+        "/apd/ductnetworks/{ductNetworkId}/ductsections/{ductSectionId}": {
+            "get": {
+                "tags": [
+                    "Duct section"
+                ],
+                "summary": "Get one duct section",
+                "description": "Get one duct section with his id from a duct network",
+                "operationId": "3fb1e7dd42600591277c80545b5dfad9",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/ductNetworkId"
+                    },
+                    {
+                        "$ref": "#/components/parameters/ductSectionId"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success to get one duct section",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "content": {
+                                            "$ref": "#/components/schemas/ductSection"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/notFound"
+                    }
+                },
+                "security": [
+                    {
+                        "scalar": "JWT"
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Duct section"
+                ],
+                "summary": "Remove a duct section",
+                "description": "Remove a duct section in a duct network",
+                "operationId": "a7a72b4e85a119b415f6f7947804ad03",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/ductNetworkId"
+                    },
+                    {
+                        "$ref": "#/components/parameters/ductSectionId"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success to remove a duct section",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "DuctSection with name \"section DE\" has been deleted."
+                                        },
+                                        "content": {
+                                            "$ref": "#/components/schemas/ductSection"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/notFound"
+                    }
+                },
+                "security": [
+                    {
+                        "scalar": "JWT"
+                    }
+                ]
+            },
+            "patch": {
+                "tags": [
+                    "Duct section"
+                ],
+                "summary": "Update a duct section",
+                "description": "Update a duct section in a duct network",
+                "operationId": "ad2829cb4ff3a06a8d8294ba1f7d983f",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/ductNetworkId"
+                    },
+                    {
+                        "$ref": "#/components/parameters/ductSectionId"
+                    }
+                ],
+                "requestBody": {
+                    "$ref": "#/components/requestBodies/updateDuctSection"
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success to update a duct section",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "content": {
+                                            "$ref": "#/components/schemas/ductSection"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/notFound"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/unprocessableEntity"
+                    }
+                },
+                "security": [
+                    {
+                        "scalar": "JWT"
+                    }
+                ]
+            }
+        },
+        "/apd/ductnetworks/{ductNetworkId}/ductsections": {
+            "post": {
+                "tags": [
+                    "Duct section"
+                ],
+                "summary": "Add a duct section",
+                "description": "Add a duct section in a duct network",
+                "operationId": "2ebc23fe69e34531059b8315eeb9c0f7",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/ductNetworkId"
+                    }
+                ],
+                "requestBody": {
+                    "$ref": "#/components/requestBodies/addDuctSection"
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success to add a duct section",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "content": {
+                                            "$ref": "#/components/schemas/ductSection"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/notFound"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/unprocessableEntity"
+                    }
+                },
+                "security": [
+                    {
+                        "scalar": "JWT"
+                    }
+                ]
+            }
+        },
+        "/apd/users/{id}/projects": {
+            "get": {
+                "tags": [
+                    "Project"
+                ],
+                "summary": "Get all project",
+                "description": "Get all the projects from an user.",
+                "operationId": "ce054671e6e57121217c4e804c58a217",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/id"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success to get all projects",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "content": {
+                                            "type": "array",
+                                            "items": {
+                                                "allOf": [
+                                                    {
+                                                        "$ref": "#/components/schemas/project"
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/notFound"
+                    }
+                },
+                "security": [
+                    {
+                        "scalar": "JWT"
+                    }
+                ]
+            }
+        },
+        "/apd/users/{userId}/projects/{ProjectId}": {
+            "get": {
+                "tags": [
+                    "Project"
+                ],
+                "summary": "Get one project",
+                "description": "Get one project with his id from an user account.",
+                "operationId": "0ec8d1d20f00b6647953142ebb9c8466",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/userId"
+                    },
+                    {
+                        "$ref": "#/components/parameters/projectId"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success to get one project",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "content": {
+                                            "$ref": "#/components/schemas/project"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/notFound"
+                    }
+                },
+                "security": [
+                    {
+                        "scalar": "JWT"
+                    }
+                ]
+            }
+        },
+        "/apd/users/{userId}/projects": {
+            "post": {
+                "tags": [
+                    "Project"
+                ],
+                "summary": "Add a project",
+                "description": "Add a project in the user account.",
+                "operationId": "f058f85080d02d5f744d7994b33227c4",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/userId"
+                    }
+                ],
+                "requestBody": {
+                    "$ref": "#/components/requestBodies/addProject"
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success to add a project",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "content": {
+                                            "properties": {
+                                                "id": {
+                                                    "title": "id",
+                                                    "description": "Project's id",
+                                                    "type": "integer",
+                                                    "example": 21
+                                                },
+                                                "name": {
+                                                    "title": "name",
+                                                    "description": "Project's name",
+                                                    "type": "string",
+                                                    "example": "project A"
+                                                },
+                                                "userId": {
+                                                    "title": "user id",
+                                                    "description": "Project's associated user id",
+                                                    "type": "integer",
+                                                    "example": 10
+                                                },
+                                                "generalAltitude": {
+                                                    "title": "general altitude",
+                                                    "description": "Project's altitude below sea level, all duct networks and duct sections are dependant of this property - in meter (m)",
+                                                    "type": "integer",
+                                                    "example": 800
+                                                },
+                                                "generalTemperature": {
+                                                    "title": "general temperature",
+                                                    "description": "Project's temperature, all duct networks and duct sections are dependant of this property - in degrees Celsius (°C)",
+                                                    "type": "number",
+                                                    "example": 18.2
+                                                },
+                                                "ductNetworks": {
+                                                    "title": "duct networks",
+                                                    "description": "All duct networks associated of this project",
+                                                    "type": "array",
+                                                    "items": {},
+                                                    "example": "[]"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/notFound"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/unprocessableEntity"
+                    }
+                },
+                "security": [
+                    {
+                        "scalar": "JWT"
+                    }
+                ]
+            }
+        },
+        "/apd/users/{userId}/projects/{projectId}": {
+            "delete": {
+                "tags": [
+                    "Project"
+                ],
+                "summary": "Remove a project",
+                "description": "Remove a project in the user account. All duct networks and duct section associated will be deleted too.",
+                "operationId": "49a5b7812d8c1b14b897a0678e27f678",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/userId"
+                    },
+                    {
+                        "$ref": "#/components/parameters/projectId"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success to remove a project",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Project with name \"Project 1\" has been deleted, all associated duct networks and duct sections has been deletes too."
+                                        },
+                                        "content": {
+                                            "$ref": "#/components/schemas/project"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/notFound"
+                    }
+                },
+                "security": [
+                    {
+                        "scalar": "JWT"
+                    }
+                ]
+            },
+            "patch": {
+                "tags": [
+                    "Project"
+                ],
+                "summary": "Update a project",
+                "description": "Update a project in the user account",
+                "operationId": "34ffae8b97fe918afdb45e414b474579",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/userId"
+                    },
+                    {
+                        "$ref": "#/components/parameters/projectId"
+                    }
+                ],
+                "requestBody": {
+                    "$ref": "#/components/requestBodies/updateProject"
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success to update a project",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "content": {
+                                            "$ref": "#/components/schemas/project"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/notFound"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/unprocessableEntity"
+                    }
+                },
+                "security": [
+                    {
+                        "scalar": "JWT"
+                    }
+                ]
+            }
+        },
+        "/users/{id}": {
+            "get": {
+                "tags": [
+                    "App user"
+                ],
+                "summary": "Get user datas",
+                "description": "Get the user's datas",
+                "operationId": "84e675ece83719d4df8b82e07d6785ee",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/id"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get user",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "content": {
+                                            "$ref": "#/components/schemas/appUser"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/notFound"
+                    }
+                },
+                "security": [
+                    {
+                        "scalar": "JWT"
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "App user"
+                ],
+                "summary": "Remove user",
+                "description": "Perform a full removing of user's data and all entity related (projects, duct networks and duct sections).",
+                "operationId": "574d27c5a9727a0fd17708de1ecdf593",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/id"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Remove an app user",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "User \"email@email.test\" and all projects are deleted."
+                                        },
+                                        "content": {
+                                            "$ref": "#/components/schemas/appUser"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/notFound"
+                    }
+                },
+                "security": [
+                    {
+                        "scalar": "JWT"
+                    }
+                ]
+            },
+            "patch": {
+                "tags": [
+                    "App user"
+                ],
+                "summary": "Update user",
+                "description": "Update the user's datas.",
+                "operationId": "0ed50950c8f15ccf4bd38308345c5ee8",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/id"
+                    }
+                ],
+                "requestBody": {
+                    "$ref": "#/components/requestBodies/updateAppUser"
+                },
+                "responses": {
+                    "200": {
+                        "description": "Update an app user",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "content": {
+                                            "$ref": "#/components/schemas/appUser"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/notFound"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/unprocessableEntity"
+                    }
+                },
+                "security": [
+                    {
+                        "scalar": "JWT"
+                    }
+                ]
+            }
+        },
+        "/register": {
+            "post": {
+                "tags": [
+                    "App user"
+                ],
+                "summary": "Register user",
+                "description": "Register request for a visitor who wants a account to use the application.",
+                "operationId": "eef400eb9b9887436475a1ff5e7b096c",
+                "requestBody": {
+                    "$ref": "#/components/requestBodies/register"
+                },
+                "responses": {
+                    "200": {
+                        "description": "Register user",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "content": {
+                                            "$ref": "#/components/schemas/appUser"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/register/{id}": {
+            "patch": {
+                "tags": [
+                    "App user"
+                ],
+                "summary": "Confirm register",
+                "description": "Confirm register from a user with the email sent on registration.",
+                "operationId": "972cc114978a8d4264d297116f8d5921",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/id"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Confirm user's registration",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "User correctly activated"
+                                        },
+                                        "content": {
+                                            "type": "array",
+                                            "items": {},
+                                            "example": []
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "User already registrated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "error"
+                                        },
+                                        "content": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "field": {
+                                                        "type": "string",
+                                                        "example": "user"
+                                                    },
+                                                    "message": {
+                                                        "type": "string",
+                                                        "example": "User is already active"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/notFound"
+                    }
+                }
+            }
+        },
+        "/login": {
+            "post": {
+                "tags": [
+                    "App user"
+                ],
+                "summary": "Login",
+                "description": "Login request to authentifiate user.",
+                "operationId": "a79ced35ad4f96452b566c8199972d70",
+                "requestBody": {
+                    "$ref": "#/components/requestBodies/login"
+                },
+                "responses": {
+                    "200": {
+                        "description": "Login",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "token": {
+                                            "title": "token",
+                                            "type": "string",
+                                            "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE3MDMzNDY2MjQsImV4cCI6MTcwMzQzMzAyNCwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoidGVzdEBlbWFpbC50ZXN0In0.H-ZOfO9x5uH1VKo33s4Nb1UXcKG5ZIlaayu9OyRdeuMDcvMiEgozizgR9l-63G0uNkDOpOcXE4aeXk7RH0Lwj7c8OZN-KHxkYYcIDIJ-dDM4I72ur2z87EW9K0VhjtUxiCylzlMKcybHG1idixyGeaOTHx0fAH5KLT6KBsFgbboZoIKc9TLjH59eNBiLob0r_fssLdpEDqhWA4AWgN7NHRmIg7EXbEu54QEXPs3n7_vvN_QKkR6YltoyQDQ4Lj5dmWpYtcZOLNi9fLq91VOjFB0gTTuyS-SviOxuXtoJzgPbDaf6Q7BUYlBgDRk2Alegru9IQggHeMjBm0IG3Sk0Cg"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "code": {
+                                            "title": "code http",
+                                            "type": "integer",
+                                            "example": 401
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Invalid credentials."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/notFound"
+                    }
+                }
+            }
+        },
+        "/lostpassword": {
+            "post": {
+                "tags": [
+                    "App user"
+                ],
+                "summary": "Lost password",
+                "description": "The user can perform a \"Lost password\" request. The sytem send an email to the recipient supplied in the request with a guid identifier of a recover entity save in database. The user's account is disabled.",
+                "operationId": "8fd4753ebb5928fa2a971b01f1681cef",
+                "requestBody": {
+                    "$ref": "#/components/requestBodies/lostPassword"
+                },
+                "responses": {
+                    "200": {
+                        "description": "Lost password request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "An email was sent to \"email@email.test\" with a recovery link."
+                                        },
+                                        "content": {
+                                            "type": "array",
+                                            "items": {},
+                                            "example": []
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/unprocessableEntity"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/notFound"
+                    },
+                    "423": {
+                        "description": "User disabled",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "error"
+                                        },
+                                        "content": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "field": {
+                                                        "type": "string",
+                                                        "example": "email"
+                                                    },
+                                                    "message": {
+                                                        "type": "string",
+                                                        "example": "User is not enable"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/recoverpassword/{guid}": {
+            "patch": {
+                "tags": [
+                    "App user"
+                ],
+                "summary": "Recover password",
+                "description": "Recover password after a \"Lost password\" request. The guid is provided in the mail received by user.",
+                "operationId": "6f75127a51f32755c69a1d482a46df91",
+                "parameters": [
+                    {
+                        "name": "guid",
+                        "in": "path",
+                        "description": "Ressource's guid",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "$ref": "#/components/requestBodies/recoverPassword"
+                },
+                "responses": {
+                    "200": {
+                        "description": "Password updated successfully.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "content": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string",
+                                                "example": "Password updated"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/notFound"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/unprocessableEntity"
+                    }
+                }
+            }
+        },
+        "/users/{id}/updatepassword": {
+            "patch": {
+                "tags": [
+                    "App user"
+                ],
+                "summary": "Update password",
+                "description": "The user can update his password in a separated request. I must provide his old password.",
+                "operationId": "b771f6e81f638ca08ca6e4daffddb959",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/id"
+                    }
+                ],
+                "requestBody": {
+                    "$ref": "#/components/requestBodies/updatePassword"
+                },
+                "responses": {
+                    "200": {
+                        "description": "Password updated successfully.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "content": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string",
+                                                "example": "Password updated"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/notFound"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/unprocessableEntity"
+                    }
+                },
+                "security": [
+                    {
+                        "scalar": "JWT"
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "ductNetwork": {
+                "title": "duct network",
+                "properties": {
+                    "id": {
+                        "title": "id",
+                        "description": "Duct network's id",
+                        "type": "integer",
+                        "example": 42
+                    },
+                    "name": {
+                        "title": "name",
+                        "description": "Duct network's name",
+                        "type": "string",
+                        "example": "duct network n°1"
+                    },
+                    "projectId": {
+                        "title": "project id",
+                        "description": "Duct network's associated project id",
+                        "type": "integer",
+                        "example": 21
+                    },
+                    "air": {
+                        "title": "air",
+                        "description": "Air instance of the duct network",
+                        "properties": {
+                            "viscosity": {
+                                "title": "viscosity",
+                                "description": "Viscosity property of the air",
+                                "type": "number",
+                                "format": "float",
+                                "example": 1.5080510051843115e-5
+                            },
+                            "density": {
+                                "title": "density",
+                                "description": "Density property of the air",
+                                "type": "number",
+                                "format": "float",
+                                "example": 1.2058928673556562
+                            },
+                            "temperature": {
+                                "title": "temperature",
+                                "description": "Temperature property of the air",
+                                "type": "number",
+                                "format": "float",
+                                "example": 18.2
+                            },
+                            "altitude": {
+                                "title": "altitude",
+                                "description": "Altitude property of the air",
+                                "type": "integer",
+                                "example": 800
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "altitude": {
+                        "title": "altitude",
+                        "description": "Duct network's altitude below sea level - in meter (m)",
+                        "type": "integer",
+                        "minimum": 0,
+                        "example": 800
+                    },
+                    "temperature": {
+                        "title": "temperature",
+                        "description": "Duct network's ambiant temperature - in degrees Celsius (°C)",
+                        "type": "number",
+                        "format": "float",
+                        "example": 18.2
+                    },
+                    "generalMaterial": {
+                        "title": "general material",
+                        "description": "Duct network's material, all duct sections are dependent of this property",
+                        "type": "string",
+                        "example": "galvanised_steel"
+                    },
+                    "additionalApd": {
+                        "title": "additional apd",
+                        "description": "Optional additional air pressure drop value who represent an accessory of duct network - in pascal (Pa)",
+                        "type": "integer",
+                        "minimum": 1,
+                        "example": 50
+                    },
+                    "ductSections": {
+                        "title": "duct sections",
+                        "description": "All duct sections associated of this duct network",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ductSection"
+                        }
+                    },
+                    "totalLinearApd": {
+                        "title": "total linear apd",
+                        "description": "Result of all linear apd calculation in this duct network - in pascal (Pa)",
+                        "type": "number",
+                        "format": "float",
+                        "example": 36.387
+                    },
+                    "totalSingularApd": {
+                        "title": "total singular apd",
+                        "description": "Result of all singular apd calculation in this duct network - in pascal (Pa)",
+                        "type": "number",
+                        "format": "float",
+                        "example": 83.473
+                    },
+                    "totalAdditionalApd": {
+                        "title": "total additional apd",
+                        "description": "Result of all additional apd calculation in this duct network - in pascal (Pa)",
+                        "type": "integer",
+                        "example": 150
+                    },
+                    "totalApd": {
+                        "title": "total apd",
+                        "description": "Result of total of all apd calculation in this duct network - in pascal (Pa)",
+                        "type": "number",
+                        "format": "float",
+                        "example": 269.86
+                    }
+                },
+                "type": "object"
+            },
+            "ductSection": {
+                "title": "duct section",
+                "properties": {
+                    "id": {
+                        "title": "id",
+                        "description": "duct section id",
+                        "type": "integer",
+                        "example": 84
+                    },
+                    "name": {
+                        "title": "name",
+                        "description": "Duct network's name",
+                        "type": "string",
+                        "example": "section DE"
+                    },
+                    "ductNetworkId": {
+                        "title": "duct network id",
+                        "description": "Duct section's associated duct network id",
+                        "type": "integer",
+                        "example": 42
+                    },
+                    "air": {
+                        "title": "air",
+                        "description": "Air instance of the duct network",
+                        "properties": {
+                            "viscosity": {
+                                "title": "viscosity",
+                                "description": "Viscosity property of the air",
+                                "type": "number",
+                                "format": "float",
+                                "example": 1.5080510051843115e-5
+                            },
+                            "density": {
+                                "title": "density",
+                                "description": "Density property of the air",
+                                "type": "number",
+                                "format": "float",
+                                "example": 1.2058928673556562
+                            },
+                            "temperature": {
+                                "title": "temperature",
+                                "description": "Temperature property of the air",
+                                "type": "number",
+                                "format": "float",
+                                "example": 18.2
+                            },
+                            "altitude": {
+                                "title": "altitude",
+                                "description": "Altitude property of the air",
+                                "type": "integer",
+                                "example": 800
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "shape": {
+                        "title": "shape",
+                        "description": "Duct desction's shape - circular or rectangular",
+                        "type": "string",
+                        "pattern": "^circular|rectangular$",
+                        "example": "circular"
+                    },
+                    "material": {
+                        "title": "material",
+                        "description": "Duct desction's material",
+                        "type": "string",
+                        "example": "galvanised_steel"
+                    },
+                    "flowrate": {
+                        "title": "flow rate",
+                        "description": "Duct section's flow rate _ in cubic meter per hour (m³/h)",
+                        "type": "integer",
+                        "minimum": 100,
+                        "example": 2500
+                    },
+                    "length": {
+                        "title": "length",
+                        "description": "Duct section's linear length - in meter (m)",
+                        "type": "number",
+                        "format": "float",
+                        "minimum": 0.1,
+                        "example": 5.4
+                    },
+                    "singularities": {
+                        "title": "singularities",
+                        "description": "List and number of singularities in the duct section",
+                        "type": "array",
+                        "items": {
+                            "properties": {
+                                "singularity": {
+                                    "title": "singularity type",
+                                    "type": "string",
+                                    "example": "90_elbow"
+                                },
+                                "number": {
+                                    "title": "number of singularity",
+                                    "type": "integer",
+                                    "example": 2
+                                }
+                            },
+                            "type": "object"
+                        },
+                        "example": {
+                            "90_elbow": 2
+                        }
+                    },
+                    "additionalApd": {
+                        "title": "additional apd",
+                        "description": "Optional additional air pressure drop value who represent an accessory of duct section - in pascal (Pa)",
+                        "type": "integer",
+                        "minimum": 1,
+                        "example": 50
+                    },
+                    "diameter": {
+                        "title": "diameter",
+                        "description": "Duct section's diameter when shape is circular (normalized diameter) - in millimeter (mm)",
+                        "type": "integer",
+                        "example": 315
+                    },
+                    "width": {
+                        "title": "width",
+                        "description": "Duct section's width when shape is rectangular - in millimeter (mm)",
+                        "type": "integer",
+                        "example": 400
+                    },
+                    "height": {
+                        "title": "height",
+                        "description": "Duct section's height when shape is rectangular - in millimeter (mm)",
+                        "type": "integer",
+                        "example": 300
+                    },
+                    "equivDiameter": {
+                        "title": "equiv diameter",
+                        "description": "Duct section equivalent diameter calculation - in millimeter (mm)",
+                        "type": "number",
+                        "format": "float",
+                        "example": 380.697
+                    },
+                    "ductSectionsSection": {
+                        "title": "duct section's section",
+                        "description": "Section of the duct section calculation - in square meter (m²)",
+                        "type": "number",
+                        "format": "float",
+                        "example": 0.114
+                    },
+                    "flowspeed": {
+                        "title": "flow speed",
+                        "description": "Duct section's flow speed calculation - in meter per second (m/s)",
+                        "type": "number",
+                        "format": "float",
+                        "example": 7.31
+                    },
+                    "linearApd": {
+                        "title": "linear apd",
+                        "description": "Duct section's linear apd calculation - in pascal (Pa)",
+                        "type": "number",
+                        "format": "float",
+                        "example": 11.011
+                    },
+                    "singularApd": {
+                        "title": "singular apd",
+                        "description": "Duct section's singular apd calculation - in pascal (Pa)",
+                        "type": "number",
+                        "format": "float",
+                        "example": 9.693
+                    },
+                    "totalApd": {
+                        "title": "total apd",
+                        "description": "Duct section's total apd calculation - in pascal (Pa)",
+                        "type": "number",
+                        "format": "float",
+                        "example": 70.704
+                    }
+                },
+                "type": "object"
+            },
+            "project": {
+                "title": "project",
+                "properties": {
+                    "id": {
+                        "title": "id",
+                        "description": "Project's id",
+                        "type": "integer",
+                        "example": 21
+                    },
+                    "name": {
+                        "title": "name",
+                        "description": "Project's name",
+                        "type": "string",
+                        "example": "project A"
+                    },
+                    "userId": {
+                        "title": "user id",
+                        "description": "Project's associated user id",
+                        "type": "integer",
+                        "example": 10
+                    },
+                    "generalAltitude": {
+                        "title": "general altitude",
+                        "description": "Project's altitude below sea level, all duct networks and duct sections are dependant of this property - in meter (m)",
+                        "type": "integer",
+                        "minimum": 0,
+                        "example": 800
+                    },
+                    "generalTemperature": {
+                        "title": "general temperature",
+                        "description": "Project's temperature, all duct networks and duct sections are dependant of this property - in degrees Celsius (°C)",
+                        "type": "number",
+                        "format": "float",
+                        "example": 18.2
+                    },
+                    "ductNetworks": {
+                        "title": "duct networks",
+                        "description": "All duct networks associated of this project",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ductNetwork"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "appUser": {
+                "title": "app user",
+                "properties": {
+                    "id": {
+                        "title": "id",
+                        "description": "user id",
+                        "type": "integer",
+                        "example": 10
+                    },
+                    "email": {
+                        "title": "email",
+                        "description": "User's email",
+                        "type": "string",
+                        "format": "email",
+                        "example": "email@email.test"
+                    },
+                    "password": {
+                        "title": "password",
+                        "description": "User's password - must have minimum 8 characters, 1 uppercase letter, 1 lowercase letter, 1 digit and 1 special character",
+                        "type": "string",
+                        "pattern": "/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%&^*-]).{8,}$/",
+                        "example": "$2y$10$./m7/hhKacEd85Vu5tZeHOd9r4sUYF375GHRqEhaen/sfoixxYtRi"
+                    },
+                    "lastname": {
+                        "title": "lastname",
+                        "description": "User's last name",
+                        "type": "string",
+                        "example": "Doe"
+                    },
+                    "firstname": {
+                        "title": "firstname",
+                        "description": "User's first name",
+                        "type": "string",
+                        "example": "John"
+                    },
+                    "company": {
+                        "title": "company",
+                        "description": "User's company - optional",
+                        "type": "string",
+                        "example": "Johns&Cie",
+                        "nullable": true
+                    },
+                    "role": {
+                        "title": "role",
+                        "description": "User's role",
+                        "type": "string",
+                        "example": "appUser"
+                    },
+                    "isEnable": {
+                        "title": "isEnable",
+                        "description": "Is user enable",
+                        "type": "boolean",
+                        "example": true
+                    }
+                },
+                "type": "object"
+            },
+            "diameters": {
+                "title": "diameters",
+                "properties": {
+                    "80": {
+                        "type": "integer"
+                    },
+                    "160": {
+                        "type": "integer"
+                    },
+                    "200": {
+                        "type": "integer"
+                    },
+                    "250": {
+                        "type": "integer"
+                    },
+                    "315": {
+                        "type": "integer"
+                    },
+                    "355": {
+                        "type": "integer"
+                    },
+                    "400": {
+                        "type": "integer"
+                    },
+                    "450": {
+                        "type": "integer"
+                    },
+                    "500": {
+                        "type": "integer"
+                    },
+                    "630": {
+                        "type": "integer"
+                    },
+                    "710": {
+                        "type": "integer"
+                    },
+                    "800": {
+                        "type": "integer"
+                    },
+                    "900": {
+                        "type": "integer"
+                    },
+                    "1000": {
+                        "type": "integer"
+                    },
+                    "1120": {
+                        "type": "integer"
+                    },
+                    "1250": {
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "materialsName": {
+                "title": "materialsName",
+                "properties": {
+                    "galvanised_steel": {
+                        "type": "string"
+                    },
+                    "aluminium": {
+                        "type": "string"
+                    },
+                    "steel": {
+                        "type": "string"
+                    },
+                    "cast_iron": {
+                        "type": "string"
+                    },
+                    "plastic": {
+                        "type": "string"
+                    },
+                    "smooth_concrete": {
+                        "type": "string"
+                    },
+                    "ordinary_concrete": {
+                        "type": "string"
+                    },
+                    "brick": {
+                        "type": "string"
+                    },
+                    "terracotta": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "singularitiesAmount": {
+                "title": "singularitiesAmount",
+                "properties": {
+                    "90_elbow": {
+                        "type": "integer",
+                        "example": 2
+                    },
+                    "60_elbow": {
+                        "type": "integer",
+                        "example": 2
+                    },
+                    "45_elbow": {
+                        "type": "integer",
+                        "example": 2
+                    },
+                    "30_elbow": {
+                        "type": "integer",
+                        "example": 2
+                    },
+                    "90_sharp_elbow": {
+                        "type": "integer",
+                        "example": 2
+                    },
+                    "60_sharp_elbow": {
+                        "type": "integer",
+                        "example": 2
+                    },
+                    "45_sharp_elbow": {
+                        "type": "integer",
+                        "example": 2
+                    },
+                    "30_sharp_elbow": {
+                        "type": "integer",
+                        "example": 2
+                    },
+                    "90_sep_tee": {
+                        "type": "integer",
+                        "example": 2
+                    },
+                    "90_junc_tee": {
+                        "type": "integer",
+                        "example": 2
+                    },
+                    "45_sep_tee": {
+                        "type": "integer",
+                        "example": 2
+                    },
+                    "45_junc_tee": {
+                        "type": "integer",
+                        "example": 2
+                    },
+                    "pressed_reducer": {
+                        "type": "integer",
+                        "example": 2
+                    },
+                    "long_reducer": {
+                        "type": "integer",
+                        "example": 2
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "responses": {
+            "notFound": {
+                "description": "Ressource not found",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "example": "Error"
+                                },
+                                "content": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "field": {
+                                                "type": "string",
+                                                "example": "id"
+                                            },
+                                            "message": {
+                                                "type": "string",
+                                                "example": "Ressource doesn't exist with this id."
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "unprocessableEntity": {
+                "description": "Unable to process the contained instructions",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "example": "Error"
+                                },
+                                "content": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "field": {
+                                                "type": "string",
+                                                "example": "shape"
+                                            },
+                                            "message": {
+                                                "type": "string",
+                                                "example": "Value \"rectangulard\" is not an element of the valid values: circular, rectangular."
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
+        "parameters": {
+            "id": {
+                "name": "id",
+                "in": "path",
+                "description": "Ressource's id",
+                "required": true,
+                "schema": {
+                    "type": "integer"
+                }
+            },
+            "userId": {
+                "name": "userId",
+                "in": "path",
+                "description": "User's id",
+                "required": true,
+                "schema": {
+                    "type": "integer"
+                }
+            },
+            "projectId": {
+                "name": "projectId",
+                "in": "path",
+                "description": "Project's id",
+                "required": true,
+                "schema": {
+                    "type": "integer"
+                }
+            },
+            "ductNetworkId": {
+                "name": "ductNetworkId",
+                "in": "path",
+                "description": "Duct network's id",
+                "required": true,
+                "schema": {
+                    "type": "integer"
+                }
+            },
+            "ductSectionId": {
+                "name": "ductSectionId",
+                "in": "path",
+                "description": "Duct section's id",
+                "required": true,
+                "schema": {
+                    "type": "integer"
+                }
+            }
+        },
+        "requestBodies": {
+            "addDuctNetwork": {
+                "required": true,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "properties": {
+                                "name": {
+                                    "title": "name",
+                                    "description": "Name of the duct network",
+                                    "type": "string",
+                                    "example": "duct network n°1"
+                                },
+                                "generalMaterial": {
+                                    "title": "general material",
+                                    "description": "Duct network's material, all duct sections are dependent of this property",
+                                    "type": "string",
+                                    "example": "galvanised_steel",
+                                    "oneOf": [
+                                        {
+                                            "$ref": "#/components/schemas/materialsName"
+                                        }
+                                    ]
+                                },
+                                "additionalApd": {
+                                    "title": "additional apd",
+                                    "description": "Optional additional air pressure drop value who represent an accessory of duct network - in pascal (Pa)",
+                                    "type": "integer",
+                                    "minimum": 1,
+                                    "example": 50
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "addDuctSection": {
+                "required": true,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "properties": {
+                                "name": {
+                                    "title": "name",
+                                    "description": "Name of the duct network",
+                                    "type": "string",
+                                    "example": "duct network n°1"
+                                },
+                                "shape": {
+                                    "title": "shape",
+                                    "description": "Duct desction's shape - circular or rectangular",
+                                    "type": "string",
+                                    "pattern": "^circular|rectangular$",
+                                    "example": "circular"
+                                },
+                                "flowrate": {
+                                    "title": "flow rate",
+                                    "description": "Duct section's flow rate _ in cubic meter per hour (m³/h)",
+                                    "type": "integer",
+                                    "minimum": 100,
+                                    "example": 2500
+                                },
+                                "length": {
+                                    "title": "length",
+                                    "description": "Duct section's linear length - in meter (m)",
+                                    "type": "number",
+                                    "format": "float",
+                                    "minimum": 0.1,
+                                    "example": 5.4
+                                },
+                                "singularities": {
+                                    "title": "singularities",
+                                    "description": "List and amount of singularities in the duct section",
+                                    "type": "object",
+                                    "anyOf": [
+                                        {
+                                            "$ref": "#/components/schemas/singularitiesAmount"
+                                        }
+                                    ]
+                                },
+                                "additionalApd": {
+                                    "title": "additional apd",
+                                    "description": "Optional additional air pressure drop value who represent an accessory of duct section - in pascal (Pa)",
+                                    "type": "integer",
+                                    "minimum": 1,
+                                    "example": 50,
+                                    "nullable": true
+                                },
+                                "diameter": {
+                                    "title": "diameter",
+                                    "description": "Duct section's diameter when shape is circular (normalized diameter) - in millimeter (mm)",
+                                    "type": "integer",
+                                    "example": 315,
+                                    "nullable": true,
+                                    "oneOf": [
+                                        {
+                                            "$ref": "#/components/schemas/diameters"
+                                        }
+                                    ]
+                                },
+                                "width": {
+                                    "title": "width",
+                                    "description": "Duct section's width when shape is rectangular - in millimeter (mm)",
+                                    "type": "integer",
+                                    "example": 400,
+                                    "nullable": true
+                                },
+                                "height": {
+                                    "title": "height",
+                                    "description": "Duct section's height when shape is rectangular - in millimeter (mm)",
+                                    "type": "integer",
+                                    "example": 300,
+                                    "nullable": true
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "addProject": {
+                "required": true,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "properties": {
+                                "name": {
+                                    "title": "name",
+                                    "description": "Name of the project",
+                                    "type": "string",
+                                    "example": "project B"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "updateDuctNetwork": {
+                "required": true,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "properties": {
+                                "name": {
+                                    "title": "name",
+                                    "description": "Name of the duct network",
+                                    "type": "string",
+                                    "example": "duct network n°1",
+                                    "nullable": true
+                                },
+                                "generalMaterial": {
+                                    "title": "general material",
+                                    "description": "Duct network's material, all duct sections are dependent of this property",
+                                    "type": "string",
+                                    "example": "galvanised_steel",
+                                    "nullable": true
+                                },
+                                "additionalApd": {
+                                    "title": "additional apd",
+                                    "description": "Optional additional air pressure drop value who represent an accessory of duct network - in pascal (Pa)",
+                                    "type": "integer",
+                                    "minimum": 1,
+                                    "example": 50,
+                                    "nullable": true
+                                },
+                                "altitude": {
+                                    "title": "altitude",
+                                    "description": "Duct network's altitude below sea level, all duct sections are dependant of this property - in meter (m)",
+                                    "type": "integer",
+                                    "minimum": 0,
+                                    "example": 800,
+                                    "nullable": true
+                                },
+                                "temperature": {
+                                    "title": "temperature",
+                                    "description": "Duct network's temperature, all duct sections are dependant of this property - in meter (m",
+                                    "type": "number",
+                                    "format": "float",
+                                    "example": 18.2,
+                                    "nullable": true
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "updateDuctSection": {
+                "required": true,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "properties": {
+                                "name": {
+                                    "title": "name",
+                                    "description": "Name of the duct network",
+                                    "type": "string",
+                                    "example": "duct network n°1",
+                                    "nullable": true
+                                },
+                                "material": {
+                                    "title": "material",
+                                    "description": "Duct desction's material",
+                                    "type": "string",
+                                    "example": "galvanised_steel",
+                                    "nullable": true,
+                                    "oneOf": [
+                                        {
+                                            "$ref": "#/components/schemas/materialsName"
+                                        }
+                                    ]
+                                },
+                                "shape": {
+                                    "title": "shape",
+                                    "description": "Duct desction's shape - circular or rectangular",
+                                    "type": "string",
+                                    "pattern": "^circular|rectangular$",
+                                    "example": "circular",
+                                    "nullable": true
+                                },
+                                "flowrate": {
+                                    "title": "flow rate",
+                                    "description": "Duct section's flow rate _ in cubic meter per hour (m³/h)",
+                                    "type": "integer",
+                                    "minimum": 100,
+                                    "example": 2500,
+                                    "nullable": true
+                                },
+                                "length": {
+                                    "title": "length",
+                                    "description": "Duct section's linear length - in meter (m)",
+                                    "type": "number",
+                                    "format": "float",
+                                    "minimum": 0.1,
+                                    "example": 5.4,
+                                    "nullable": true
+                                },
+                                "singularities": {
+                                    "title": "singularities",
+                                    "description": "List and amount of singularities in the duct section",
+                                    "type": "object",
+                                    "nullable": true,
+                                    "anyOf": [
+                                        {
+                                            "$ref": "#/components/schemas/singularitiesAmount"
+                                        }
+                                    ]
+                                },
+                                "additionalApd": {
+                                    "title": "additional apd",
+                                    "description": "Optional additional air pressure drop value who represent an accessory of duct section - in pascal (Pa)",
+                                    "type": "integer",
+                                    "minimum": 1,
+                                    "example": 50,
+                                    "nullable": true
+                                },
+                                "diameter": {
+                                    "title": "diameter",
+                                    "description": "Duct section's diameter when shape is circular (normalized diameter) - in millimeter (mm)",
+                                    "type": "integer",
+                                    "example": 315,
+                                    "nullable": true,
+                                    "oneOf": [
+                                        {
+                                            "$ref": "#/components/schemas/diameters"
+                                        }
+                                    ]
+                                },
+                                "width": {
+                                    "title": "width",
+                                    "description": "Duct section's width when shape is rectangular - in millimeter (mm)",
+                                    "type": "integer",
+                                    "example": 400,
+                                    "nullable": true
+                                },
+                                "height": {
+                                    "title": "height",
+                                    "description": "Duct section's height when shape is rectangular - in millimeter (mm)",
+                                    "type": "integer",
+                                    "example": 300,
+                                    "nullable": true
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "updateProject": {
+                "required": true,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "properties": {
+                                "name": {
+                                    "title": "name",
+                                    "description": "Name of the project",
+                                    "type": "string",
+                                    "example": "project B",
+                                    "nullable": true
+                                },
+                                "generalAltitude": {
+                                    "title": "general altitude",
+                                    "description": "Project's altitude below sea level, all duct networks and duct sections are dependant of this property - in meter (m",
+                                    "type": "integer",
+                                    "minimum": 0,
+                                    "example": 800,
+                                    "nullable": true
+                                },
+                                "generalTemperature": {
+                                    "title": "general temperature",
+                                    "description": "Project's temperature, all duct networks and duct sections are dependant of this property - in degrees Celsius (°C)",
+                                    "type": "number",
+                                    "format": "float",
+                                    "example": 18.2,
+                                    "nullable": true
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "login": {
+                "required": true,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "properties": {
+                                "email": {
+                                    "title": "email",
+                                    "description": "User's email",
+                                    "type": "string",
+                                    "format": "email",
+                                    "example": "email@email.test"
+                                },
+                                "password": {
+                                    "title": "password",
+                                    "description": "User's password - must have minimum 8 characters, 1 uppercase letter, 1 lowercase letter, 1 digit and 1 special character",
+                                    "type": "string",
+                                    "pattern": "/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%&^*-]).{8,}$/",
+                                    "example": "Azert?123"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "lostPassword": {
+                "required": true,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "properties": {
+                                "email": {
+                                    "description": "User's email",
+                                    "type": "string",
+                                    "format": "email",
+                                    "example": "email@email.test"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "register": {
+                "required": true,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "properties": {
+                                "email": {
+                                    "title": "email",
+                                    "description": "User's email",
+                                    "type": "string",
+                                    "format": "email",
+                                    "example": "email@email.test"
+                                },
+                                "password": {
+                                    "title": "password",
+                                    "description": "User's password - must have minimum 8 characters, 1 uppercase letter, 1 lowercase letter, 1 digit and 1 special character",
+                                    "type": "string",
+                                    "pattern": "/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%&^*-]).{8,}$/",
+                                    "example": "Azert?123"
+                                },
+                                "lastname": {
+                                    "title": "lastname",
+                                    "description": "User's last name",
+                                    "type": "string",
+                                    "example": "Doe"
+                                },
+                                "firstname": {
+                                    "title": "firstname",
+                                    "description": "User's first name",
+                                    "type": "string",
+                                    "example": "John"
+                                },
+                                "company": {
+                                    "title": "company",
+                                    "description": "User's company - optional",
+                                    "type": "string",
+                                    "example": "Johns&Cie",
+                                    "nullable": true
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "updateAppUser": {
+                "required": true,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "properties": {
+                                "email": {
+                                    "title": "email",
+                                    "description": "User's email",
+                                    "type": "string",
+                                    "format": "email",
+                                    "example": "email@email.test",
+                                    "nullable": true
+                                },
+                                "lastname": {
+                                    "title": "lastname",
+                                    "description": "User's last name",
+                                    "type": "string",
+                                    "example": "Doe",
+                                    "nullable": true
+                                },
+                                "firstname": {
+                                    "title": "firstname",
+                                    "description": "User's first name",
+                                    "type": "string",
+                                    "example": "John",
+                                    "nullable": true
+                                },
+                                "company": {
+                                    "title": "company",
+                                    "description": "User's company - optional",
+                                    "type": "string",
+                                    "example": "Johns&Cie",
+                                    "nullable": true
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "recoverPassword": {
+                "required": true,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "properties": {
+                                "newPassword": {
+                                    "title": "password",
+                                    "description": "User's new password - must have minimum 8 characters, 1 uppercase letter, 1 lowercase letter, 1 digit and 1 special character",
+                                    "type": "string",
+                                    "pattern": "/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%&^*-]).{8,}$/",
+                                    "example": "Azert?123"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "updatePassword": {
+                "required": true,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "properties": {
+                                "oldPpassword": {
+                                    "title": "oldPassword",
+                                    "description": "User's old password",
+                                    "type": "string",
+                                    "pattern": "/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%&^*-]).{8,}$/",
+                                    "example": "Azert?123"
+                                },
+                                "newPassword": {
+                                    "title": "newPassword",
+                                    "description": "User's new password - must have minimum 8 characters, 1 uppercase letter, 1 lowercase letter, 1 digit and 1 special character",
+                                    "type": "string",
+                                    "pattern": "/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%&^*-]).{8,}$/",
+                                    "example": "Azert123?"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
+        "securitySchemes": {
+            "JWT": {
+                "type": "apiKey",
+                "description": "Enter JWT token",
+                "name": "JWTToken",
+                "in": "header",
+                "scheme": "bearer"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Duct network",
+            "description": "Manage duct networks to add duct sections"
+        },
+        {
+            "name": "Duct section",
+            "description": "Manage duct sections"
+        },
+        {
+            "name": "Project",
+            "description": "Manage projects to add duct networks"
+        },
+        {
+            "name": "App user",
+            "description": "Manage user's app"
+        }
+    ]
+}

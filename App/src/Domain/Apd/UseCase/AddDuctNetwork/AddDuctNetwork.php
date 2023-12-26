@@ -35,6 +35,8 @@ class AddDuctNetwork
             $ductNetwork = $this->setDuctNetwork($request, $project);
 
             $this->ductNetworkRepository->addDuctNetwork($ductNetwork);
+            $ductNetworks = $this->ductNetworkRepository->getDuctNetworksByProjectId($project->getId());
+            $ductNetwork->setId(end($ductNetworks)->getId());
 
             $response->setDuctNetwork($ductNetwork);
         }

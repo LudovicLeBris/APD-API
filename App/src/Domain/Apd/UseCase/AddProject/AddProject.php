@@ -35,6 +35,8 @@ class AddProject
             $project = $this->setProject($request);
 
             $this->projectRepository->addProject($project);
+            $projects = $this->projectRepository->getProjectsByUserId($appUser->getId());
+            $project->setId(end($projects)->getId());
 
             $response->setProject($project);
         }

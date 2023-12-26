@@ -1,7 +1,23 @@
 <?php
 
 namespace App\SharedKernel\Model;
+use OpenApi\Attributes as OA;
 
+#[OA\Schema(
+    schema:"materialsName",
+    title:"materialsName",
+    properties:[
+        new OA\Property(property:"galvanised_steel", type:"string"),
+        new OA\Property(property:"aluminium", type:"string"),
+        new OA\Property(property:"steel", type:"string"),
+        new OA\Property(property:"cast_iron", type:"string"),
+        new OA\Property(property:"plastic", type:"string"),
+        new OA\Property(property:"smooth_concrete", type:"string"),
+        new OA\Property(property:"ordinary_concrete", type:"string"),
+        new OA\Property(property:"brick", type:"string"),
+        new OA\Property(property:"terracotta", type:"string"),
+    ]
+)]
 class Material
 {
     static $material = [

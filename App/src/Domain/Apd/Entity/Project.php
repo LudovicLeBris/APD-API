@@ -3,16 +3,63 @@
 namespace App\Domain\Apd\Entity;
 
 use Exception;
+use OpenApi\Attributes as OA;
 
+#[OA\Schema(
+    schema:"project",
+    title:"project"
+)]
 class Project
 {
+    #[OA\Property(
+        title:"id",
+        description:"Project's id",
+        type:"integer",
+        example:21
+    )]
     public $id;
+    
+    #[OA\Property(
+        title:"name",
+        description:"Project's name",
+        type:"string",
+        example:"project A"
+    )]
     private $name;
-    private $userId;
 
+    #[OA\Property(
+        title:"user id",
+        description:"Project's associated user id",
+        type:"integer",
+        example:10
+    )]
+    private $userId;
+    
+    #[OA\Property(
+        title:"general altitude",
+        description:"Project's altitude below sea level, all duct networks and duct sections are dependant of this property - in meter (m)",
+        type:"integer",
+        minimum:0,
+        example:800
+    )]
     private $generalAltitude;
+
+    #[OA\Property(
+        title:"general temperature",
+        description:"Project's temperature, all duct networks and duct sections are dependant of this property - in degrees Celsius (°C)",
+        type:"number",
+        format:"float",
+        example:18.2
+    )]
     private $generalTemperature;
 
+    #[OA\Property(
+        title:"duct networks",
+        description:"All duct networks associated of this project",
+        type:"array",
+        items:
+            new OA\Items(ref:"#/components/schemas/ductNetwork")
+    )]
     private $ductNetworks;
 
     public function __construct(string $name)

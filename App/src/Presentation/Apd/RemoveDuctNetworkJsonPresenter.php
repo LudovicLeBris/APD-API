@@ -21,7 +21,7 @@ class RemoveDuctNetworkJsonPresenter extends CoreJsonPresenter implements Remove
             $ductNetwork = $response->getDuctNetwork();
 
             $this->jsonModel = new JsonModel(
-                "DuctNetwork with name ". $ductNetwork->getName() ." has been deleted",
+                "DuctNetwork with name ". $ductNetwork->getName() ." has been deleted, all associated duct sections has been deletes too.",
                 $ductNetwork,
                 200
             );

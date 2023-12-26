@@ -2,6 +2,30 @@
 
 namespace App\SharedKernel\Model;
 
+use OpenApi\Attributes as OA;
+
+use function PHPSTORM_META\type;
+
+#[OA\Schema(
+    schema:"singularitiesAmount",
+    title:"singularitiesAmount",
+    properties:[
+        new OA\Property(property:"90_elbow", type:"integer", example:2),
+        new OA\Property(property:"60_elbow", type:"integer", example:2),
+        new OA\Property(property:"45_elbow", type:"integer", example:2),
+        new OA\Property(property:"30_elbow", type:"integer", example:2),
+        new OA\Property(property:"90_sharp_elbow", type:"integer", example:2),
+        new OA\Property(property:"60_sharp_elbow", type:"integer", example:2),
+        new OA\Property(property:"45_sharp_elbow", type:"integer", example:2),
+        new OA\Property(property:"30_sharp_elbow", type:"integer", example:2),
+        new OA\Property(property:"90_sep_tee", type:"integer", example:2),
+        new OA\Property(property:"90_junc_tee", type:"integer", example:2),
+        new OA\Property(property:"45_sep_tee", type:"integer", example:2),
+        new OA\Property(property:"45_junc_tee", type:"integer", example:2),
+        new OA\Property(property:"pressed_reducer", type:"integer", example:2),
+        new OA\Property(property:"long_reducer", type:"integer", example:2),
+    ]
+)]
 class Singularity
 {
     static $singularities = [
@@ -35,7 +59,7 @@ class Singularity
             '45_sep_tee' => [0.58, "45° rectangular separation tee"],
             '45_junc_tee' => [1.64, "45° rectangular junction tee"],
             'pressed_reducer' => [0.35, "pressed rectangular reducer"],
-            'long_reducer' => [0.08, "long rectangular reducer"],
+            'long_reducer' => [0.58, "long rectangular reducer"],
         ]
     ];
 

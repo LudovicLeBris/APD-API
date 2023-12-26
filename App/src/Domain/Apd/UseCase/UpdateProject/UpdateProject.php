@@ -62,9 +62,9 @@ class UpdateProject
             }, 'Name must be a string value or not empty string')
             ->that($request->generalAltitude, 'generalAltitude')->satisfy(function($value) {
                 if (!is_null($value)) {
-                    return is_int($value);
+                    return is_int($value) && $value >= 0;
                 }
-            }, 'GeneralAltitude must be an integer value')
+            }, 'GeneralAltitude must be an positive integer value')
             ->that($request->generalTemperature, 'generalTemperature')->satisfy(function($value) {
                 if (!is_null($value)) {
                     return is_float($value);

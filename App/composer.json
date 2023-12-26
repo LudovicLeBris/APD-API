@@ -27,7 +27,8 @@
         "symfony/security-bundle": "6.4.*",
         "symfony/serializer": "6.4.*",
         "symfony/validator": "6.4.*",
-        "symfony/yaml": "6.4.*"
+        "symfony/yaml": "6.4.*",
+        "zircote/swagger-php": "^4.8"
     },
     "config": {
         "allow-plugins": {

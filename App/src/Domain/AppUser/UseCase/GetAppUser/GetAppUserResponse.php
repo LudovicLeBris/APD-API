@@ -9,6 +9,8 @@ class GetAppUserResponse extends CoreResponse
 {
     private $appUser;
 
+    public function __construct() {}
+    
     public function getAppUser(): ?AppUser
     {
         return $this->appUser;

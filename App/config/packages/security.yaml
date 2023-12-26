@@ -13,6 +13,7 @@ security:
             pattern: ^/api/V1/login
             stateless: true
             json_login:
+                username_path: email
                 provider: app_user_provider
                 check_path: /api/V1/login
                 success_handler: lexik_jwt_authentication.handler.authentication_success
@@ -44,6 +45,7 @@ security:
         - { path: ^/api/V1/users, roles: ROLE_USER }
         - { path: ^/api/V1/users, roles: ROLE_USER }
         - { path: ^/api/V1/apd, roles: ROLE_USER }
+        - { path: ^/api/V1/users/\d+, roles: ROLE_ADMIN}
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
 

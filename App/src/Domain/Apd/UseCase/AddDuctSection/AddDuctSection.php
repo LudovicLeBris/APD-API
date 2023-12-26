@@ -37,6 +37,8 @@ class AddDuctSection
             $ductSection = $this->setDuctSection($request, $ductNetwork);
 
             $this->ductSectionRepository->addDuctSection($ductSection);
+            $ductSections = $this->ductSectionRepository->getDuctSectionsByDuctNetworkId($ductNetwork->getId());
+            $ductSection->setId(end($ductSections)->getId());
 
             $response->setDuctSection($ductSection);
         }
@@ -54,7 +56,7 @@ class AddDuctSection
                 ->that($request->flowrate, 'flowrate')->notEmpty('Flowrate is empty')->integer()->greaterThan(0, 'Flowrate must be positive')
                 ->that($request->length, 'length')->notEmpty('Length is empty')->float()->greaterThan(0, 'Length must be positive')
                 ->that($request->singularities, 'singularities')->isArray('Singularities must be an array')->satisfy(function($values) use($request){
-                    if ($request->shape === null) {return true;}
+                    if ($request->shape !== 'circular' || $request->shape !== 'rectangular') {return true;}
                     $singularities = Singularity::getSingularitiesByShape($request->shape);
                     foreach($values as $key => $value) {
                         if (!array_key_exists($key, $singularities)) {

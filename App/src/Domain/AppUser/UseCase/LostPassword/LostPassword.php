@@ -87,7 +87,7 @@ class LostPassword
         $existingAppUser = $this->appUserRepository->getAppUserByEmail($request->email);
 
         if ($existingAppUser === null) {
-            $response->addError('email', 'User is not registered', 423);
+            $response->addError('email', 'User is not registered', 404);
 
             return false;
         }

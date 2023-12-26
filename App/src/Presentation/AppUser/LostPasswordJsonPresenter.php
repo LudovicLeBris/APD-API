@@ -15,12 +15,12 @@ class LostPasswordJsonPresenter extends CoreJsonPresenter implements LostPasswor
             $this->jsonModel = new JsonModel(
                 'error',
                 $response->getErrors(),
-                422
+                $response->getHttpStatus()
             );
         } else {
             $this->jsonModel = new JsonModel(
-                'success',
-                $response->getAppUser(),
+                'An email was sent to '. $response->getAppUser()->getEmail() .'with a recovery link.',
+                [],
                 200
             );
         }

@@ -19,8 +19,8 @@ class ConfirmRegisterJsonPresenter extends CoreJsonPresenter implements ConfirmR
             );
         } else {
             $this->jsonModel = new JsonModel(
-                'success',
-                ['User correctly activated'],
+                'User correctly activated',
+                [],
                 200
             );
         }

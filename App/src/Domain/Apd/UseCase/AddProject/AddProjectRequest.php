@@ -2,6 +2,23 @@
 
 namespace App\Domain\Apd\UseCase\AddProject;
 
+use OpenApi\Attributes as OA;
+
+#[OA\RequestBody(
+    request:"addProject",
+    required:"true",
+    content: new OA\JsonContent(
+        properties:[
+            new OA\Property(
+                property:"name",
+                title:"name",
+                description:"Name of the project",
+                type:"string",
+                example:"project B",
+            )
+        ]
+    )
+)]
 class AddProjectRequest
 {
     public $userId;

@@ -3,25 +3,128 @@
 namespace App\Domain\Apd\Entity;
 
 use Exception;
+use OpenApi\Attributes as OA;
 
+#[OA\Schema(
+    schema:"ductNetwork",
+    title:"duct network"
+)]
 class DuctNetwork
 {
+    #[OA\Property(
+        title:"id",
+        description:"Duct network's id",
+        type:"integer",
+        example:42
+    )]
     public $id;
+
+    #[OA\Property(
+        title:"name",
+        description:"Duct network's name",
+        type:"string",
+        example:"duct network n°1"
+    )]
     private $name;
+
+    #[OA\Property(
+        title:"project id",
+        description:"Duct network's associated project id",
+        type:"integer",
+        example:21
+    )]
     private $projectId;
 
+    #[OA\Property(
+        title:"air",
+        description:"Air instance of the duct network",
+        type:"object",
+        properties: [
+            new OA\Property(property:"viscosity", title:"viscosity", description:"Viscosity property of the air", type:"number", format:"float", example:1.5080510051843115e-5),
+            new OA\Property(property:"density", title:"density", description:"Density property of the air", type:"number", format:"float", example:1.2058928673556562),
+            new OA\Property(property:"temperature", title:"temperature", description:"Temperature property of the air", type:"number", format:"float", example:18.2),
+            new OA\Property(property:"altitude", title:"altitude", description:"Altitude property of the air", type:"integer", example:800),
+        ]
+    )]
     private $air;
+
+    #[OA\Property(
+        title:"altitude",
+        description:"Duct network's altitude below sea level - in meter (m)",
+        type:"integer",
+        minimum:0,
+        example:800
+    )]
     private $altitude;
+
+    #[OA\Property(
+        title:"temperature",
+        description:"Duct network's ambiant temperature - in degrees Celsius (°C)",
+        type:"number",
+        format:"float",
+        example:18.2
+    )]
     private $temperature;
 
+    #[OA\Property(
+        title:"general material",
+        description:"Duct network's material, all duct sections are dependent of this property",
+        type:"string",
+        example:"galvanised_steel"
+    )]
     private $generalMaterial;
+
+    #[OA\Property(
+        title:"additional apd",
+        description:"Optional additional air pressure drop value who represent an accessory of duct network - in pascal (Pa)",
+        type:"integer",
+        minimum:1,
+        example:50
+    )]
     private $additionalApd;
 
+    #[OA\Property(
+        title:"duct sections",
+        description:"All duct sections associated of this duct network",
+        type:"array",
+        items:
+            new OA\Items(ref:"#/components/schemas/ductSection")
+    )]
     private array $ductSections;
 
+    #[OA\Property(
+        title:"total linear apd",
+        description:"Result of all linear apd calculation in this duct network - in pascal (Pa)",
+        type:"number",
+        format:"float",
+        example:36.387
+    )]
     private $totalLinearApd;
+
+    #[OA\Property(
+        title:"total singular apd",
+        description:"Result of all singular apd calculation in this duct network - in pascal (Pa)",
+        type:"number",
+        format:"float",
+        example:83.473
+    )]
     private $totalSingularApd;
+
+    #[OA\Property(
+        title:"total additional apd",
+        description:"Result of all additional apd calculation in this duct network - in pascal (Pa)",
+        type:"integer",
+        example:150
+    )]
     private $totalAdditionalApd;
+
+    #[OA\Property(
+        title:"total apd",
+        description:"Result of total of all apd calculation in this duct network - in pascal (Pa)",
+        type:"number",
+        format:"float",
+        example:269.86
+    )]
     private $totalApd;
 
     public function __construct(string $name, string $generalMaterial, int $additionalApd = 0)

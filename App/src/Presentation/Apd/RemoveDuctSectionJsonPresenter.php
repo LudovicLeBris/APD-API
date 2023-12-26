@@ -21,7 +21,7 @@ class RemoveDuctSectionJsonPresenter extends CoreJsonPresenter implements Remove
             $ductSection = $response->getDuctSection();
 
             $this->jsonModel = new JsonModel(
-                "DuctSection with name ". $ductSection->getName() ." has been deleted",
+                "DuctSection with name ". $ductSection->getName() ." has been deleted.",
                 $ductSection,
                 200
             );

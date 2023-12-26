@@ -21,7 +21,7 @@ class RemoveProjectJsonPresenter extends CoreJsonPresenter implements RemoveProj
             $project = $response->getProject();
 
             $this->jsonModel = new JsonModel(
-                "Project with name ". $project->getName() ." has been deleted",
+                "Project with name \"". $project->getName() ."\" has been deleted, all associated duct networks and duct sections has been deletes too.",
                 $project,
                 200
             );
