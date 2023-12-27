@@ -27,7 +27,7 @@ The formula used for the linear air pressure drop calculation is the [Colebrook 
 
 ## Endpoints
 
-TODO
+The doc is here : [http://localhost:8080] 
 
 ## Requests and responses
 
@@ -48,4 +48,12 @@ Json format
 
 ## How to launch
 
-TODO
+The app run into a docker container.
+Docker and Docker compose must be installed on host.
+Launch the container with ```docker compose up -d``` and wait for the end of the build.
+Then go into the container to initiate the packages and teh database : ```docker exec -it www bash```.
+Intall the composer packages with ```composer install```.
+For the dev environment the database environment variable is already configurate in .env file.
+Set the database with ```php bin/console doctrine:databaes:create``` then ```php bin/console make:migration``` and finally ```php bin/console doctrine:migrate:migrations```.
+
+TODO : create script file to automate the build.
