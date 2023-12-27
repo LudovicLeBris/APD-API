@@ -1,30 +1,40 @@
 # Air Pressure Drop API
 
+## WIP
+
+This Project is still in progress. I'm working on a complete refactoring with a clean architecture and more features.
 
 ## Description
+
 This small API allow you to calculate the air drop pressure in air duct network. You can add multiple duct sections and configure each section with its own characteristics. Air characteristics are configurable too.
 
 ## Aeraulic method of calculation
+
 he calculations methods used in this software is strongly inspired by [COSTIC methods](https://www.costic.com).  
 The formula used for the linear air pressure drop calculation is the [Colebrook equation](https://www.engineeringtoolbox.com/colebrook-equation-d_1031.html).
 
-
 ## PHP version used
+
 * PHP 8.2
 
 ## Dependencies
-* Laravel 10.14.1
+
+* Symfony 6.4
 
 ## Database
-* SQlite
+
+* MariaDB
 
 ## Endpoints
-Check the endpoints list and example of requests and responses for each endpoint in the [docs folder](/docs/).
+
+The doc is here : [http://localhost:8080] 
 
 ## Requests and responses
+
 Json format
 
 ## Values required for this API
+
 * Flow rate in the duct section (unit: cubic metre per hour - m³/h)
 * Shape of the duct section (circular or rectangular)
 * Material of the duct section (galvanised steel per example)
@@ -37,28 +47,13 @@ Json format
 * Altitude of the installation (optionnal, set to 0m below sea by default)
 
 ## How to launch
-The API is functional in `backend` folder (Laravel).  
-After installing the composer dependancies, launch the project with `php artisan serve`.  
-The server will running on http://127.0.0.1:8000.  
-The endpoints will be available with this adress (ex : http://127.0.0.1:8000/api/ductdimension).  
-Don't forget the request body (json) in yout API client.
 
-The `backend2` folder is a fork with symfony, still in dev stage.
-Use the `php -S localhost:8080 -t public` in this folder to run the server.  
-There is 2 endpoints for testing : http://localhost:8080/test and http://localhost:8080/test2.
-The first one don't need json body, the second one need a json body like this : 
-```json
-{
-	"flowRate": 2500,
-	"shape": "circular",
-	"diameter": 355,
-	"material": "galvanised steel",
-	"length": 10,
-	"singularities": {
-		"90_elbow": 3,
-		"90_sep_tee": 1
-	},
-	"additionalApd": 0,
-}
-```
+The app run into a docker container.
+Docker and Docker compose must be installed on host.
+Launch the container with ```docker compose up -d``` and wait for the end of the build.
+Then go into the container to initiate the packages and teh database : ```docker exec -it www bash```.
+Intall the composer packages with ```composer install```.
+For the dev environment the database environment variable is already configurate in .env file.
+Set the database with ```php bin/console doctrine:databaes:create``` then ```php bin/console make:migration``` and finally ```php bin/console doctrine:migrate:migrations```.
 
+TODO : create script file to automate the build.

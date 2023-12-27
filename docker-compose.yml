@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql
+    container_name: ${DB_CONTAINER_NAME}
+    restart: always
+    volumes:
+      - db-data:/var/lib/mysql
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+    networks:
+      - dev
+
+  phpmyadmin:
+    image: phpmyadmin
+    container_name: ${PHPMYADMIN_CONTAINER_NAME}
+    restart: always
+    depends_on:
+      - db
+    ports:
+      - 8081:80
+    environment:
+      PMA_HOST: db
+    networks:
+      - dev
+
+  maildev:
+    image: mailhog/mailhog
+    container_name: ${MAILHOG_CONTAINER_NAME}
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+    restart: always
+    networks:
+        - dev
+
+  www:
+    build: ./build/php
+    container_name: ${PHP_PROJECT_CONTAINER_NAME}
+    ports:
+      - "8080:80"
+    volumes:
+      - ./conf/vhosts:/etc/apache2/sites-enabled
+      - ./App:/var/www
+    restart: always
+    networks:
+      - dev
+
+networks:
+  dev:
+
+volumes:
+  db-data:

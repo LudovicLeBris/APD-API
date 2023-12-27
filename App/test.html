@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8"/>
+        <title>Test Documentation</title>
+        <style>
+            body {
+                text-rendering: optimizeLegibility;
+                font-family: Source SansSerif Pro, Arial, sans-serif;
+                font-variant-ligatures: common-ligatures;
+                font-kerning: normal;
+                margin-left: 2rem;
+                background-color: #fff;
+                color: #000;
+            }
+
+            body > ul > li {
+                font-size: larger;
+            }
+
+            h2 {
+                font-size: larger;
+                text-decoration-line: underline;
+                text-decoration-thickness: 2px;
+                margin: 0;
+                padding: 0.5rem 0;
+            }
+
+            ul {
+                list-style: none;
+                margin: 0 0 2rem;
+                padding: 0 0 0 1rem;
+                text-indent: -1rem;
+            }
+
+            .success:before {
+                color: #4e9a06;
+                content: '✓';
+                padding-right: 0.5rem;
+            }
+
+            .defect {
+                color: #a40000;
+            }
+
+            .defect:before {
+                color: #a40000;
+                content: '✗';
+                padding-right: 0.5rem;
+            }
+        </style>
+    </head>
+    <body>
+        <h2>Add Duct Network (App\Tests\Domain\Apd\UseCase\AddDuctNetwork\AddDuctNetwork)</h2>
+        <ul>
+            <li class="success">Add duct network in database</li>
+            <li class="success">Fail when a request data is missing</li>
+            <li class="success">If calculation is done</li>
+            <li class="success">Duct network is save in project object</li>
+        </ul>
+        <h2>Add Duct Section (App\Tests\Domain\Apd\UseCase\AddDuctSection\AddDuctSection)</h2>
+        <ul>
+            <li class="success">Add duct section in database</li>
+            <li class="success">Fail when a request data is missing</li>
+            <li class="success">Get errors when a request data is missing</li>
+            <li class="success">If calculation is done</li>
+            <li class="success">Duct section is save in duct network object</li>
+        </ul>
+        <h2>Add Project (App\Tests\Domain\Apd\UseCase\AddProject\AddProject)</h2>
+        <ul>
+            <li class="success">Add project in database</li>
+            <li class="success">Fail when a request data is missing</li>
+        </ul>
+        <h2>Confirm Register (App\Tests\Domain\AppUser\UseCase\ConfirmRegister\ConfirmRegister)</h2>
+        <ul>
+            <li class="success">If user is enabled</li>
+            <li class="success">Fails when user does not exist</li>
+        </ul>
+        <h2>Get All Duct Networks (App\Tests\Domain\Apd\UseCase\GetAllDuctNetworks\GetAllDuctNetworks)</h2>
+        <ul>
+            <li class="success">Return all duct networks in array</li>
+            <li class="success">Fails when project does not exist</li>
+        </ul>
+        <h2>Get All Duct Sections (App\Tests\Domain\Apd\UseCase\GetAllDuctSections\GetAllDuctSections)</h2>
+        <ul>
+            <li class="success">Return all duct sections in array</li>
+            <li class="success">Fails when duct network does not exist</li>
+        </ul>
+        <h2>Get All Projects (App\Tests\Domain\Apd\UseCase\GetAllProjects\GetAllProjects)</h2>
+        <ul>
+            <li class="success">Return all projects in array</li>
+            <li class="success">Fails when user does not exist</li>
+        </ul>
+        <h2>Get App User (App\Tests\Domain\AppUser\UseCase\GetAppUser\GetAppUser)</h2>
+        <ul>
+            <li class="success">Return user</li>
+            <li class="success">Fails when user does not exist</li>
+        </ul>
+        <h2>Get Duct Network (App\Tests\Domain\Apd\UseCase\GetDuctNetwork\GetDuctNetwork)</h2>
+        <ul>
+            <li class="success">Return duct network</li>
+            <li class="success">Fails when duct network does not exist</li>
+            <li class="success">Fails when project does not exist</li>
+            <li class="success">Fails when duct network does not belong to project</li>
+        </ul>
+        <h2>Get Duct Section (App\Tests\Domain\Apd\UseCase\GetDuctSection\GetDuctSection)</h2>
+        <ul>
+            <li class="success">Return duct section</li>
+            <li class="success">Fails when duct network does not exist</li>
+            <li class="success">Fails when duct section does not exist</li>
+            <li class="success">Fails when duct section does not belong to duct network</li>
+        </ul>
+        <h2>Get Project (App\Tests\Domain\Apd\UseCase\GetProject\GetProject)</h2>
+        <ul>
+            <li class="success">Return project</li>
+            <li class="success">Fails when user does not exist</li>
+            <li class="success">Fails when project does not exist</li>
+        </ul>
+        <h2>Login (App\Tests\Domain\AppUser\UseCase\Login\Login)</h2>
+        <ul>
+            <li class="success">If login correctly</li>
+            <li class="success">Fails when credentials are false</li>
+            <li class="success">Fails when email is invalid</li>
+            <li class="success">Fails when user is not enable</li>
+        </ul>
+        <h2>Lost Password (App\Tests\Domain\AppUser\UseCase\LostPassword\LostPassword)</h2>
+        <ul>
+            <li class="success">User is returned</li>
+            <li class="success">If a recoveryPassword is saved in database</li>
+            <li class="success">Fails when user is not registered</li>
+            <li class="success">Fails when user is already disable</li>
+            <li class="success">Fails when email is invalid</li>
+        </ul>
+        <h2>Register (App\Tests\Domain\AppUser\UseCase\Register\Register)</h2>
+        <ul>
+            <li class="success">AppUser is save in database</li>
+            <li class="success">Fails when email already exist</li>
+            <li class="success">Fails when one request data is missing</li>
+            <li class="success">Fails when email is invalid</li>
+            <li class="success">Fails when password does not match required pattern</li>
+            <li class="success">If appuser registered is not enable</li>
+            <li class="success">If password store in database is hased</li>
+        </ul>
+        <h2>Remove App User (App\Tests\Domain\AppUser\UseCase\RemoveAppUser\RemoveAppUser)</h2>
+        <ul>
+            <li class="success">User is deleted from database</li>
+            <li class="success">Projects and all datas related are deleted from database</li>
+            <li class="success">Fails when user does nor exist</li>
+        </ul>
+        <h2>Remove Duct Network (App\Tests\Domain\Apd\UseCase\RemoveDuctNetwork\RemoveDuctNetwork)</h2>
+        <ul>
+            <li class="success">Duct network is deleting from database</li>
+            <li class="success">Duct network is removing from project object</li>
+        </ul>
+        <h2>Remove Duct Section (App\Tests\Domain\Apd\UseCase\RemoveDuctSection\RemoveDuctSection)</h2>
+        <ul>
+            <li class="success">Duct section is deleting from database</li>
+            <li class="success">Duct section is removing from duct network object</li>
+        </ul>
+        <h2>Remove Project (App\Tests\Domain\Apd\UseCase\RemoveProject\RemoveProject)</h2>
+        <ul>
+            <li class="success">Projects and all duct networks and duct sections are deleting from database</li>
+            <li class="success">Fails when user does not exist</li>
+            <li class="success">Fails when project does not exist</li>
+        </ul>
+        <h2>Update App User (App\Tests\Domain\AppUser\UseCase\UpdateAppUser\UpdateAppUser)</h2>
+        <ul>
+            <li class="success">User is updated</li>
+            <li class="success">Return null when user does not exist</li>
+        </ul>
+        <h2>Update Duct Network (App\Tests\Domain\Apd\UseCase\UpdateDuctNetwork\UpdateDuctNetwork)</h2>
+        <ul>
+            <li class="success">Duct network is updated</li>
+            <li class="success">Return null when duct network does not exist</li>
+            <li class="success">Return null when project does not exist</li>
+            <li class="success">Return null when duct network does not belong to the right project</li>
+        </ul>
+        <h2>Update Duct Section (App\Tests\Domain\Apd\UseCase\UpdateDuctSection\UpdateDuctSection)</h2>
+        <ul>
+            <li class="success">Duct section is updated</li>
+            <li class="success">Return null when duct section does not exist</li>
+            <li class="success">Return null when duct network does not exist</li>
+            <li class="success">Return null when duct section does not belong to the right duct network</li>
+        </ul>
+        <h2>Update Password (App\Tests\Domain\AppUser\UseCase\UpdatePassword\UpdatePassword)</h2>
+        <ul>
+            <li class="success">Password updated from an update request</li>
+            <li class="success">Password updated from a recovery request</li>
+            <li class="success">Fails when user id does not match</li>
+            <li class="success">Fails when old password does not match</li>
+            <li class="success">Fails when recover time has expired</li>
+        </ul>
+        <h2>Update Project (App\Tests\Domain\Apd\UseCase\UpdateProject\UpdateProject)</h2>
+        <ul>
+            <li class="success">Project is updated</li>
+            <li class="success">Fails when user does not exist</li>
+            <li class="success">Fails when project does not exist</li>
+        </ul>
+    </body>
+</html>
