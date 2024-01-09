@@ -36,12 +36,11 @@ services:
         - dev
 
   www:
-    build: ./build/php
+    build: .
     container_name: ${PHP_PROJECT_CONTAINER_NAME}
     ports:
       - "8080:80"
     volumes:
-      - ./conf/vhosts:/etc/apache2/sites-enabled
       - ./App:/var/www
     restart: always
     networks:
