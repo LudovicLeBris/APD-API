@@ -10,9 +10,9 @@ use App\Domain\Apd\Model\RectangularDuctSection;
 class DuctSectionFactory
 {
     private string $shape;
-    private array $datas;
+    private $datas;
 
-    public function setSectionTechnicalDatas($datas): void
+    public function setSectionTechnicalDatas(array $datas): void
     {
         $this->datas = [];
         
