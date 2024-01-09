@@ -121,7 +121,7 @@ class AppFixtures extends Fixture
             ->setEquivDiameter($ductSection->getEquivDiameter())
             ->setDuctSectionsSection($ductSection->getDuctSectionsSection())
             ->setFlowspeed($ductSection->getFlowspeed())
-            ->setLineaApd($ductSection->getLinearApd())
+            ->setLinearApd($ductSection->getLinearApd())
             ->setSingularApd($ductSection->getSingularApd())
             ->setTotalApd($ductSection->getTotalApd())
             ->setAir($ductSection->getAir())
