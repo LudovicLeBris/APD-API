@@ -22,5 +22,5 @@
 /config/jwt/*.pem
 ###< lexik/jwt-authentication-bundle ###
 
-./composer
+/.composer
 .bash_history

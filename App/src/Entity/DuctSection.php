@@ -55,7 +55,7 @@ class DuctSection
     private ?float $flowspeed = null;
 
     #[ORM\Column(nullable: true)]
-    private ?float $lineaApd = null;
+    private ?float $linearApd = null;
 
     #[ORM\Column(nullable: true)]
     private ?float $singularApd = null;
@@ -238,14 +238,14 @@ class DuctSection
         return $this;
     }
 
-    public function getLineaApd(): ?float
+    public function getlinearApd(): ?float
     {
-        return $this->lineaApd;
+        return $this->linearApd;
     }
 
-    public function setLineaApd(?float $lineaApd): static
+    public function setlinearApd(?float $linearApd): static
     {
-        $this->lineaApd = $lineaApd;
+        $this->linearApd = $linearApd;
 
         return $this;
     }
