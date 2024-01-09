@@ -24,7 +24,4 @@ RUN usermod -u 1000 www-data && groupmod -g 1000 www-data
 RUN chown -R www-data:www-data /var/www
 USER www-data:www-data
 
-RUN cd /var/www && \
-    composer install
-
 WORKDIR /var/www/
