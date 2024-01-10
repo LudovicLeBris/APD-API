@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use OpenApi\Attributes as OA;
+use Symfony\Component\HttpFoundation\Response;
 
 #[OA\Info(
     title: "APD-API",
@@ -101,7 +102,13 @@ use OpenApi\Attributes as OA;
 #[Route('/api/V1')]
 class ApiAbstractController extends AbstractController
 {
-    #[Route('/test', name:'app_apitest',methods:['GET'])]
+    #[Route('/', name:'app_apidoc', methods:['GET'])]
+    public function home(): Response
+    {
+        return $this->render('apidoc/index.html.twig');
+    }    
+    
+    #[Route('/test', name:'app_apitest', methods:['GET'])]
     public function apiTest(): JsonResponse
     {
         return $this->json('test ok', 200);
