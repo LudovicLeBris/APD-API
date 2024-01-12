@@ -1,0 +1,77 @@
+type: install
+name: ApdApi
+id: ApdApi
+categories: ["apps/dev-and-admin-tools"]
+homepage : https://github.com/LudovicLeBris/APD-API
+baseUrl: https://raw.githubusercontent.com/LudovicLeBris/APD-API/main/
+
+description : |
+    Fichier d'installation jelastic pour le projet Apd-api
+
+ssl: true
+
+nodes:
+    -   nodeType: nginx
+        nodeGroup: bl
+        count: 1
+        cloudlets: 8
+        displayName: LoadBalancer
+    
+    -   nodeType: php:8.2-apache
+        count: 1
+        cloudlets: 8
+        nodeGroup: cp
+        displayName: www
+        volumes:
+            -   /var/www
+
+    -   nodeType: mysql
+        count: 1
+        cloudlets: 8
+        nodeGroup: mysql
+        displayName: MYSQL
+        env:
+            MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+        volumes:
+            -   /var/lib/mysql
+        isSLBAccessEnabled: false
+
+onInstall:
+    - composer
+    - git
+    - apacheConf
+    - php
+
+actions:
+    composer:
+        cmd[cp]: |-
+            curl -sSk https://getcomposer.org/installer | php -- --disable-tls
+            mv composer.phar /usr/local/bin/composer
+            chmod +x /usr/bin/composer
+        user: root
+
+    git:
+        cmd[cp]: |-
+            apt-get install -yqq --no-install-recommends git
+
+    apacheConf:
+        cmd[cp]: |-
+            cd /var/www
+            mkdir public
+            cd /var/www/public
+            touch index.php
+            cd /etc/apache2/sites-enabled
+            rm 000-default.conf
+            wget https://raw.githubusercontent.com/LudovicLeBris/APD-API/main/apache.conf
+            apachectl restart
+    
+    php:
+        cmd[cp]: |-
+            curl -sSLf \
+            -o /usr/local/bin/install-php-extensions \
+            https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions && \
+            chmod +x /usr/local/bin/install-php-extensions && \
+            install-php-extensions intl pdo pdo_mysql gd opcache zip calendar dom mbstring apcu
+
+success: |
+    ApdApi environment correctly installed !
