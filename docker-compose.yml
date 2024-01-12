@@ -41,7 +41,7 @@ services:
     ports:
       - "8080:80"
     volumes:
-      - ./App:/var/www
+      - ./:/var/www
     restart: always
     networks:
       - dev

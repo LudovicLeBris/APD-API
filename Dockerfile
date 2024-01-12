@@ -16,7 +16,7 @@ RUN docker-php-ext-configure intl
 RUN docker-php-ext-install pdo pdo_mysql gd opcache intl zip calendar dom mbstring zip gd xsl
 RUN pecl install apcu && docker-php-ext-enable apcu
 
-COPY ./App /var/www
+COPY . /var/www
 
 COPY ./apache.conf /etc/apache2/sites-available/000-default.conf
 
