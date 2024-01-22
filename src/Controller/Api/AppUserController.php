@@ -28,8 +28,6 @@ use App\Domain\AppUser\UseCase\RemoveAppUser\RemoveAppUserRequest;
 use App\Domain\AppUser\UseCase\UpdateAppUser\UpdateAppUserRequest;
 use App\Domain\AppUser\UseCase\UpdatePassword\UpdatePasswordRequest;
 use App\Domain\AppUser\UseCase\ConfirmRegister\ConfirmRegisterRequest;
-use OpenApi\Annotations\JsonContent;
-use PHPUnit\Util\Json;
 
 #[OA\Tag(
     name:"App user",
@@ -111,7 +109,7 @@ class AppUserController extends ApiAbstractController
         return $this->json(...$presenter->getJson());
     }
 
-    #[OA\Patch(
+    #[OA\Post(
         tags:["App user"],
         path:"/register/{id}",
         summary:"Confirm register",
@@ -148,7 +146,7 @@ class AppUserController extends ApiAbstractController
     #[Route(
         '/register/{id}',
         name: 'app_appuser_confirmregister',
-        methods: ['PATCH'],
+        methods: ['POST'],
         requirements: ['id' => '\d+']
     )]
     public function confirmRegister(

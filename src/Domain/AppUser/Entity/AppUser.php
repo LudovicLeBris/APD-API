@@ -122,7 +122,7 @@ class AppUser
         return $this->firstname;
     }
 
-    public function getCompany(): string
+    public function getCompany(): ?string
     {
         return $this->company;
     }
