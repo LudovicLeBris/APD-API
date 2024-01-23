@@ -42,12 +42,15 @@ security:
     access_control:
         - { path: ^/api/V1/register, roles: PUBLIC_ACCESS }
         - { path: ^/api/V1/login, roles: PUBLIC_ACCESS }
-        - { path: ^/api/V1/users, roles: ROLE_USER }
+        - { path: ^/api/V1/users/\d+, roles: ROLE_ADMIN, methods: GET}
+        - { path: ^/api/V1/users/\d+, roles: ROLE_ADMIN, methods: DELETE}
         - { path: ^/api/V1/users, roles: ROLE_USER }
         - { path: ^/api/V1/apd, roles: ROLE_USER }
-        - { path: ^/api/V1/users/\d+, roles: ROLE_ADMIN}
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
+    
+    role_hierarchy:
+        ROLE_ADMIN: ROLE_USER
 
 when@test:
     security:

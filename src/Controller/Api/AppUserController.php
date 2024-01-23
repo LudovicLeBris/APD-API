@@ -2,12 +2,13 @@
 
 namespace App\Controller\Api;
 
+use App\Domain\AppUser\Entity\AppUser;
+use OpenApi\Attributes as OA;
+use App\Presentation\JsonModel;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use App\Presentation\JsonModel;
-use OpenApi\Attributes as OA;
 use App\Domain\AppUser\UseCase\Register\Register;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Presentation\AppUser\RegisterJsonPresenter;
 use App\Domain\AppUser\UseCase\GetAppUser\GetAppUser;
 use App\Presentation\AppUser\GetAppUserJsonPresenter;
@@ -28,6 +29,10 @@ use App\Domain\AppUser\UseCase\RemoveAppUser\RemoveAppUserRequest;
 use App\Domain\AppUser\UseCase\UpdateAppUser\UpdateAppUserRequest;
 use App\Domain\AppUser\UseCase\UpdatePassword\UpdatePasswordRequest;
 use App\Domain\AppUser\UseCase\ConfirmRegister\ConfirmRegisterRequest;
+use OpenApi\Annotations\Response;
+use Symfony\Component\HttpFoundation\Response as HttpFoundationResponse;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Serializer\SerializerInterface;
 
 #[OA\Tag(
     name:"App user",
@@ -36,6 +41,13 @@ use App\Domain\AppUser\UseCase\ConfirmRegister\ConfirmRegisterRequest;
 #[Route('/api/V1')]
 class AppUserController extends ApiAbstractController
 {
+    private $token;
+
+    public function __construct(TokenStorageInterface $tokenStorage)
+    {
+        $this->token = $tokenStorage;
+    }
+
     #[OA\Get(
         security:["JWT"],
         tags:["App user"],
@@ -69,6 +81,44 @@ class AppUserController extends ApiAbstractController
     ): JsonResponse
     {
         $getAppUser->execute(new GetAppUserRequest($id), $presenter);
+
+        return $this->json(...$presenter->getJson());
+    }
+
+    #[OA\Get(
+        security:["JWT"],
+        tags:["App user"],
+        path:"/me",
+        summary:"authenticated user's datas",
+        description:"Get the authenticated user's data"
+        ),
+        OA\Response(
+            response:"200",
+            description:"Get user",
+            content: new OA\JsonContent(
+                properties:[
+                    new OA\Property(property:"message", type:"string", example:"success"),
+                    new OA\Property(property:"content", ref:"#/components/schemas/appUser")
+                ]
+            )
+        )
+    ]
+    #[Route(
+        '/users/me',
+        name: 'app_appuser_me',
+        methods: ['GET']
+    )]
+    public function me(
+        GetAppUser $getAppUser,
+        GetAppUserJsonPresenter $presenter
+    ): JsonResponse
+    {
+        if ($this->token->getToken()) {
+            $id = $this->token->getToken()->getUser()->getId();
+            $getAppUser->execute(new GetAppUserRequest($id), $presenter);
+        } else {
+            return $this->json(['code' => 401, 'message' => 'JWT Token not found'], HttpFoundationResponse::HTTP_UNAUTHORIZED);
+        }
 
         return $this->json(...$presenter->getJson());
     }
