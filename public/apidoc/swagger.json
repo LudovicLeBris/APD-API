@@ -1056,13 +1056,13 @@
             }
         },
         "/register/{id}": {
-            "patch": {
+            "post": {
                 "tags": [
                     "App user"
                 ],
                 "summary": "Confirm register",
                 "description": "Confirm register from a user with the email sent on registration.",
-                "operationId": "972cc114978a8d4264d297116f8d5921",
+                "operationId": "a3a1587c041d2ad0b919688c53673d23",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/id"
