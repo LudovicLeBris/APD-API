@@ -2,6 +2,7 @@
 
 namespace App\Domain\AppUser\Entity;
 
+use Symfony\Component\Serializer\Annotation\Ignore;
 use OpenApi\Attributes as OA;
 
 #[OA\Schema(
@@ -27,6 +28,7 @@ class AppUser
     )]
     private string $email;
 
+    #[Ignore]
     #[OA\Property(
         title:"password",
         description:"User's password - must have minimum 8 characters, 1 uppercase letter, 1 lowercase letter, 1 digit and 1 special character",
