@@ -1021,6 +1021,42 @@
                 ]
             }
         },
+        "/me": {
+            "get": {
+                "tags": [
+                    "App user"
+                ],
+                "summary": "authenticated user's datas",
+                "description": "Get the authenticated user's data",
+                "operationId": "a1f5836cf1aed4fd0f9c45f2a5b5ffaf",
+                "responses": {
+                    "200": {
+                        "description": "Get user",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "content": {
+                                            "$ref": "#/components/schemas/appUser"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "scalar": "JWT"
+                    }
+                ]
+            }
+        },
         "/register": {
             "post": {
                 "tags": [
@@ -1056,13 +1092,13 @@
             }
         },
         "/register/{id}": {
-            "patch": {
+            "post": {
                 "tags": [
                     "App user"
                 ],
                 "summary": "Confirm register",
                 "description": "Confirm register from a user with the email sent on registration.",
-                "operationId": "972cc114978a8d4264d297116f8d5921",
+                "operationId": "a3a1587c041d2ad0b919688c53673d23",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/id"
