@@ -1,0 +1,939 @@
+{
+    "info": {
+        "_postman_id": "98fbaad9-32a1-4e18-b10d-60018eb24921",
+        "name": "APD-API",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+        "description": ""
+    },
+    "item": [
+        {
+            "name": "Duct network",
+            "item": [
+                {
+                    "name": "Add a duct network",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "/apd/projects/:projectId/ductnetworks",
+                            "query": [],
+                            "variable": [
+                                {
+                                    "key": "projectId",
+                                    "value": "1"
+                                }
+                            ],
+                            "path": [
+                                "projects",
+                                ":projectId",
+                                "ductnetworks"
+                            ],
+                            "host": [
+                                "apd"
+                            ]
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\n  \"name\": \"B\",\n  \"generalMaterial\": \"galvanised_steel\",\n  \"additionalApd\": 10\n}"
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{JwtToken}}",
+                                    "type": "string"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get one duct network",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "/apd/projects/:projectId/ductnetworks/:ductNetworkId",
+                            "query": [],
+                            "variable": [
+                                {
+                                    "key": "projectId",
+                                    "value": "1"
+                                },
+                                {
+                                    "key": "ductNetworkId",
+                                    "value": "1"
+                                }
+                            ],
+                            "path": [
+                                "projects",
+                                ":projectId",
+                                "ductnetworks",
+                                ":ductNetworkId"
+                            ],
+                            "host": [
+                                "apd"
+                            ]
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{JwtToken}}",
+                                    "type": "string"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Update a duct network",
+                    "request": {
+                        "method": "PATCH",
+                        "url": {
+                            "raw": "/apd/projects/:projectId/ductnetworks/:ductNetworkId",
+                            "query": [],
+                            "variable": [
+                                {
+                                    "key": "projectId",
+                                    "value": "1"
+                                },
+                                {
+                                    "key": "ductNetworkId",
+                                    "value": "1"
+                                }
+                            ],
+                            "path": [
+                                "projects",
+                                ":projectId",
+                                "ductnetworks",
+                                ":ductNetworkId"
+                            ],
+                            "host": [
+                                "apd"
+                            ]
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\n  \"generalMaterial\" : \"aluminium\",\n  \"additionalApd\": 40,\n  \"altitude\": 0\n}"
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{JwtToken}}",
+                                    "type": "string"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Remove a duct network",
+                    "request": {
+                        "method": "DELETE",
+                        "url": {
+                            "raw": "/apd/projects/:projectId/ductnetworks/:ductNetworkId",
+                            "query": [],
+                            "variable": [
+                                {
+                                    "key": "projectId",
+                                    "value": "1"
+                                },
+                                {
+                                    "key": "ductNetworkId",
+                                    "value": "2"
+                                }
+                            ],
+                            "path": [
+                                "projects",
+                                ":projectId",
+                                "ductnetworks",
+                                ":ductNetworkId"
+                            ],
+                            "host": [
+                                "apd"
+                            ]
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{JwtToken}}",
+                                    "type": "string"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get all duct networks",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "/apd/projects/:projectId/ductnetworks",
+                            "query": [],
+                            "variable": [
+                                {
+                                    "key": "projectId",
+                                    "value": "1"
+                                }
+                            ],
+                            "path": [
+                                "projects",
+                                ":projectId",
+                                "ductnetworks"
+                            ],
+                            "host": [
+                                "apd"
+                            ]
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{JwtToken}}",
+                                    "type": "string"
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Duct section",
+            "item": [
+                {
+                    "name": "Get one duct section",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "/apd/ductnetworks/:ductNetworkId/ductsections/:ductSectionId",
+                            "query": [],
+                            "variable": [
+                                {
+                                    "key": "ductNetworkId",
+                                    "value": "1"
+                                },
+                                {
+                                    "key": "ductSectionId",
+                                    "value": "1"
+                                }
+                            ],
+                            "path": [
+                                "ductnetworks",
+                                ":ductNetworkId",
+                                "ductsections",
+                                ":ductSectionId"
+                            ],
+                            "host": [
+                                "apd"
+                            ]
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{JwtToken}}",
+                                    "type": "string"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Add a duct section",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "/apd/ductnetworks/:ductNetworkId/ductsections",
+                            "query": [],
+                            "variable": [
+                                {
+                                    "key": "ductNetworkId",
+                                    "value": "1"
+                                }
+                            ],
+                            "path": [
+                                "ductnetworks",
+                                ":ductNetworkId",
+                                "ductsections"
+                            ],
+                            "host": [
+                                "apd"
+                            ]
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\n  \"shape\": \"rectangular\",\n  \"name\": \"B\",\n  \"flowrate\": 3000,\n  \"length\": 10.0,\n  \"singularities\": {\n    \"90_elbow\": 1\n  },\n  \"additionalApd\": 10,\n  \"diameter\": 355,\n  \"width\" : 400,\n  \"height\": 300\n}"
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{JwtToken}}",
+                                    "type": "string"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Remove a duct section",
+                    "request": {
+                        "method": "DELETE",
+                        "url": {
+                            "raw": "/apd/ductnetworks/:ductNetworkId/ductsections/:ductSectionId",
+                            "query": [],
+                            "variable": [
+                                {
+                                    "key": "ductNetworkId",
+                                    "value": "1"
+                                },
+                                {
+                                    "key": "ductSectionId",
+                                    "value": "2"
+                                }
+                            ],
+                            "path": [
+                                "ductnetworks",
+                                ":ductNetworkId",
+                                "ductsections",
+                                ":ductSectionId"
+                            ],
+                            "host": [
+                                "apd"
+                            ]
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{JwtToken}}",
+                                    "type": "string"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Update a duct section",
+                    "request": {
+                        "method": "PATCH",
+                        "url": {
+                            "raw": "/apd/ductnetworks/:ductNetworkId/ductsections/:ductSectionId",
+                            "query": [],
+                            "variable": [
+                                {
+                                    "key": "ductNetworkId",
+                                    "value": "1"
+                                },
+                                {
+                                    "key": "ductSectionId",
+                                    "value": "2"
+                                }
+                            ],
+                            "path": [
+                                "ductnetworks",
+                                ":ductNetworkId",
+                                "ductsections",
+                                ":ductSectionId"
+                            ],
+                            "host": [
+                                "apd"
+                            ]
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\n  \"shape\": \"circular\",\n  \"name\": \"AA\",\n  \"material\": \"aluminium\",\n  \"flowrate\": 3000,\n  \"length\": 1.0,\n  \"singularities\": {\n    \"90_elbow\": 1\n  },\n  \"additionalApd\": 10,\n  \"diameter\": 315\n}"
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{JwtToken}}",
+                                    "type": "string"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get all duct sections",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "/apd/ductnetworks/:ductNetworkID/ductsections",
+                            "query": [],
+                            "variable": [
+                                {
+                                    "key": "ductNetworkID",
+                                    "value": "1"
+                                }
+                            ],
+                            "path": [
+                                "ductnetworks",
+                                ":ductNetworkID",
+                                "ductsections"
+                            ],
+                            "host": [
+                                "apd"
+                            ]
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{JwtToken}}",
+                                    "type": "string"
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Project",
+            "item": [
+                {
+                    "name": "Get one project",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "/apd/users/:userId/projects/:projectId",
+                            "query": [],
+                            "variable": [
+                                {
+                                    "key": "userId",
+                                    "value": "1"
+                                },
+                                {
+                                    "key": "projectId",
+                                    "value": "1"
+                                }
+                            ],
+                            "path": [
+                                "users",
+                                ":userId",
+                                "projects",
+                                ":projectId"
+                            ],
+                            "host": [
+                                "apd"
+                            ]
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{JwtToken}}",
+                                    "type": "string"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Update a project",
+                    "request": {
+                        "method": "PATCH",
+                        "url": {
+                            "raw": "/apd/users/:userId/projects/:projectId",
+                            "query": [],
+                            "variable": [
+                                {
+                                    "key": "userId",
+                                    "value": "1"
+                                },
+                                {
+                                    "key": "projectId",
+                                    "value": "1"
+                                }
+                            ],
+                            "path": [
+                                "users",
+                                ":userId",
+                                "projects",
+                                ":projectId"
+                            ],
+                            "host": [
+                                "apd"
+                            ]
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\n  \"name\": \"Project B\",\n  \"generalAltitude\": 2000,\n  \"generalTemperature\": 0.0\n}"
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{JwtToken}}",
+                                    "type": "string"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Remove a project",
+                    "request": {
+                        "method": "DELETE",
+                        "url": {
+                            "raw": "/apd/users/:userId/projects/:projectId",
+                            "query": [],
+                            "variable": [
+                                {
+                                    "key": "userId",
+                                    "value": "1"
+                                },
+                                {
+                                    "key": "projectId",
+                                    "value": "2"
+                                }
+                            ],
+                            "path": [
+                                "users",
+                                ":userId",
+                                "projects",
+                                ":projectId"
+                            ],
+                            "host": [
+                                "apd"
+                            ]
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{JwtToken}}",
+                                    "type": "string"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get all projects",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "/apd/users/:userId/projects",
+                            "query": [],
+                            "variable": [
+                                {
+                                    "key": "userId",
+                                    "value": "1"
+                                }
+                            ],
+                            "path": [
+                                "users",
+                                ":userId",
+                                "projects"
+                            ],
+                            "host": [
+                                "apd"
+                            ]
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{JwtToken}}",
+                                    "type": "string"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Add a project",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "/apd/users/:userId/projects",
+                            "query": [],
+                            "variable": [
+                                {
+                                    "key": "userId",
+                                    "value": "1"
+                                }
+                            ],
+                            "path": [
+                                "users",
+                                ":userId",
+                                "projects"
+                            ],
+                            "host": [
+                                "apd"
+                            ]
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\n  \"name\": \"Project A\"\n}"
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{JwtToken}}",
+                                    "type": "string"
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "App user",
+            "item": [
+                {
+                    "name": "Get user datas",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "/users/:id",
+                            "query": [],
+                            "variable": [
+                                {
+                                    "key": "id",
+                                    "value": "1"
+                                }
+                            ],
+                            "path": [
+                                ":id"
+                            ],
+                            "host": [
+                                "users"
+                            ]
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{JwtToken}}",
+                                    "type": "string"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Register User",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "/register",
+                            "host": [
+                                "register"
+                            ]
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\n  \"email\": \"test2@email.test\",\n  \"password\": \"Azerty123!\",\n  \"lastname\": \"Doe\",\n  \"firstname\": \"John\",\n  \"company\": \"Test&Cie\"\n}"
+                        }
+                    }
+                },
+                {
+                    "name": "Confirm register",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "/register/:id",
+                            "query": [],
+                            "variable": [
+                                {
+                                    "key": "id",
+                                    "value": "2"
+                                }
+                            ],
+                            "path": [
+                                ":id"
+                            ],
+                            "host": [
+                                "register"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Login",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "/login",
+                            "host": [
+                                "login"
+                            ]
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\n  \"email\": \"test2@test.com\",\n  \"password\": \"Azerty123!\"\n}"
+                        }
+                    }
+                },
+                {
+                    "name": "Update user",
+                    "request": {
+                        "method": "PATCH",
+                        "url": {
+                            "raw": "/users/:id",
+                            "query": [],
+                            "variable": [
+                                {
+                                    "key": "id",
+                                    "value": "2"
+                                }
+                            ],
+                            "path": [
+                                ":id"
+                            ],
+                            "host": [
+                                "users"
+                            ]
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\n  \"lastname\": \"Dupond\",\n  \"firstname\": \"Jean\"\n}"
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{JwtToken}}",
+                                    "type": "string"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Remove user",
+                    "request": {
+                        "method": "DELETE",
+                        "url": {
+                            "raw": "/users/:id",
+                            "query": [],
+                            "variable": [
+                                {
+                                    "key": "id",
+                                    "value": "2"
+                                }
+                            ],
+                            "path": [
+                                ":id"
+                            ],
+                            "host": [
+                                "users"
+                            ]
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{JwtToken}}",
+                                    "type": "string"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Lost password",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "/lostpassword",
+                            "host": [
+                                "lostpassword"
+                            ]
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\n  \"email\": \"test2@email.test\"\n}"
+                        }
+                    }
+                },
+                {
+                    "name": "Recover password",
+                    "request": {
+                        "method": "PATCH",
+                        "url": {
+                            "raw": "/recoverpassword/:guid",
+                            "query": [],
+                            "variable": [
+                                {
+                                    "key": "guid",
+                                    "value": "8203b18ef51444d8"
+                                }
+                            ],
+                            "path": [
+                                ":guid"
+                            ],
+                            "host": [
+                                "recoverpassword"
+                            ]
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\n  \"newPassword\": \"Azerty123!\"\n}"
+                        }
+                    }
+                },
+                {
+                    "name": "Update password",
+                    "request": {
+                        "method": "PATCH",
+                        "url": {
+                            "raw": "/users/:id/updatepassword",
+                            "query": [],
+                            "variable": [
+                                {
+                                    "key": "id",
+                                    "value": "2"
+                                }
+                            ],
+                            "path": [
+                                ":id",
+                                "updatepassword"
+                            ],
+                            "host": [
+                                "users"
+                            ]
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\n  \"oldPassword\" : \"Azerty123!\",\n  \"newPassword\": \"Azerty!123\"\n}"
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{JwtToken}}",
+                                    "type": "string"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get authenticated user datas",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "/users/me",
+                            "path": [
+                                "me"
+                            ],
+                            "host": [
+                                "users"
+                            ]
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{JwtToken}}",
+                                    "type": "string"
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "test api base url",
+            "request": {
+                "method": "GET",
+                "url": {
+                    "raw": "/test",
+                    "host": [
+                        "test"
+                    ]
+                }
+            }
+        }
+    ]
+}

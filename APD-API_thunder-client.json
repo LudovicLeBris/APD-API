@@ -1,0 +1,718 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "APD-API",
+    "dateExported": "2024-01-24T09:31:25.509Z",
+    "version": "1.1",
+    "folders": [
+        {
+            "_id": "0e54cd62-462d-44f8-8773-ca07001cf1c0",
+            "name": "Duct network",
+            "containerId": "",
+            "created": "2024-01-23T20:48:59.392Z",
+            "sortNum": 10000
+        },
+        {
+            "_id": "7f97d3a5-9484-4905-b22f-0b1496a5e96f",
+            "name": "Duct section",
+            "containerId": "",
+            "created": "2024-01-23T20:49:11.061Z",
+            "sortNum": 20000
+        },
+        {
+            "_id": "38d38cf7-1b0b-4ce9-b142-cf4ba594eb54",
+            "name": "Project",
+            "containerId": "",
+            "created": "2024-01-23T20:49:20.410Z",
+            "sortNum": 30000
+        },
+        {
+            "_id": "b1ffbc32-3d81-4f53-a25e-c89b4215bd24",
+            "name": "App user",
+            "containerId": "",
+            "created": "2024-01-23T20:49:29.852Z",
+            "sortNum": 40000
+        }
+    ],
+    "requests": [
+        {
+            "_id": "89be8baa-879d-436f-adfc-f3bab284568d",
+            "colId": "63b0e7b3-81cf-4eb7-b2c6-c3965618ae7f",
+            "containerId": "7f97d3a5-9484-4905-b22f-0b1496a5e96f",
+            "name": "Get one duct section",
+            "url": "/apd/ductnetworks/{ductNetworkId}/ductsections/{ductSectionId}",
+            "method": "GET",
+            "sortNum": 10000,
+            "created": "2023-11-21T12:56:42.018Z",
+            "modified": "2024-01-24T08:36:02.965Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "ductNetworkId",
+                    "value": "1",
+                    "isPath": true
+                },
+                {
+                    "name": "ductSectionId",
+                    "value": "1",
+                    "isPath": true
+                }
+            ],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{JwtToken}}"
+            },
+            "tests": []
+        },
+        {
+            "_id": "a8819296-75d0-4c67-92f1-fe5c733d6eb1",
+            "colId": "63b0e7b3-81cf-4eb7-b2c6-c3965618ae7f",
+            "containerId": "0e54cd62-462d-44f8-8773-ca07001cf1c0",
+            "name": "Get one duct network",
+            "url": "/apd/projects/{projectId}/ductnetworks/{ductNetworkId}",
+            "method": "GET",
+            "sortNum": 10000,
+            "created": "2023-11-29T07:23:21.739Z",
+            "modified": "2024-01-24T08:36:25.214Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "projectId",
+                    "value": "1",
+                    "isPath": true
+                },
+                {
+                    "name": "ductNetworkId",
+                    "value": "1",
+                    "isPath": true
+                }
+            ],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{JwtToken}}"
+            },
+            "tests": []
+        },
+        {
+            "_id": "5f55a35f-80f4-40dd-82bf-a00f10ec6da1",
+            "colId": "63b0e7b3-81cf-4eb7-b2c6-c3965618ae7f",
+            "containerId": "38d38cf7-1b0b-4ce9-b142-cf4ba594eb54",
+            "name": "Get one project",
+            "url": "/apd/users/{userId}/projects/{projectId}",
+            "method": "GET",
+            "sortNum": 10000,
+            "created": "2023-11-30T10:02:06.167Z",
+            "modified": "2024-01-24T08:35:40.244Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "userId",
+                    "value": "1",
+                    "isPath": true
+                },
+                {
+                    "name": "projectId",
+                    "value": "1",
+                    "isPath": true
+                }
+            ],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{JwtToken}}"
+            },
+            "tests": []
+        },
+        {
+            "_id": "c8d781c2-2e23-44b9-9f9c-095c75bda598",
+            "colId": "63b0e7b3-81cf-4eb7-b2c6-c3965618ae7f",
+            "containerId": "b1ffbc32-3d81-4f53-a25e-c89b4215bd24",
+            "name": "Get user datas",
+            "url": "/users/{id}",
+            "method": "GET",
+            "sortNum": 10000,
+            "created": "2023-12-01T16:11:00.578Z",
+            "modified": "2024-01-24T08:31:26.347Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "id",
+                    "value": "1",
+                    "isPath": true
+                }
+            ],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{JwtToken}}"
+            },
+            "tests": []
+        },
+        {
+            "_id": "01030e62-be4c-48b1-953e-2a1a55dbb117",
+            "colId": "63b0e7b3-81cf-4eb7-b2c6-c3965618ae7f",
+            "containerId": "b1ffbc32-3d81-4f53-a25e-c89b4215bd24",
+            "name": "Get authenticated user datas",
+            "url": "/users/me",
+            "method": "GET",
+            "sortNum": 15000,
+            "created": "2024-01-24T08:31:49.498Z",
+            "modified": "2024-01-24T08:32:08.065Z",
+            "headers": [],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{JwtToken}}"
+            },
+            "tests": []
+        },
+        {
+            "_id": "9208663d-b5ba-4589-891b-368ceb1bc4d7",
+            "colId": "63b0e7b3-81cf-4eb7-b2c6-c3965618ae7f",
+            "containerId": "b1ffbc32-3d81-4f53-a25e-c89b4215bd24",
+            "name": "Register User",
+            "url": "/register",
+            "method": "POST",
+            "sortNum": 20000,
+            "created": "2023-12-04T08:57:05.867Z",
+            "modified": "2024-01-23T20:58:57.895Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"email\": \"test2@email.test\",\n  \"password\": \"Azerty123!\",\n  \"lastname\": \"Doe\",\n  \"firstname\": \"John\",\n  \"company\": \"Test&Cie\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "da63fc0f-e865-4216-b71f-9bc3870ca35c",
+            "colId": "63b0e7b3-81cf-4eb7-b2c6-c3965618ae7f",
+            "containerId": "7f97d3a5-9484-4905-b22f-0b1496a5e96f",
+            "name": "Get all duct sections",
+            "url": "/apd/ductnetworks/{ductNetworkID}/ductsections",
+            "method": "GET",
+            "sortNum": 20000,
+            "created": "2023-12-18T08:57:05.862Z",
+            "modified": "2024-01-24T08:36:14.042Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "ductNetworkID",
+                    "value": "1",
+                    "isPath": true
+                }
+            ],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{JwtToken}}"
+            },
+            "tests": []
+        },
+        {
+            "_id": "501d9e5c-efa8-4f61-aa15-6c7e1c7557d7",
+            "colId": "63b0e7b3-81cf-4eb7-b2c6-c3965618ae7f",
+            "containerId": "38d38cf7-1b0b-4ce9-b142-cf4ba594eb54",
+            "name": "Get all projects",
+            "url": "/apd/users/{userId}/projects",
+            "method": "GET",
+            "sortNum": 20000,
+            "created": "2023-12-18T14:41:47.963Z",
+            "modified": "2024-01-24T08:35:47.423Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "userId",
+                    "value": "1",
+                    "isPath": true
+                }
+            ],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{JwtToken}}"
+            },
+            "tests": []
+        },
+        {
+            "_id": "32df4005-be49-482a-9b22-e546c7073bbb",
+            "colId": "63b0e7b3-81cf-4eb7-b2c6-c3965618ae7f",
+            "containerId": "0e54cd62-462d-44f8-8773-ca07001cf1c0",
+            "name": "Get all duct networks",
+            "url": "/apd/projects/{projectId}/ductnetworks",
+            "method": "GET",
+            "sortNum": 20000,
+            "created": "2023-12-18T20:16:21.179Z",
+            "modified": "2024-01-24T08:36:29.577Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "projectId",
+                    "value": "1",
+                    "isPath": true
+                }
+            ],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{JwtToken}}"
+            },
+            "tests": []
+        },
+        {
+            "_id": "c372f522-e740-442b-8992-87e555a9b9c1",
+            "colId": "63b0e7b3-81cf-4eb7-b2c6-c3965618ae7f",
+            "containerId": "7f97d3a5-9484-4905-b22f-0b1496a5e96f",
+            "name": "Add a duct section",
+            "url": "/apd/ductnetworks/{ductNetworkId}/ductsections",
+            "method": "POST",
+            "sortNum": 30000,
+            "created": "2023-11-23T20:23:16.086Z",
+            "modified": "2024-01-24T09:25:29.265Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "ductNetworkId",
+                    "value": "1",
+                    "isPath": true
+                }
+            ],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"shape\": \"rectangular\",\n  \"name\": \"B\",\n  \"flowrate\": 3000,\n  \"length\": 10.0,\n  \"singularities\": {\n    \"90_elbow\": 1\n  },\n  \"additionalApd\": 10,\n  \"diameter\": 355,\n  \"width\" : 400,\n  \"height\": 300\n}",
+                "form": []
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{JwtToken}}"
+            },
+            "tests": []
+        },
+        {
+            "_id": "a20e0676-f433-44f8-adbd-9a2b8d6a08bd",
+            "colId": "63b0e7b3-81cf-4eb7-b2c6-c3965618ae7f",
+            "containerId": "0e54cd62-462d-44f8-8773-ca07001cf1c0",
+            "name": "Add a duct network",
+            "url": "/apd/projects/{projectId}/ductnetworks",
+            "method": "POST",
+            "sortNum": 30000,
+            "created": "2023-11-28T19:55:07.257Z",
+            "modified": "2024-01-24T09:21:06.354Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "projectId",
+                    "value": "1",
+                    "isPath": true
+                }
+            ],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"name\": \"B\",\n  \"generalMaterial\": \"galvanised_steel\",\n  \"additionalApd\": 10\n}",
+                "form": []
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{JwtToken}}"
+            },
+            "tests": []
+        },
+        {
+            "_id": "65874b8d-b0c5-48d2-8a0e-52fdce2a54a0",
+            "colId": "63b0e7b3-81cf-4eb7-b2c6-c3965618ae7f",
+            "containerId": "38d38cf7-1b0b-4ce9-b142-cf4ba594eb54",
+            "name": "Update a project",
+            "url": "/apd/users/{userId}/projects/{projectId}",
+            "method": "PATCH",
+            "sortNum": 30000,
+            "created": "2023-11-30T19:51:10.689Z",
+            "modified": "2024-01-24T09:13:19.448Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "userId",
+                    "value": "1",
+                    "isPath": true
+                },
+                {
+                    "name": "projectId",
+                    "value": "1",
+                    "isPath": true
+                }
+            ],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"name\": \"Project B\",\n  \"generalAltitude\": 2000,\n  \"generalTemperature\": 0.0\n}",
+                "form": []
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{JwtToken}}"
+            },
+            "tests": []
+        },
+        {
+            "_id": "d92daa6b-09f0-49d3-bbb3-0ea12cddbdc4",
+            "colId": "63b0e7b3-81cf-4eb7-b2c6-c3965618ae7f",
+            "containerId": "b1ffbc32-3d81-4f53-a25e-c89b4215bd24",
+            "name": "Lost password",
+            "url": "/lostpassword",
+            "method": "POST",
+            "sortNum": 30000,
+            "created": "2023-12-05T20:38:04.472Z",
+            "modified": "2024-01-24T09:03:35.541Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"email\": \"test2@email.test\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "6f4edd0f-634a-4f28-8d7c-bd2d9e43fb69",
+            "colId": "63b0e7b3-81cf-4eb7-b2c6-c3965618ae7f",
+            "containerId": "38d38cf7-1b0b-4ce9-b142-cf4ba594eb54",
+            "name": "Add a project",
+            "url": "/apd/users/{userId}/projects",
+            "method": "POST",
+            "sortNum": 35000,
+            "created": "2024-01-24T09:10:23.009Z",
+            "modified": "2024-01-24T09:11:40.200Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "userId",
+                    "value": "1",
+                    "isPath": true
+                }
+            ],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"name\": \"Project A\"\n}",
+                "form": []
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{JwtToken}}"
+            },
+            "tests": []
+        },
+        {
+            "_id": "a397ec1e-1889-41cd-858e-e97ddd8a4a17",
+            "colId": "63b0e7b3-81cf-4eb7-b2c6-c3965618ae7f",
+            "containerId": "7f97d3a5-9484-4905-b22f-0b1496a5e96f",
+            "name": "Update a duct section",
+            "url": "/apd/ductnetworks/{ductNetworkId}/ductsections/{ductSectionId}",
+            "method": "PATCH",
+            "sortNum": 40000,
+            "created": "2023-11-27T14:29:00.874Z",
+            "modified": "2024-01-24T09:26:35.379Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "ductNetworkId",
+                    "value": "1",
+                    "isPath": true
+                },
+                {
+                    "name": "ductSectionId",
+                    "value": "2",
+                    "isPath": true
+                }
+            ],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"shape\": \"circular\",\n  \"name\": \"AA\",\n  \"material\": \"aluminium\",\n  \"flowrate\": 3000,\n  \"length\": 1.0,\n  \"singularities\": {\n    \"90_elbow\": 1\n  },\n  \"additionalApd\": 10,\n  \"diameter\": 315\n}",
+                "form": []
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{JwtToken}}"
+            },
+            "tests": []
+        },
+        {
+            "_id": "03e79898-b8ba-41e1-af77-2db114645790",
+            "colId": "63b0e7b3-81cf-4eb7-b2c6-c3965618ae7f",
+            "containerId": "38d38cf7-1b0b-4ce9-b142-cf4ba594eb54",
+            "name": "Remove a project",
+            "url": "/apd/users/{userId}/projects/{projectId}",
+            "method": "DELETE",
+            "sortNum": 40000,
+            "created": "2023-12-01T09:10:00.292Z",
+            "modified": "2024-01-24T09:15:14.433Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "userId",
+                    "value": "1",
+                    "isPath": true
+                },
+                {
+                    "name": "projectId",
+                    "value": "2",
+                    "isPath": true
+                }
+            ],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{JwtToken}}"
+            },
+            "tests": []
+        },
+        {
+            "_id": "c49806f2-570e-4c73-ab9f-2858b21680c4",
+            "colId": "63b0e7b3-81cf-4eb7-b2c6-c3965618ae7f",
+            "containerId": "b1ffbc32-3d81-4f53-a25e-c89b4215bd24",
+            "name": "Login",
+            "url": "/login",
+            "method": "POST",
+            "sortNum": 40000,
+            "created": "2023-12-05T09:51:38.000Z",
+            "modified": "2024-01-24T09:08:38.444Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"email\": \"ludovic.lebris@gmail.com\",\n  \"password\": \"Azerty123!\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "2b961a79-ef9b-491f-b77c-004fdfced068",
+            "colId": "63b0e7b3-81cf-4eb7-b2c6-c3965618ae7f",
+            "containerId": "7f97d3a5-9484-4905-b22f-0b1496a5e96f",
+            "name": "Remove a duct section",
+            "url": "/apd/ductnetworks/{ductNetworkId}/ductsections/{ductSectionId}",
+            "method": "DELETE",
+            "sortNum": 50000,
+            "created": "2023-11-24T14:48:41.610Z",
+            "modified": "2024-01-24T09:29:41.582Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "ductNetworkId",
+                    "value": "1",
+                    "isPath": true
+                },
+                {
+                    "name": "ductSectionId",
+                    "value": "2",
+                    "isPath": true
+                }
+            ],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{JwtToken}}"
+            },
+            "tests": []
+        },
+        {
+            "_id": "ae31b00d-1f9f-4f22-9ab0-734c4826af5c",
+            "colId": "63b0e7b3-81cf-4eb7-b2c6-c3965618ae7f",
+            "containerId": "0e54cd62-462d-44f8-8773-ca07001cf1c0",
+            "name": "Update a duct network",
+            "url": "/apd/projects/{projectId}/ductnetworks/{ductNetworkId}",
+            "method": "PATCH",
+            "sortNum": 50000,
+            "created": "2023-11-29T09:31:36.972Z",
+            "modified": "2024-01-24T09:20:36.844Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "projectId",
+                    "value": "1",
+                    "isPath": true
+                },
+                {
+                    "name": "ductNetworkId",
+                    "value": "1",
+                    "isPath": true
+                }
+            ],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"generalMaterial\" : \"aluminium\",\n  \"additionalApd\": 40,\n  \"altitude\": 0\n}",
+                "form": []
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{JwtToken}}"
+            },
+            "tests": []
+        },
+        {
+            "_id": "84a389ad-45e5-43fa-a212-8433367bb323",
+            "colId": "63b0e7b3-81cf-4eb7-b2c6-c3965618ae7f",
+            "containerId": "b1ffbc32-3d81-4f53-a25e-c89b4215bd24",
+            "name": "Confirm register",
+            "url": "/register/{id}",
+            "method": "POST",
+            "sortNum": 50000,
+            "created": "2023-12-04T13:13:16.655Z",
+            "modified": "2024-01-24T08:59:51.063Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "id",
+                    "value": "2",
+                    "isPath": true
+                }
+            ],
+            "tests": []
+        },
+        {
+            "_id": "21debe48-5df0-478e-8e86-698e441fb145",
+            "colId": "63b0e7b3-81cf-4eb7-b2c6-c3965618ae7f",
+            "containerId": "0e54cd62-462d-44f8-8773-ca07001cf1c0",
+            "name": "Remove a duct network",
+            "url": "/apd/projects/{projectId}/ductnetworks/{ductNetworkId}",
+            "method": "DELETE",
+            "sortNum": 60000,
+            "created": "2023-11-30T08:49:29.379Z",
+            "modified": "2024-01-24T09:21:32.584Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "projectId",
+                    "value": "1",
+                    "isPath": true
+                },
+                {
+                    "name": "ductNetworkId",
+                    "value": "2",
+                    "isPath": true
+                }
+            ],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{JwtToken}}"
+            },
+            "tests": []
+        },
+        {
+            "_id": "235d6436-50fc-469f-bdd1-bcb6fc46ee6b",
+            "colId": "63b0e7b3-81cf-4eb7-b2c6-c3965618ae7f",
+            "containerId": "b1ffbc32-3d81-4f53-a25e-c89b4215bd24",
+            "name": "Update user",
+            "url": "/users/{id}",
+            "method": "PATCH",
+            "sortNum": 60000,
+            "created": "2023-12-05T11:27:54.282Z",
+            "modified": "2024-01-24T09:01:31.511Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "id",
+                    "value": "2",
+                    "isPath": true
+                }
+            ],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"lastname\": \"Dupond\",\n  \"firstname\": \"Jean\"\n}",
+                "form": []
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{JwtToken}}"
+            },
+            "tests": []
+        },
+        {
+            "_id": "c1171c87-b222-4a27-812d-d26454a8a8a3",
+            "colId": "63b0e7b3-81cf-4eb7-b2c6-c3965618ae7f",
+            "containerId": "",
+            "name": "test api base url",
+            "url": "/test",
+            "method": "GET",
+            "sortNum": 65000,
+            "created": "2023-11-17T11:03:44.638Z",
+            "modified": "2024-01-23T20:50:58.642Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "9640e85c-7724-464d-a122-1cd9cadd6281",
+            "colId": "63b0e7b3-81cf-4eb7-b2c6-c3965618ae7f",
+            "containerId": "b1ffbc32-3d81-4f53-a25e-c89b4215bd24",
+            "name": "Recover password",
+            "url": "/recoverpassword/{guid}",
+            "method": "PATCH",
+            "sortNum": 70000,
+            "created": "2023-12-06T12:55:28.435Z",
+            "modified": "2024-01-24T09:05:11.229Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "guid",
+                    "value": "8203b18ef51444d8",
+                    "isPath": true
+                }
+            ],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"newPassword\": \"Azerty123!\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "8796a369-6076-42b8-8bd3-402d415257db",
+            "colId": "63b0e7b3-81cf-4eb7-b2c6-c3965618ae7f",
+            "containerId": "b1ffbc32-3d81-4f53-a25e-c89b4215bd24",
+            "name": "Update password",
+            "url": "/users/{id}/updatepassword",
+            "method": "PATCH",
+            "sortNum": 80000,
+            "created": "2023-12-06T13:07:47.493Z",
+            "modified": "2024-01-24T09:06:27.033Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "id",
+                    "value": "2",
+                    "isPath": true
+                }
+            ],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"oldPassword\" : \"Azerty123!\",\n  \"newPassword\": \"Azerty!123\"\n}",
+                "form": []
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{JwtToken}}"
+            },
+            "tests": []
+        },
+        {
+            "_id": "82df6f32-58c5-4ff0-a4b7-e6f8ba6670f1",
+            "colId": "63b0e7b3-81cf-4eb7-b2c6-c3965618ae7f",
+            "containerId": "b1ffbc32-3d81-4f53-a25e-c89b4215bd24",
+            "name": "Remove user",
+            "url": "/users/{id}",
+            "method": "DELETE",
+            "sortNum": 90000,
+            "created": "2023-12-05T13:29:32.503Z",
+            "modified": "2024-01-24T09:07:01.211Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "id",
+                    "value": "2",
+                    "isPath": true
+                }
+            ],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{JwtToken}}"
+            },
+            "tests": []
+        }
+    ],
+    "settings": {
+        "options": {
+            "baseUrl": "https://apd.aeraulic.com/api/V1"
+        }
+    }
+}
