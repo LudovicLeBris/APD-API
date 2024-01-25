@@ -712,7 +712,7 @@
     ],
     "settings": {
         "options": {
-            "baseUrl": "https://apd.aeraulic.com/api/V1"
+            "baseUrl": "https://aeraulic.com/api/V1"
         }
     }
 }

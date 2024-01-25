@@ -7,7 +7,7 @@
     },
     "servers": [
         {
-            "url": "https://aeraulic.io/api/V1",
+            "url": "https://aeraulic.com/api/V1",
             "description": "Apd calculator API server"
         }
     ],

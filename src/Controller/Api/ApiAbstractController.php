@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
     version:"0.1",
     description:"An API to perform air pressure drop calculation through projects and user account"
     )]
-#[OA\Server(url:"https://aeraulic.io/api/V1", description:"Apd calculator API server")]
+#[OA\Server(url:"https://aeraulic.com/api/V1", description:"Apd calculator API server")]
 #[OA\Parameter(
     name:"id",
     in:"path",
