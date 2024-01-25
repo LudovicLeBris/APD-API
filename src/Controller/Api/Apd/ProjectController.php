@@ -31,7 +31,7 @@ use App\Presentation\Apd\RemoveProjectJsonPresenter;
 class ProjectController extends ApiAbstractController
 {
     #[OA\Get(
-        security:["JWT"],
+        security:["bearerAuth"],
         tags:["Project"],
         path:"/apd/users/{id}/projects",
         summary:"Get all project",
@@ -70,7 +70,7 @@ class ProjectController extends ApiAbstractController
     }
     
     #[OA\Get(
-        security:["JWT"],
+        security:["bearerAuth"],
         tags:["Project"],
         path:"/apd/users/{userId}/projects/{ProjectId}",
         summary:"Get one project",
@@ -109,7 +109,7 @@ class ProjectController extends ApiAbstractController
     }
     
     #[OA\Post(
-        security:["JWT"],
+        security:["bearerAuth"],
         tags:["Project"],
         path:"/apd/users/{userId}/projects",
         summary:"Add a project",
@@ -161,7 +161,7 @@ class ProjectController extends ApiAbstractController
     }
 
     #[OA\Patch(
-        security:["JWT"],
+        security:["bearerAuth"],
         tags:["Project"],
         path:"/apd/users/{userId}/projects/{projectId}",
         summary:"Update a project",
@@ -207,7 +207,7 @@ class ProjectController extends ApiAbstractController
     }
 
     #[OA\Delete(
-        security:["JWT"],
+        security:["bearerAuth"],
         tags:["Project"],
         path:"/apd/users/{userId}/projects/{projectId}",
         summary:"Remove a project",

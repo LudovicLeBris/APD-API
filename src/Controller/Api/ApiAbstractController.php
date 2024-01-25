@@ -92,10 +92,11 @@ use Symfony\Component\HttpFoundation\Response;
     )
 ]
 #[OA\SecurityScheme(
-    securityScheme:"JWT",
-    type:"apiKey",
+    securityScheme:"bearerAuth",
+    name:"bearerAuth",
+    type: "http",
+    bearerFormat:"JWT",
     scheme:"bearer",
-    name:"JWTToken",
     in:"header",
     description:"Enter JWT token",
 )]

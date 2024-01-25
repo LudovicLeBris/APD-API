@@ -58,7 +58,7 @@
                 },
                 "security": [
                     {
-                        "scalar": "JWT"
+                        "scalar": "bearerAuth"
                     }
                 ]
             }
@@ -105,7 +105,7 @@
                 },
                 "security": [
                     {
-                        "scalar": "JWT"
+                        "scalar": "bearerAuth"
                     }
                 ]
             },
@@ -150,7 +150,7 @@
                 },
                 "security": [
                     {
-                        "scalar": "JWT"
+                        "scalar": "bearerAuth"
                     }
                 ]
             },
@@ -201,7 +201,7 @@
                 },
                 "security": [
                     {
-                        "scalar": "JWT"
+                        "scalar": "bearerAuth"
                     }
                 ]
             }
@@ -357,7 +357,7 @@
                 },
                 "security": [
                     {
-                        "scalar": "JWT"
+                        "scalar": "bearerAuth"
                     }
                 ]
             }
@@ -404,7 +404,7 @@
                 },
                 "security": [
                     {
-                        "scalar": "JWT"
+                        "scalar": "bearerAuth"
                     }
                 ]
             }
@@ -451,7 +451,7 @@
                 },
                 "security": [
                     {
-                        "scalar": "JWT"
+                        "scalar": "bearerAuth"
                     }
                 ]
             },
@@ -496,7 +496,7 @@
                 },
                 "security": [
                     {
-                        "scalar": "JWT"
+                        "scalar": "bearerAuth"
                     }
                 ]
             },
@@ -547,7 +547,7 @@
                 },
                 "security": [
                     {
-                        "scalar": "JWT"
+                        "scalar": "bearerAuth"
                     }
                 ]
             }
@@ -597,7 +597,7 @@
                 },
                 "security": [
                     {
-                        "scalar": "JWT"
+                        "scalar": "bearerAuth"
                     }
                 ]
             }
@@ -648,7 +648,7 @@
                 },
                 "security": [
                     {
-                        "scalar": "JWT"
+                        "scalar": "bearerAuth"
                     }
                 ]
             }
@@ -695,7 +695,7 @@
                 },
                 "security": [
                     {
-                        "scalar": "JWT"
+                        "scalar": "bearerAuth"
                     }
                 ]
             }
@@ -784,7 +784,7 @@
                 },
                 "security": [
                     {
-                        "scalar": "JWT"
+                        "scalar": "bearerAuth"
                     }
                 ]
             }
@@ -831,7 +831,7 @@
                 },
                 "security": [
                     {
-                        "scalar": "JWT"
+                        "scalar": "bearerAuth"
                     }
                 ]
             },
@@ -882,7 +882,7 @@
                 },
                 "security": [
                     {
-                        "scalar": "JWT"
+                        "scalar": "bearerAuth"
                     }
                 ]
             }
@@ -926,7 +926,7 @@
                 },
                 "security": [
                     {
-                        "scalar": "JWT"
+                        "scalar": "bearerAuth"
                     }
                 ]
             },
@@ -968,7 +968,7 @@
                 },
                 "security": [
                     {
-                        "scalar": "JWT"
+                        "scalar": "bearerAuth"
                     }
                 ]
             },
@@ -1016,7 +1016,7 @@
                 },
                 "security": [
                     {
-                        "scalar": "JWT"
+                        "scalar": "bearerAuth"
                     }
                 ]
             }
@@ -1052,7 +1052,7 @@
                 },
                 "security": [
                     {
-                        "scalar": "JWT"
+                        "scalar": "bearerAuth"
                     }
                 ]
             }
@@ -1398,7 +1398,7 @@
                 },
                 "security": [
                     {
-                        "scalar": "JWT"
+                        "scalar": "bearerAuth"
                     }
                 ]
             }
@@ -2570,11 +2570,12 @@
             }
         },
         "securitySchemes": {
-            "JWT": {
-                "type": "apiKey",
+            "bearerAuth": {
+                "type": "http",
                 "description": "Enter JWT token",
-                "name": "JWTToken",
+                "name": "bearerAuth",
                 "in": "header",
+                "bearerFormat": "JWT",
                 "scheme": "bearer"
             }
         }

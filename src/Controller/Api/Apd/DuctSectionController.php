@@ -31,7 +31,7 @@ use App\Presentation\Apd\RemoveDuctSectionJsonPresenter;
 class DuctSectionController extends ApiAbstractController
 {
     #[OA\Get(
-        security:["JWT"],
+        security:["bearerAuth"],
         tags:["Duct section"],
         path:"/apd/ductnetworks/{id}/ductsections",
         summary:"Get all duct sections",
@@ -70,7 +70,7 @@ class DuctSectionController extends ApiAbstractController
     }
     
     #[OA\Get(
-        security:["JWT"],
+        security:["bearerAuth"],
         tags:["Duct section"],
         path:"/apd/ductnetworks/{ductNetworkId}/ductsections/{ductSectionId}",
         summary:"Get one duct section",
@@ -110,7 +110,7 @@ class DuctSectionController extends ApiAbstractController
     }
 
     #[OA\Post(
-        security:["JWT"],
+        security:["bearerAuth"],
         tags:["Duct section"],
         path:"/apd/ductnetworks/{ductNetworkId}/ductsections",
         summary:"Add a duct section",
@@ -154,7 +154,7 @@ class DuctSectionController extends ApiAbstractController
     }
 
     #[OA\Patch(
-        security:["JWT"],
+        security:["bearerAuth"],
         tags:["Duct section"],
         path:"/apd/ductnetworks/{ductNetworkId}/ductsections/{ductSectionId}",
         summary:"Update a duct section",
@@ -200,7 +200,7 @@ class DuctSectionController extends ApiAbstractController
     }
 
     #[OA\Delete(
-        security:["JWT"],
+        security:["bearerAuth"],
         tags:["Duct section"],
         path:"/apd/ductnetworks/{ductNetworkId}/ductsections/{ductSectionId}",
         summary:"Remove a duct section",

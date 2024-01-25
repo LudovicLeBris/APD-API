@@ -2,7 +2,6 @@
 
 namespace App\Controller\Api;
 
-use App\Domain\AppUser\Entity\AppUser;
 use OpenApi\Attributes as OA;
 use App\Presentation\JsonModel;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,10 +28,8 @@ use App\Domain\AppUser\UseCase\RemoveAppUser\RemoveAppUserRequest;
 use App\Domain\AppUser\UseCase\UpdateAppUser\UpdateAppUserRequest;
 use App\Domain\AppUser\UseCase\UpdatePassword\UpdatePasswordRequest;
 use App\Domain\AppUser\UseCase\ConfirmRegister\ConfirmRegisterRequest;
-use OpenApi\Annotations\Response;
 use Symfony\Component\HttpFoundation\Response as HttpFoundationResponse;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Symfony\Component\Serializer\SerializerInterface;
 
 #[OA\Tag(
     name:"App user",
@@ -49,7 +46,7 @@ class AppUserController extends ApiAbstractController
     }
 
     #[OA\Get(
-        security:["JWT"],
+        security:["bearerAuth"],
         tags:["App user"],
         path:"/users/{id}",
         summary:"Get user datas",
@@ -86,7 +83,7 @@ class AppUserController extends ApiAbstractController
     }
 
     #[OA\Get(
-        security:["JWT"],
+        security:["bearerAuth"],
         tags:["App user"],
         path:"/me",
         summary:"authenticated user's datas",
@@ -249,7 +246,7 @@ class AppUserController extends ApiAbstractController
     }
 
     #[OA\Patch(
-        security:["JWT"],
+        security:["bearerAuth"],
         tags:["App user"],
         path:"/users/{id}",
         summary:"Update user",
@@ -293,7 +290,7 @@ class AppUserController extends ApiAbstractController
     }
 
     #[OA\Delete(
-        security:["JWT"],
+        security:["bearerAuth"],
         tags:["App user"],
         path:"/users/{id}",
         summary:"Remove user",
@@ -445,7 +442,7 @@ class AppUserController extends ApiAbstractController
     }
 
     #[OA\Patch(
-        security:["JWT"],
+        security:["bearerAuth"],
         tags:["App user"],
         path:"/users/{id}/updatepassword",
         summary:"Update password",
