@@ -31,7 +31,7 @@ use App\Presentation\Apd\RemoveDuctNetworkJsonPresenter;
 class DuctNetworkController extends ApiAbstractController
 {
     #[OA\Get(
-        security:["JWT"],
+        security:["bearerAuth"],
         tags:["Duct network"],
         path:"/apd/projects/{id}/ductnetworks",
         summary:"Get all duct networks",
@@ -70,7 +70,7 @@ class DuctNetworkController extends ApiAbstractController
     }
     
     #[OA\Get(
-        security:["JWT"],
+        security:["bearerAuth"],
         tags:["Duct network"],
         path:"/apd/projects/{projectId}/ductnetworks/{ductNetworkId}",
         summary:"Get one project",
@@ -109,7 +109,7 @@ class DuctNetworkController extends ApiAbstractController
     }
     
     #[OA\Post(
-        security:["JWT"],
+        security:["bearerAuth"],
         tags:["Duct network"],
         path:"/apd/projects/{projectId}/ductnetworks",
         summary:"Add a duct network",
@@ -173,7 +173,7 @@ class DuctNetworkController extends ApiAbstractController
     }
 
     #[OA\Patch(
-        security:["JWT"],
+        security:["bearerAuth"],
         tags:["Duct network"],
         path:"/apd/projects/{projectId}/ductnetworks/{ductNetworkId}",
         summary:"Update a duct network",
@@ -219,7 +219,7 @@ class DuctNetworkController extends ApiAbstractController
     }
 
     #[OA\Delete(
-        security:["JWT"],
+        security:["bearerAuth"],
         tags:["Duct network"],
         path:"/apd/projects/{projectId}/ductnetworks/{ductNetworkId}",
         summary:"Remove a duct network",
