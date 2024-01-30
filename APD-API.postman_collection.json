@@ -1,0 +1,1042 @@
+{
+	"info": {
+		"_postman_id": "942fdaeb-1241-4c29-a597-189399f08acf",
+		"name": "APD-API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32592802"
+	},
+	"item": [
+		{
+			"name": "Duct network",
+			"item": [
+				{
+					"name": "Add a duct network",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JwtToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"B\",\n  \"generalMaterial\": \"galvanised_steel\",\n  \"additionalApd\": 10\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{aeraulic.com}}/apd/projects/:projectId/ductnetworks",
+							"host": [
+								"{{aeraulic.com}}"
+							],
+							"path": [
+								"apd",
+								"projects",
+								":projectId",
+								"ductnetworks"
+							],
+							"variable": [
+								{
+									"key": "projectId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get one duct network",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JwtToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{aeraulic.com}}/apd/projects/:projectId/ductnetworks/:ductNetworkId",
+							"host": [
+								"{{aeraulic.com}}"
+							],
+							"path": [
+								"apd",
+								"projects",
+								":projectId",
+								"ductnetworks",
+								":ductNetworkId"
+							],
+							"variable": [
+								{
+									"key": "projectId",
+									"value": "1"
+								},
+								{
+									"key": "ductNetworkId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update a duct network",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JwtToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"generalMaterial\" : \"aluminium\",\n  \"additionalApd\": 40,\n  \"altitude\": 0\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{aeraulic.com}}/apd/projects/:projectId/ductnetworks/:ductNetworkId",
+							"host": [
+								"{{aeraulic.com}}"
+							],
+							"path": [
+								"apd",
+								"projects",
+								":projectId",
+								"ductnetworks",
+								":ductNetworkId"
+							],
+							"variable": [
+								{
+									"key": "projectId",
+									"value": "1"
+								},
+								{
+									"key": "ductNetworkId",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove a duct network",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JwtToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{aeraulic.com}}/apd/projects/:projectId/ductnetworks/:ductNetworkId",
+							"host": [
+								"{{aeraulic.com}}"
+							],
+							"path": [
+								"apd",
+								"projects",
+								":projectId",
+								"ductnetworks",
+								":ductNetworkId"
+							],
+							"variable": [
+								{
+									"key": "projectId",
+									"value": "1"
+								},
+								{
+									"key": "ductNetworkId",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all duct networks",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JwtToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{aeraulic.com}}/apd/projects/:projectId/ductnetworks",
+							"host": [
+								"{{aeraulic.com}}"
+							],
+							"path": [
+								"apd",
+								"projects",
+								":projectId",
+								"ductnetworks"
+							],
+							"variable": [
+								{
+									"key": "projectId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Duct section",
+			"item": [
+				{
+					"name": "Get one duct section",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JwtToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{aeraulic.com}}/apd/ductnetworks/:ductNetworkId/ductsections/:ductSectionId",
+							"host": [
+								"{{aeraulic.com}}"
+							],
+							"path": [
+								"apd",
+								"ductnetworks",
+								":ductNetworkId",
+								"ductsections",
+								":ductSectionId"
+							],
+							"variable": [
+								{
+									"key": "ductNetworkId",
+									"value": "1"
+								},
+								{
+									"key": "ductSectionId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add a duct section",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JwtToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"shape\": \"rectangular\",\n  \"name\": \"B\",\n  \"flowrate\": 3000,\n  \"length\": 10.0,\n  \"singularities\": {\n    \"90_elbow\": 1\n  },\n  \"additionalApd\": 10,\n  \"diameter\": 355,\n  \"width\" : 400,\n  \"height\": 300\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{aeraulic.com}}/apd/ductnetworks/:ductNetworkId/ductsections",
+							"host": [
+								"{{aeraulic.com}}"
+							],
+							"path": [
+								"apd",
+								"ductnetworks",
+								":ductNetworkId",
+								"ductsections"
+							],
+							"variable": [
+								{
+									"key": "ductNetworkId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove a duct section",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JwtToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{aeraulic.com}}/apd/ductnetworks/:ductNetworkId/ductsections/:ductSectionId",
+							"host": [
+								"{{aeraulic.com}}"
+							],
+							"path": [
+								"apd",
+								"ductnetworks",
+								":ductNetworkId",
+								"ductsections",
+								":ductSectionId"
+							],
+							"variable": [
+								{
+									"key": "ductNetworkId",
+									"value": "1"
+								},
+								{
+									"key": "ductSectionId",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update a duct section",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JwtToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"shape\": \"circular\",\n  \"name\": \"AA\",\n  \"material\": \"aluminium\",\n  \"flowrate\": 3000,\n  \"length\": 1.0,\n  \"singularities\": {\n    \"90_elbow\": 1\n  },\n  \"additionalApd\": 10,\n  \"diameter\": 315\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{aeraulic.com}}/apd/ductnetworks/:ductNetworkId/ductsections/:ductSectionId",
+							"host": [
+								"{{aeraulic.com}}"
+							],
+							"path": [
+								"apd",
+								"ductnetworks",
+								":ductNetworkId",
+								"ductsections",
+								":ductSectionId"
+							],
+							"variable": [
+								{
+									"key": "ductNetworkId",
+									"value": "1"
+								},
+								{
+									"key": "ductSectionId",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all duct sections",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JwtToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{aeraulic.com}}/apd/ductnetworks/:ductNetworkID/ductsections",
+							"host": [
+								"{{aeraulic.com}}"
+							],
+							"path": [
+								"apd",
+								"ductnetworks",
+								":ductNetworkID",
+								"ductsections"
+							],
+							"variable": [
+								{
+									"key": "ductNetworkID",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Project",
+			"item": [
+				{
+					"name": "Get one project",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JwtToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{aeraulic.com}}/apd/users/:userId/projects/:projectId",
+							"host": [
+								"{{aeraulic.com}}"
+							],
+							"path": [
+								"apd",
+								"users",
+								":userId",
+								"projects",
+								":projectId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "1"
+								},
+								{
+									"key": "projectId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update a project",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JwtToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Project B\",\n  \"generalAltitude\": 2000,\n  \"generalTemperature\": 0.0\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{aeraulic.com}}/apd/users/:userId/projects/:projectId",
+							"host": [
+								"{{aeraulic.com}}"
+							],
+							"path": [
+								"apd",
+								"users",
+								":userId",
+								"projects",
+								":projectId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "1"
+								},
+								{
+									"key": "projectId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove a project",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JwtToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{aeraulic.com}}/apd/users/:userId/projects/:projectId",
+							"host": [
+								"{{aeraulic.com}}"
+							],
+							"path": [
+								"apd",
+								"users",
+								":userId",
+								"projects",
+								":projectId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "1"
+								},
+								{
+									"key": "projectId",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all projects",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JwtToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{aeraulic.com}}/apd/users/:userId/projects",
+							"host": [
+								"{{aeraulic.com}}"
+							],
+							"path": [
+								"apd",
+								"users",
+								":userId",
+								"projects"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add a project",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JwtToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Project A\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{aeraulic.com}}/apd/users/:userId/projects",
+							"host": [
+								"{{aeraulic.com}}"
+							],
+							"path": [
+								"apd",
+								"users",
+								":userId",
+								"projects"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "App user",
+			"item": [
+				{
+					"name": "Get user datas",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JwtToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{aeraulic.com}}/users/:id",
+							"host": [
+								"{{aeraulic.com}}"
+							],
+							"path": [
+								"users",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register User",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"test2@email.test\",\n  \"password\": \"Azerty123!\",\n  \"lastname\": \"Doe\",\n  \"firstname\": \"John\",\n  \"company\": \"Test&Cie\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{aeraulic.com}}/register",
+							"host": [
+								"{{aeraulic.com}}"
+							],
+							"path": [
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Confirm register",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{aeraulic.com}}/register/:id",
+							"host": [
+								"{{aeraulic.com}}"
+							],
+							"path": [
+								"register",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"demo@demo.com\",\n  \"password\": \"Azerty123!\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{aeraulic.com}}/login",
+							"host": [
+								"{{aeraulic.com}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JwtToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"lastname\": \"Dupond\",\n  \"firstname\": \"Jean\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{aeraulic.com}}/users/:id",
+							"host": [
+								"{{aeraulic.com}}"
+							],
+							"path": [
+								"users",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JwtToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{aeraulic.com}}/users/:id",
+							"host": [
+								"{{aeraulic.com}}"
+							],
+							"path": [
+								"users",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Lost password",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"test2@email.test\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{aeraulic.com}}/lostpassword",
+							"host": [
+								"{{aeraulic.com}}"
+							],
+							"path": [
+								"lostpassword"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Recover password",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"newPassword\": \"Azerty123!\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{aeraulic.com}}/recoverpassword/:guid",
+							"host": [
+								"{{aeraulic.com}}"
+							],
+							"path": [
+								"recoverpassword",
+								":guid"
+							],
+							"variable": [
+								{
+									"key": "guid",
+									"value": "8203b18ef51444d8"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update password",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"oldPassword\" : \"Azerty123!\",\n  \"newPassword\": \"Azerty!123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{aeraulic.com}}/users/:id/updatepassword",
+							"host": [
+								"{{aeraulic.com}}"
+							],
+							"path": [
+								"users",
+								":id",
+								"updatepassword"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get authenticated user datas",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JwtToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{aeraulic.com}}/users/me",
+							"host": [
+								"{{aeraulic.com}}"
+							],
+							"path": [
+								"users",
+								"me"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "test api base url",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{aeraulic.com}}/test",
+					"host": [
+						"{{aeraulic.com}}"
+					],
+					"path": [
+						"test"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE3MDY0NTY0OTYsImV4cCI6MTcwNjU0Mjg5Niwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoiam9obi5kb2VAZVtby5mciJ9.unL_qHzMwSdSfIKygYtkUUSzfBSRkKWFvB1X26oXBGWHtb4t0yaz5mnZ1SQYponYoduEuZM3aslmgrlXvsym3GOZ6BOJnZC9Zyjpwaal8YvvV8IxbOm6wp1V1KeYi2Qq4enwtCeMnHH2NZm_r0ffyxr_R84kAZQsbHaSWD-bpX1h-ZmPtCoftIfZh1FCyFwqgT6_brV0N_KBnaBT2DfhrdU2WMbDAqUAucczZy6m1_M2JuL6gnU6JOdaH3JL5ggwEliC2CulzK6MUadZ_Ogwifp2t6GX0B4zcp_RK2ZYQ1b8N3dsKdIF3SQctOglQPHFuJrUCsLkxYW86mk5qez0jg",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
