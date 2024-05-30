@@ -67,9 +67,9 @@ class UpdateProject
             }, 'GeneralAltitude must be an positive integer value')
             ->that($request->generalTemperature, 'generalTemperature')->satisfy(function($value) {
                 if (!is_null($value)) {
-                    return is_float($value);
+                    return is_float($value) || is_int($value);
                 }
-            }, 'GeneralTemperature must be a float value')
+            }, 'GeneralTemperature must be an integer or a float value')
                 ->verifyNow();
             
             return true;
