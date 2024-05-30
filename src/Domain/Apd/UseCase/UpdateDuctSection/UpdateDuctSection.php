@@ -77,9 +77,9 @@ class UpdateDuctSection
 
                 ->that($request->length, 'length')->satisfy(function($value) {
                     if(!is_null($value)) {
-                        return is_float($value) && $value > 0;
+                        return (is_float($value) || is_int($value)) && $value > 0;
                     }
-                }, 'Length must be a positive float value')
+                }, 'Length must be a positive integer or float value')
 
                 ->that($request->singularities, 'singularities')->satisfy(function($values) use($request, $oldDuctSection){
                     if(is_null($request->shape)) {

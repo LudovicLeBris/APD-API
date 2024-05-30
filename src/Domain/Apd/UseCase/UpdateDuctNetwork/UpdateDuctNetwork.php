@@ -65,9 +65,9 @@ class UpdateDuctNetwork
                 }, 'Altitude must be an integer value')
                 ->that($request->temperature, 'temperature')->satisfy(function($value) {
                     if (!is_null($value)) {
-                        return is_float($value);
+                        return is_float($value) || is_int($value);
                     }
-                }, 'Temperature must be a float value')
+                }, 'Temperature must be an integer or a float value')
                 ->that($request->generalMaterial, 'generalMaterial')->satisfy(function($value) {
                     if (!is_null($value)) {
                         return in_array($value, array_keys(Material::$material));

@@ -54,7 +54,11 @@ class AddDuctSection
                 ->that($request->name, 'name')->notEmpty('Name is empty')->string()
                 ->that($request->shape, 'shape')->notEmpty('Shape is empty')->inArray(['circular', 'rectangular'])
                 ->that($request->flowrate, 'flowrate')->notEmpty('Flowrate is empty')->integer()->greaterThan(0, 'Flowrate must be positive')
-                ->that($request->length, 'length')->notEmpty('Length is empty')->float()->greaterThan(0, 'Length must be positive')
+                ->that($request->length, 'length')->satisfy(function($value) {
+                    if (!is_null($value)) {
+                        return (is_float($value) || is_int($value)) && $value > 0;
+                    }
+                }, "Length must be a positive integer or float value")
                 ->that($request->singularities, 'singularities')->isArray('Singularities must be an array')->satisfy(function($values) use($request){
                     if ($request->shape !== 'circular' || $request->shape !== 'rectangular') {return true;}
                     $singularities = Singularity::getSingularitiesByShape($request->shape);
