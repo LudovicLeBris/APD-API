@@ -2,6 +2,8 @@
 
 namespace App\Presentation;
 
+use Symfony\Component\Serializer\Encoder\JsonEncode;
+
 class JsonModel
 {
     private $message;
@@ -15,7 +17,7 @@ class JsonModel
         Object|array $data,
         int $httpStatus,
         array $header = [],
-        array $context = []
+        array $context = [JsonEncode::OPTIONS => 1024]
     )
     {
         $this->message = $message;
