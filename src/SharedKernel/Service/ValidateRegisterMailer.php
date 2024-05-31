@@ -13,7 +13,8 @@ class ValidateRegisterMailer extends CoreMailer
         $this->from = 'api@aeraulic.com';
         $this->subject = "apdcalculator - Account Activating - Do not reply";
         $this->contentType = 'html';
-        
+        $frontend_url = $_ENV['FRONTEND_URL'];
+        $frontendConfirmRegisterUri = $_ENV['FRONTEND_CONFIRM_REGISTER_URI'];
         
         $id = $appUser->getId();
         $email = $appUser->getEmail();
@@ -21,7 +22,7 @@ class ValidateRegisterMailer extends CoreMailer
         <h1>Account validation</h1>
         <p>Your account need a validation to be enabled.</p>
         <p>Click on the link below to activate your account : $email</p>
-        <form action='https://apd.aeraulic.com/api/V1/register/$id' method='POST' target='_blank'>
+        <form action='$frontend_url/$frontendConfirmRegisterUri/$id' method='GET' target='_blank'>
             <input type='submit' value='Account activation'>
         </form>
         ";
